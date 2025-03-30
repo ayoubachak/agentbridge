@@ -27,6 +27,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for proper version tracking
       - uses: actions/setup-node@v4
         with:
           node-version: '18'
@@ -45,6 +47,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for proper version tracking
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.13.0'
@@ -80,10 +84,12 @@ jobs:
     if: github.event_name == 'workflow_dispatch'
     outputs:
       new_version: ${{ steps.set-version.outputs.new_version }}
+      changes_made: ${{ steps.check-changes.outputs.changes_made }}
     steps:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0 # Fetch all history for proper version tracking
       - uses: actions/setup-node@v4
         with:
           node-version: '18'
@@ -129,15 +135,21 @@ jobs:
           echo "new_version=${NEW_VERSION}" >> $GITHUB_OUTPUT
       - name: Update package versions
         run: node scripts/prepare-packages.js ${{ steps.set-version.outputs.new_version }}
-      - name: Commit version changes
+      - name: Check if changes were made
+        id: check-changes
         run: |
-          git add .
-          git commit -m "chore: update package versions to ${{ steps.set-version.outputs.new_version }}"
-      - name: Create and push tag
-        run: |
-          git tag v${{ steps.set-version.outputs.new_version }}
-          git push --tags
-          git push
+          if git diff --quiet; then
+            echo "No changes detected. Current version matches target version."
+            echo "changes_made=false" >> $GITHUB_OUTPUT
+          else
+            echo "Changes detected. Updating versions."
+            echo "changes_made=true" >> $GITHUB_OUTPUT
+            git add .
+            git commit -m "chore: update package versions to ${{ steps.set-version.outputs.new_version }}"
+            git tag v${{ steps.set-version.outputs.new_version }}
+            git push --tags
+            git push
+          fi
 
   build-js:
     name: Build JavaScript Packages
@@ -147,7 +159,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event_name == 'workflow_dispatch' && 'HEAD' || github.ref }}
+          fetch-depth: 0 # Fetch all history for proper version tracking
       - uses: actions/setup-node@v4
         with:
           node-version: '18'
@@ -175,7 +187,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event_name == 'workflow_dispatch' && 'HEAD' || github.ref }}
+          fetch-depth: 0 # Fetch all history for proper version tracking
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.13.0'
@@ -195,12 +207,16 @@ jobs:
   publish-js:
     name: Publish to npm
     needs: [build-js, version-packages]
-    if: always() && (github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v'))
+    if: |
+      always() && 
+      (github.event_name != 'workflow_dispatch' || needs.version-packages.outputs.changes_made == 'true') && 
+      (github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event_name == 'workflow_dispatch' && 'HEAD' || github.ref }}
+          fetch-depth: 0 # Fetch all history for proper version tracking
+          ref: ${{ github.event_name == 'workflow_dispatch' && 'main' || github.ref }}
       - uses: actions/setup-node@v4
         with:
           node-version: '18'
@@ -256,48 +272,21 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-  # Commenting out the pub.dev publishing job for now
-  # publish-flutter:
-  #   name: Publish to pub.dev
-  #   needs: [build-flutter]
-  #   if: startsWith(github.ref, 'refs/tags/v')
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: subosito/flutter-action@v2
-  #       with:
-  #         flutter-version: '3.13.0'
-  #         channel: 'stable'
-  #     - name: Setup pub credentials
-  #       run: |
-  #         mkdir -p $HOME/.config/dart
-  #         echo '${{ secrets.PUB_DEV_CREDENTIALS }}' > $HOME/.config/dart/pub-credentials.json
-  #     - name: Download build artifacts
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: flutter-package
-  #         path: packages/mobile/flutter/build
-  #     - name: Update pubspec version
-  #       run: |
-  #         # Extract version from tag (remove the 'v' prefix)
-  #         VERSION=${GITHUB_REF#refs/tags/v}
-  #         # Update the version in pubspec.yaml
-  #         sed -i "s/^version: .*/version: $VERSION/" pubspec.yaml
-  #       working-directory: ./packages/mobile/flutter
-  #     - name: Publish Flutter package
-  #       run: flutter pub publish --force || true
-  #       working-directory: ./packages/mobile/flutter
-
   create-release:
     name: Create GitHub Release
     # Modified to only depend on publish-js, not publish-flutter
-    needs: [publish-js]
-    if: always() && (github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v'))
+    needs: [publish-js, version-packages]
+    if: |
+      always() && 
+      needs.publish-js.result == 'success' && 
+      (github.event_name != 'workflow_dispatch' || needs.version-packages.outputs.changes_made == 'true') && 
+      (github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event_name == 'workflow_dispatch' && 'HEAD' || github.ref }}
+          fetch-depth: 0 # Fetch all history for proper version tracking
+          ref: ${{ github.event_name == 'workflow_dispatch' && 'main' || github.ref }}
       - name: Get version if from tag
         id: get_version
         if: startsWith(github.ref, 'refs/tags/v')
@@ -329,8 +318,12 @@ jobs:
           echo "" >> RELEASE_NOTES.md
           # Check if there are previous tags, if not just add an initial release message
           if git describe --tags --abbrev=0 2>/dev/null; then
-            PREV_TAG=$(git describe --tags --abbrev=0 $(git rev-list --tags --skip=1 --max-count=1))
-            git log ${PREV_TAG}..HEAD --pretty=format:"- %s" >> RELEASE_NOTES.md
+            PREV_TAG=$(git describe --tags --abbrev=0 $(git rev-list --tags --skip=1 --max-count=1) 2>/dev/null || echo "")
+            if [ -n "$PREV_TAG" ]; then
+              git log ${PREV_TAG}..HEAD --pretty=format:"- %s" >> RELEASE_NOTES.md || echo "- Initial release" >> RELEASE_NOTES.md
+            else
+              echo "- Initial release" >> RELEASE_NOTES.md
+            fi
           else
             echo "- Initial release" >> RELEASE_NOTES.md
           fi
