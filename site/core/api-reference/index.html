@@ -8,8 +8,8 @@
 <meta content="Documentation for the AgentBridge framework" name="description"/>
 <meta content="AgentBridge Team" name="author"/>
 <link href="https://agentbridge.ai/core/api-reference/" rel="canonical"/>
-<link href="../overview/" rel="prev"/>
-<link href="../function-registry/" rel="next"/>
+<link href="../architecture/" rel="prev"/>
+<link href="../component-registry/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.6.9" name="generator"/>
 <title>API Reference - AgentBridge Documentation</title>
@@ -129,7 +129,7 @@
         </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../web/react/overview/">
+<a class="md-tabs__link" href="../../web/web-features/">
           
   
   Web SDKs
@@ -137,7 +137,7 @@
         </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../mobile/react-native/overview/">
+<a class="md-tabs__link" href="../../mobile/mobile-features/">
           
   
   Mobile SDKs
@@ -225,6 +225,22 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started/communication-modes/">
+<span class="md-ellipsis">
+    Communication Modes
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started/migration-guide/">
+<span class="md-ellipsis">
+    Migration Guide
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -247,6 +263,14 @@
 <a class="md-nav__link" href="../overview/">
 <span class="md-ellipsis">
     Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../architecture/">
+<span class="md-ellipsis">
+    Architecture
     
   </span>
 </a>
@@ -283,6 +307,14 @@
 </nav>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="../component-registry/">
+<span class="md-ellipsis">
+    Component Registry
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="../function-registry/">
 <span class="md-ellipsis">
     Function Registry
@@ -294,6 +326,30 @@
 <a class="md-nav__link" href="../type-system/">
 <span class="md-ellipsis">
     Type System
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../communication-protocol/">
+<span class="md-ellipsis">
+    Communication Protocol
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pubsub-config/">
+<span class="md-ellipsis">
+    Pub/Sub Configuration
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../websocket-config/">
+<span class="md-ellipsis">
+    WebSocket Configuration
     
   </span>
 </a>
@@ -316,17 +372,25 @@
             Web SDKs
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../web/web-features/">
+<span class="md-ellipsis">
+    Features
+    
+  </span>
+</a>
+</li>
 <li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4_1" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
 <span class="md-ellipsis">
     React
     
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_4_1_label" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_4_1">
+<nav aria-expanded="false" aria-labelledby="__nav_4_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_2">
 <span class="md-nav__icon md-icon"></span>
             React
           </label>
@@ -355,20 +419,28 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../examples/react-examples/">
+<span class="md-ellipsis">
+    Examples
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4_2" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
 <span class="md-ellipsis">
     Angular
     
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_4_2_label" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_4_2">
+<nav aria-expanded="false" aria-labelledby="__nav_4_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_3">
 <span class="md-nav__icon md-icon"></span>
             Angular
           </label>
@@ -397,6 +469,14 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../examples/angular-examples/">
+<span class="md-ellipsis">
+    Examples
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -418,17 +498,25 @@
             Mobile SDKs
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../mobile/mobile-features/">
+<span class="md-ellipsis">
+    Features
+    
+  </span>
+</a>
+</li>
 <li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5_1" type="checkbox"/>
-<label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
 <span class="md-ellipsis">
     React Native
     
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_5_1_label" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_5_1">
+<nav aria-expanded="false" aria-labelledby="__nav_5_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_5_2">
 <span class="md-nav__icon md-icon"></span>
             React Native
           </label>
@@ -449,20 +537,36 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../mobile/react-native/hooks/">
+<span class="md-ellipsis">
+    Hooks
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../examples/react-native-examples/">
+<span class="md-ellipsis">
+    Examples
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5_2" type="checkbox"/>
-<label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
 <span class="md-ellipsis">
     Flutter
     
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_5_2_label" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_5_2">
+<nav aria-expanded="false" aria-labelledby="__nav_5_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_5_3">
 <span class="md-nav__icon md-icon"></span>
             Flutter
           </label>
@@ -479,6 +583,22 @@
 <a class="md-nav__link" href="../../mobile/flutter/components/">
 <span class="md-ellipsis">
     Components
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../mobile/flutter-api/">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../examples/flutter-examples/">
+<span class="md-ellipsis">
+    Examples
     
   </span>
 </a>
@@ -513,6 +633,14 @@
 </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="../../advanced/component-registration/">
+<span class="md-ellipsis">
+    Component Registration
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="../../advanced/error-handling/">
 <span class="md-ellipsis">
     Error Handling
@@ -529,9 +657,49 @@
 </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="../../advanced/custom-pubsub/">
+<span class="md-ellipsis">
+    Custom Pub/Sub Providers
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="../../advanced/mcp-integration/">
 <span class="md-ellipsis">
     MCP Integration
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../advanced/mcp-advanced/">
+<span class="md-ellipsis">
+    MCP Advanced
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../advanced/server-implementations/">
+<span class="md-ellipsis">
+    Server Implementations
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../advanced/security/">
+<span class="md-ellipsis">
+    Security
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../advanced/design-info/">
+<span class="md-ellipsis">
+    Design Info
     
   </span>
 </a>
@@ -582,6 +750,22 @@
 <a class="md-nav__link" href="../../development/mcp-evaluation/">
 <span class="md-ellipsis">
     MCP Evaluation
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/release-notes/">
+<span class="md-ellipsis">
+    Release Notes
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/roadmap/">
+<span class="md-ellipsis">
+    Roadmap
     
   </span>
 </a>

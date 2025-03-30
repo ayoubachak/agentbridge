@@ -25,6 +25,27 @@ AgentBridge is a comprehensive SDK that enables seamless integration between AI 
 - **Context Management**: Provide context to AI agents about the application state
 - **Adapter Architecture**: Easy to extend to support new platforms and frameworks
 
+## Architecture
+
+```
+agentbridge/
+├── packages/
+│   ├── core/             # Core functionality and interfaces
+│   ├── frameworks/       # Framework-specific implementations
+│   │   ├── react/        # React SDK
+│   │   ├── angular/      # Angular SDK
+│   │   ├── react-native/ # React Native SDK
+│   │   ├── flutter/      # Flutter SDK
+│   ├── providers/        # Communication providers
+│   │   ├── ably/         # Ably provider
+│   │   ├── firebase/     # Firebase provider
+│   │   ├── pusher/       # Pusher provider
+│   │   ├── supabase/     # Supabase provider
+│   ├── communication/    # Communication protocols
+│   │   ├── websocket/    # WebSocket implementation
+│   ├── server/           # Self-hosted mode server
+```
+
 ## Why AgentBridge?
 
 In the rapidly evolving landscape of AI-powered applications, developers need a consistent way to expose functionality to AI agents. AgentBridge solves this problem by providing:
@@ -68,16 +89,17 @@ To get started with AgentBridge, follow these steps:
 
 ## Integration Examples
 
-- [React Web App](examples/react-web.md): Integrate with a React web application
-- [React Native App](examples/react-native.md): Integrate with a React Native mobile app
-- [Angular Web App](examples/angular.md): Integrate with an Angular web application
-- [Flutter App](examples/flutter.md): Integrate with a Flutter mobile app
+- [React Web App](web/react/overview.md): Integrate with a React web application
+- [React Native App](mobile/react-native/overview.md): Integrate with a React Native mobile app
+- [Angular Web App](web/angular/overview.md): Integrate with an Angular web application
+- [Flutter App](mobile/flutter/overview.md): Integrate with a Flutter mobile app
 
 ## Resources
 
 - [GitHub Repository](https://github.com/agentbridge/agentbridge)
-- [Example Applications](https://github.com/agentbridge/examples)
-- [Community Forum](https://community.agentbridge.ai)
+- [Core API Reference](core/api-reference.md)
+- [Function Registry](core/function-registry.md)
+- [Type System](core/type-system.md)
 
 ## License
 

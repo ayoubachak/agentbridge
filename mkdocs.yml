@@ -44,37 +44,60 @@ nav:
   - Getting Started:
       - Installation: getting-started/installation.md
       - Quick Start: getting-started/quick-start.md
+      - Communication Modes: getting-started/communication-modes.md
+      - Migration Guide: getting-started/migration-guide.md
   - Core:
       - Overview: core/overview.md
+      - Architecture: core/architecture.md
       - API Reference: core/api-reference.md
+      - Component Registry: core/component-registry.md
       - Function Registry: core/function-registry.md
       - Type System: core/type-system.md
+      - Communication Protocol: core/communication-protocol.md
+      - Pub/Sub Configuration: core/pubsub-config.md
+      - WebSocket Configuration: core/websocket-config.md
   - Web SDKs:
+      - Features: web/web-features.md
       - React:
           - Overview: web/react/overview.md
           - Components: web/react/components.md
           - Hooks: web/react/hooks.md
+          - Examples: examples/react-examples.md
       - Angular:
           - Overview: web/angular/overview.md
           - Components: web/angular/components.md
           - Services: web/angular/services.md
+          - Examples: examples/angular-examples.md
   - Mobile SDKs:
+      - Features: mobile/mobile-features.md
       - React Native:
           - Overview: mobile/react-native/overview.md
           - Components: mobile/react-native/components.md
+          - Hooks: mobile/react-native/hooks.md
+          - Examples: examples/react-native-examples.md
       - Flutter:
           - Overview: mobile/flutter/overview.md
           - Components: mobile/flutter/components.md
+          - API Reference: mobile/flutter-api.md
+          - Examples: examples/flutter-examples.md
   - Advanced:
       - Authentication: advanced/authentication.md
+      - Component Registration: advanced/component-registration.md
       - Error Handling: advanced/error-handling.md
       - Custom Adapters: advanced/custom-adapters.md
+      - Custom Pub/Sub Providers: advanced/custom-pubsub.md
       - MCP Integration: advanced/mcp-integration.md
+      - MCP Advanced: advanced/mcp-advanced.md
+      - Server Implementations: advanced/server-implementations.md
+      - Security: advanced/security.md
+      - Design Info: advanced/design-info.md
   - Development:
       - Contributing: development/contributing.md
       - Architecture: development/architecture.md
       - Package Deployment: development/deployment.md
       - MCP Evaluation: development/mcp-evaluation.md
+      - Release Notes: development/release-notes.md
+      - Roadmap: development/roadmap.md
 
 plugins:
   - search

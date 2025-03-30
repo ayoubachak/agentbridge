@@ -1,26 +1,28 @@
-# Installation Guide
+# Installation
 
-This guide covers how to install AgentBridge in various environments and frameworks. AgentBridge is designed to work with both web and mobile applications, with packages tailored for different frameworks.
+This guide will walk you through installing AgentBridge for different frameworks and platforms.
 
-## Core Package
+## Prerequisites
 
-The core package provides the foundation for AgentBridge and is required regardless of your framework or communication mode.
+Before installing AgentBridge, ensure you have:
+
+- Node.js 14.x or higher (for JavaScript packages)
+- npm 7.x or higher or yarn 1.22.x or higher
+- Flutter 3.0.0 or higher (for Flutter package)
+
+## Installing the Core Package
+
+The core package is required for all installations:
 
 ```bash
 npm install @agentbridge/core
 ```
 
-or with yarn:
+## Installing Framework SDKs
 
-```bash
-yarn add @agentbridge/core
-```
-
-## Framework-Specific SDKs
+Choose the framework SDK that matches your application:
 
 ### React
-
-For React web applications, install the React SDK:
 
 ```bash
 npm install @agentbridge/react
@@ -28,15 +30,11 @@ npm install @agentbridge/react
 
 ### Angular
 
-For Angular applications, install the Angular SDK:
-
 ```bash
 npm install @agentbridge/angular
 ```
 
 ### React Native
-
-For React Native mobile applications, install the React Native SDK:
 
 ```bash
 npm install @agentbridge/react-native
@@ -44,11 +42,11 @@ npm install @agentbridge/react-native
 
 ### Flutter
 
-For Flutter applications, add the AgentBridge Flutter package to your `pubspec.yaml`:
+Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  agent_bridge: ^0.2.0
+  agentbridge: ^0.2.0
 ```
 
 Then run:
@@ -57,107 +55,342 @@ Then run:
 flutter pub get
 ```
 
-## Communication Providers
+## Installing Communication Providers
 
-AgentBridge supports two communication modes: Pub/Sub and Self-Hosted. You'll need to install the appropriate provider package for your chosen mode.
+You'll need at least one communication provider to connect your application with AI agents:
 
-### Pub/Sub Providers
+### Ably Provider
 
-#### Ably Provider
-
-To use Ably as your Pub/Sub provider:
+[Ably](https://ably.com/) offers a reliable real-time messaging service with an excellent free tier.
 
 ```bash
-npm install @agentbridge/provider-ably ably
+npm install @agentbridge/provider-ably
 ```
 
-#### Firebase Provider
+You'll need an Ably API key, which you can get by [signing up for a free account](https://ably.com/sign-up).
 
-To use Firebase Realtime Database as your Pub/Sub provider:
+### Firebase Provider
+
+[Firebase](https://firebase.google.com/) provides a comprehensive platform with real-time database capabilities.
 
 ```bash
-npm install @agentbridge/provider-firebase firebase
+npm install @agentbridge/provider-firebase
 ```
 
-#### Pusher Provider
+You'll need to create a Firebase project and configure your application to use it.
 
-To use Pusher as your Pub/Sub provider:
+### Pusher Provider
+
+[Pusher](https://pusher.com/) is a popular real-time messaging platform.
 
 ```bash
-npm install @agentbridge/provider-pusher pusher-js
+npm install @agentbridge/provider-pusher
 ```
 
-#### Supabase Provider
+You'll need a Pusher account and API credentials.
 
-To use Supabase Realtime as your Pub/Sub provider:
+### Supabase Provider
+
+[Supabase](https://supabase.com/) is an open-source Firebase alternative with real-time capabilities.
 
 ```bash
-npm install @agentbridge/provider-supabase @supabase/supabase-js
+npm install @agentbridge/provider-supabase
 ```
 
-### Self-Hosted Mode
+You'll need a Supabase project and API credentials.
 
-For the self-hosted WebSocket mode, you'll be using the server package directly:
+### WebSocket Provider (Self-Hosted Mode)
+
+For applications with backends, you can use the WebSocket provider for direct communication:
 
 ```bash
-npm install @agentbridge/server ws
+npm install @agentbridge/communication-websocket
 ```
 
-## Complete Installation Examples
-
-Here are complete installation examples for common setups:
-
-### React + Ably (Pub/Sub Mode)
+If you're using the self-hosted mode, you'll also need the server package:
 
 ```bash
-npm install @agentbridge/core @agentbridge/react @agentbridge/provider-ably ably
+npm install @agentbridge/server
 ```
 
-### React + Self-Hosted WebSocket
+## Framework-Specific Setup
+
+### React Setup
+
+1. Install the required packages:
 
 ```bash
-# Frontend
 npm install @agentbridge/core @agentbridge/react
-
-# Backend (Node.js)
-npm install @agentbridge/server ws express
 ```
 
-### Angular + Firebase (Pub/Sub Mode)
+2. Choose a communication provider (e.g., Ably):
 
 ```bash
-npm install @agentbridge/core @agentbridge/angular @agentbridge/provider-firebase firebase
+npm install @agentbridge/provider-ably
 ```
 
-### React Native + Pusher (Pub/Sub Mode)
+3. Wrap your application with the AgentBridgeProvider:
+
+```jsx
+import React from 'react';
+import { AgentBridgeProvider } from '@agentbridge/react';
+import { AblyProvider } from '@agentbridge/provider-ably';
+
+// Create a communication provider
+const ablyProvider = new AblyProvider({
+  apiKey: 'your-ably-api-key',
+});
+
+function App() {
+  return (
+    <AgentBridgeProvider 
+      applicationId="your-app-id"
+      communicationProvider={ablyProvider}
+    >
+      {/* Your app components */}
+      <YourApp />
+    </AgentBridgeProvider>
+  );
+}
+
+export default App;
+```
+
+### Angular Setup
+
+1. Install the required packages:
 
 ```bash
-npm install @agentbridge/core @agentbridge/react-native @agentbridge/provider-pusher pusher-js
+npm install @agentbridge/core @agentbridge/angular
 ```
 
-### Flutter + Supabase (Pub/Sub Mode)
+2. Choose a communication provider (e.g., Firebase):
 
-In `pubspec.yaml`:
+```bash
+npm install @agentbridge/provider-firebase
+```
+
+3. Import the AgentBridgeModule in your app module:
+
+```typescript
+// app.module.ts
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AgentBridgeModule } from '@agentbridge/angular';
+import { FirebaseProvider } from '@agentbridge/provider-firebase';
+import { AppComponent } from './app.component';
+
+// Create a communication provider
+const firebaseProvider = new FirebaseProvider({
+  firebaseConfig: {
+    apiKey: 'your-api-key',
+    authDomain: 'your-auth-domain',
+    projectId: 'your-project-id',
+    storageBucket: 'your-storage-bucket',
+    messagingSenderId: 'your-messaging-sender-id',
+    appId: 'your-app-id'
+  }
+});
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [
+    BrowserModule,
+    AgentBridgeModule.forRoot({
+      applicationId: 'your-app-id',
+      communicationProvider: firebaseProvider
+    })
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+### React Native Setup
+
+1. Install the required packages:
+
+```bash
+npm install @agentbridge/core @agentbridge/react-native
+```
+
+2. Choose a communication provider (e.g., Pusher):
+
+```bash
+npm install @agentbridge/provider-pusher
+```
+
+3. Wrap your application with the AgentBridgeProvider:
+
+```jsx
+import React from 'react';
+import { SafeAreaView, StatusBar } from 'react-native';
+import { AgentBridgeProvider } from '@agentbridge/react-native';
+import { PusherProvider } from '@agentbridge/provider-pusher';
+
+// Create a communication provider
+const pusherProvider = new PusherProvider({
+  appId: 'your-pusher-app-id',
+  key: 'your-pusher-key',
+  cluster: 'your-pusher-cluster',
+});
+
+function App() {
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar barStyle="dark-content" />
+      <AgentBridgeProvider 
+        applicationId="your-app-id"
+        communicationProvider={pusherProvider}
+      >
+        {/* Your app components */}
+        <YourApp />
+      </AgentBridgeProvider>
+    </SafeAreaView>
+  );
+}
+
+export default App;
+```
+
+### Flutter Setup
+
+1. Add dependencies to `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  agent_bridge: ^0.2.0
-  agent_bridge_provider_supabase: ^0.2.0
-  supabase_flutter: ^1.0.0
+  agentbridge: ^0.2.0
+  supabase_flutter: ^1.10.0  # If using Supabase provider
 ```
 
-## TypeScript Support
+2. Run `flutter pub get`
 
-All JavaScript packages include TypeScript definitions. To ensure full TypeScript support, make sure you have TypeScript installed in your project:
+3. Initialize AgentBridge in your app:
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:agentbridge/agentbridge.dart';
+import 'package:agentbridge/providers/supabase_provider.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // Create a Supabase provider
+    final supabaseProvider = SupabaseProvider(
+      url: 'your-supabase-url',
+      anonKey: 'your-supabase-anon-key',
+    );
+    
+    return MaterialApp(
+      title: 'AgentBridge Demo',
+      home: AgentBridgeProvider(
+        applicationId: 'your-app-id',
+        communicationProvider: supabaseProvider,
+        child: MyHomePage(),
+      ),
+    );
+  }
+}
+```
+
+## Self-Hosted Mode Setup
+
+If you're using self-hosted mode, you'll need to set up the server component:
+
+1. Install the server package:
 
 ```bash
-npm install typescript --save-dev
+npm install @agentbridge/server
 ```
+
+2. Create a server instance:
+
+```typescript
+// server.js
+import { AgentBridgeServer } from '@agentbridge/server';
+
+const server = new AgentBridgeServer({
+  port: 3000,
+  authenticationHandler: async (token) => {
+    // Implement your authentication logic
+    // Return null if authentication fails, or user info if it succeeds
+    return { id: 'user-123', name: 'John Doe' };
+  }
+});
+
+server.start().then(() => {
+  console.log('AgentBridge server running on port 3000');
+});
+```
+
+3. Connect your client application:
+
+```typescript
+import { WebSocketProvider } from '@agentbridge/communication-websocket';
+
+const webSocketProvider = new WebSocketProvider({
+  url: 'ws://localhost:3000',
+  authToken: 'your-auth-token'
+});
+
+// Then use this provider with your framework's AgentBridgeProvider
+```
+
+## Verifying Installation
+
+To verify that AgentBridge is installed correctly, you can implement a simple component and function:
+
+### React Verification
+
+```jsx
+import React from 'react';
+import { useAgentFunction, AgentButton } from '@agentbridge/react';
+
+function VerificationComponent() {
+  useAgentFunction({
+    name: 'ping',
+    description: 'Test function that returns a pong response',
+    parameters: {},
+    handler: async () => {
+      return { message: 'pong', timestamp: new Date().toISOString() };
+    }
+  });
+  
+  return (
+    <div>
+      <h2>AgentBridge Test</h2>
+      <AgentButton 
+        id="test-button"
+        label="Test Button"
+        onClick={() => console.log('Button clicked')}
+      />
+    </div>
+  );
+}
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Connection failed**: Check your API keys and network connection
+2. **Components not registered**: Ensure your components have unique IDs
+3. **Functions not working**: Verify the function registration and parameters
+4. **WebSocket connection issues**: Check port availability and firewall settings
+5. **React/Angular provider errors**: Make sure the provider is wrapped correctly
+
+### Version Compatibility
+
+Ensure all your AgentBridge packages have compatible versions. It's recommended to use the same version number for all packages.
 
 ## Next Steps
 
-Now that you've installed the required packages, you can proceed to set up AgentBridge in your application:
-
-1. [Quick Start Guide](./quick-start.md): Build your first AI-enabled application
-2. [Communication Modes](./communication-modes.md): Learn about the different communication modes
-3. [Framework-Specific Guides](../web/index.md): Integration guides for specific frameworks 
+- [Quick Start Guide](quick-start.md): Build your first AI-enabled application
+- [Choose a Communication Mode](communication-modes.md): Learn more about Pub/Sub vs. Self-Hosted modes 

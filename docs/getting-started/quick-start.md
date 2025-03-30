@@ -1,374 +1,477 @@
 # Quick Start Guide
 
-This guide will help you quickly integrate AgentBridge into a React application, enabling AI agents to interact with your UI components and application functions.
+This guide will help you quickly set up AgentBridge in your application and start exposing functionality to AI agents.
 
 ## Prerequisites
 
-- Node.js (v14 or higher)
-- npm or yarn
-- A React application (create-react-app or similar)
+- Node.js 14+ or a compatible JavaScript environment
+- npm, yarn, or another package manager
+- A frontend application (React, Angular, React Native, or Flutter)
 
 ## Installation
 
-Install the required AgentBridge packages:
+1. Install the core package and your preferred framework adapter:
 
 ```bash
-# Core package
-npm install @agentbridge/core
+# For React
+npm install @agentbridge/core @agentbridge/react
 
-# React SDK
-npm install @agentbridge/react
+# For Angular
+npm install @agentbridge/core @agentbridge/angular
 
-# Choose one of the communication providers:
-# For Pub/Sub mode with Ably:
-npm install @agentbridge/provider-ably ably
-# OR for Self-Hosted mode with WebSockets:
-npm install @agentbridge/comm-websocket isomorphic-ws
+# For React Native
+npm install @agentbridge/core @agentbridge/react-native
+
+# For Flutter
+# See Flutter-specific installation instructions
 ```
 
-## Setting Up AgentBridge
+2. Install a communication provider:
 
-### 1. Create an AgentBridge Instance
+```bash
+# Choose one of these providers
+npm install @agentbridge/provider-ably     # Ably
+npm install @agentbridge/provider-firebase # Firebase
+npm install @agentbridge/provider-pusher   # Pusher
+npm install @agentbridge/provider-supabase # Supabase
 
-First, let's create and configure an AgentBridge instance based on your preferred communication mode.
-
-#### Option A: Pub/Sub Mode (with Ably)
-
-```jsx
-// src/agentBridge.js
-import { createReactBridge } from '@agentbridge/react';
-import { initializeAblyProvider } from '@agentbridge/provider-ably';
-
-// Create a unique ID for your application
-const APP_ID = 'my-awesome-app';
-
-// Create the bridge
-const bridge = createReactBridge(APP_ID, {
-  appName: 'My Awesome App',
-  environment: process.env.NODE_ENV,
-  // Configure Pub/Sub with Ably
-  pubsub: {
-    provider: 'ably',
-    apiKey: 'YOUR_ABLY_API_KEY' // Get this from your Ably dashboard
-  },
-  logging: {
-    level: 'debug' // Use 'info' or 'error' in production
-  }
-});
-
-// Initialize the Ably provider
-initializeAblyProvider(bridge, {
-  appId: APP_ID,
-  apiKey: 'YOUR_ABLY_API_KEY'
-});
-
-export default bridge;
+# Or for self-hosted mode
+npm install @agentbridge/communication-websocket
 ```
 
-#### Option B: Self-Hosted Mode (with WebSockets)
+## Basic Setup
+
+### React Application
 
 ```jsx
-// src/agentBridge.js
-import { AgentBridge } from '@agentbridge/core';
-import { initializeWebSocketProvider } from '@agentbridge/comm-websocket';
-
-// Create the bridge
-const bridge = new AgentBridge({
-  communication: {
-    mode: 'self-hosted'
-  },
-  logging: {
-    level: 'debug' // Use 'info' or 'error' in production
-  }
-});
-
-// Initialize the WebSocket provider
-initializeWebSocketProvider(bridge, {
-  url: 'wss://your-websocket-server.com/agent-bridge', // Your WebSocket server URL
-  reconnect: {
-    enabled: true
-  }
-});
-
-export default bridge;
-```
-
-### 2. Add the AgentBridge Provider to Your App
-
-Wrap your application with the AgentBridge provider to make it available throughout your component tree:
-
-```jsx
-// src/index.js or App.js
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import bridge from './agentBridge';
 import { AgentBridgeProvider } from '@agentbridge/react';
+import { AblyProvider } from '@agentbridge/provider-ably';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <AgentBridgeProvider bridge={bridge}>
-      <App />
-    </AgentBridgeProvider>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
-```
-
-## Registering UI Components
-
-Now, let's make UI components controllable by AI agents. AgentBridge offers several approaches:
-
-### Approach 1: Using the `useRegisterComponent` Hook
-
-```jsx
-// src/components/SubmitButton.jsx
-import React, { useState } from 'react';
-import { useRegisterComponent } from '@agentbridge/react';
-import { z } from 'zod';
-
-const SubmitButton = ({ onSubmit, label = 'Submit' }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  
-  const handleClick = async () => {
-    setIsLoading(true);
-    try {
-      await onSubmit();
-    } finally {
-      setIsLoading(false);
-    }
-  };
-  
-  // Register this component with AgentBridge
-  useRegisterComponent({
-    id: 'submit-button',
-    description: 'A button to submit the current form',
-    componentType: 'button',
-    // Define actions the AI can trigger
-    actions: {
-      click: {
-        description: 'Click the submit button',
-        handler: async (params, context) => {
-          await handleClick();
-          return { success: true };
-        }
-      }
-    },
-    // Properties the AI can update (optional)
-    properties: z.object({
-      disabled: z.boolean().optional(),
-      label: z.string().optional()
-    }),
-    // Handler for property updates
-    updateHandler: async (properties, context) => {
-      // You'd typically update state here
-      if (properties.label) {
-        // Update label (in a real component, you'd use state)
-      }
-    },
-    // Optional metadata
-    tags: ['form', 'button', 'submit'],
-    path: '/checkout/form'
-  });
-  
-  return (
-    <button
-      onClick={handleClick}
-      disabled={isLoading || isDisabled}
-    >
-      {isLoading ? 'Loading...' : label}
-    </button>
-  );
-};
-
-export default SubmitButton;
-```
-
-### Approach 2: Using the `AgentBridgeComponent` Wrapper
-
-```jsx
-// src/components/TextField.jsx
-import React from 'react';
-import { AgentBridgeComponent } from '@agentbridge/react';
-import { z } from 'zod';
-
-const TextField = ({ id, label, placeholder }) => {
-  return (
-    <AgentBridgeComponent
-      register={{
-        id: `input-${id}`,
-        description: `Text input field for ${label}`,
-        componentType: 'input',
-        properties: z.object({
-          value: z.string().optional(),
-          placeholder: z.string().optional(),
-          disabled: z.boolean().optional()
-        }),
-        tags: ['form', 'input', 'text']
-      }}
-      initialState={{ value: '', placeholder, disabled: false }}
-    >
-      {(state, setState) => (
-        <div className="form-field">
-          <label htmlFor={id}>{label}</label>
-          <input
-            id={id}
-            type="text"
-            value={state.value}
-            placeholder={state.placeholder}
-            disabled={state.disabled}
-            onChange={(e) => setState({ ...state, value: e.target.value })}
-          />
-        </div>
-      )}
-    </AgentBridgeComponent>
-  );
-};
-
-export default TextField;
-```
-
-### Approach 3: Using the Higher-Order Component
-
-```jsx
-// src/components/Checkbox.jsx
-import React from 'react';
-import { withAgentBridge } from '@agentbridge/react';
-import { z } from 'zod';
-
-const Checkbox = ({ id, label, checked, onChange, disabled }) => {
-  return (
-    <div className="checkbox-field">
-      <input
-        id={id}
-        type="checkbox"
-        checked={checked}
-        onChange={onChange}
-        disabled={disabled}
-      />
-      <label htmlFor={id}>{label}</label>
-    </div>
-  );
-};
-
-// Wrap the component with AgentBridge
-export default withAgentBridge(Checkbox, {
-  id: 'terms-checkbox',
-  description: 'Checkbox for accepting terms and conditions',
-  componentType: 'checkbox',
-  properties: z.object({
-    checked: z.boolean(),
-    disabled: z.boolean().optional()
-  }),
-  tags: ['form', 'checkbox', 'terms']
+// Create a communication provider
+const ablyProvider = new AblyProvider({
+  apiKey: 'your-ably-api-key',
 });
-```
-
-## Registering Application Functions
-
-You can also expose application-level functions (like API calls or business logic) to AI agents:
-
-```jsx
-// src/hooks/useAuthFunctions.js
-import { useRegisterFunction } from '@agentbridge/react';
-import { z } from 'zod';
-import { useAuth } from './useAuth'; // Your auth hook
-
-export function useAuthFunctions() {
-  const { login, logout, register } = useAuth();
-  
-  // Register login function
-  useRegisterFunction(
-    'login',
-    'Authenticate a user with email and password',
-    z.object({
-      email: z.string().email(),
-      password: z.string().min(6)
-    }),
-    async (params, context) => {
-      try {
-        const result = await login(params.email, params.password);
-        return { success: true, user: result.user };
-      } catch (error) {
-        return { success: false, message: error.message };
-      }
-    },
-    { authLevel: 'public' }
-  );
-  
-  // Register logout function
-  useRegisterFunction(
-    'logout',
-    'Log out the current user',
-    z.object({}),
-    async (params, context) => {
-      await logout();
-      return { success: true };
-    },
-    { authLevel: 'user' }
-  );
-  
-  // Register user registration function
-  useRegisterFunction(
-    'register',
-    'Register a new user account',
-    z.object({
-      email: z.string().email(),
-      password: z.string().min(6),
-      name: z.string().min(1)
-    }),
-    async (params, context) => {
-      try {
-        const result = await register(params);
-        return { success: true, user: result.user };
-      } catch (error) {
-        return { success: false, message: error.message };
-      }
-    },
-    { authLevel: 'public' }
-  );
-}
-```
-
-Then use this hook in your app:
-
-```jsx
-// src/App.jsx
-import React from 'react';
-import { useAuthFunctions } from './hooks/useAuthFunctions';
 
 function App() {
-  // Register auth functions with AgentBridge
-  useAuthFunctions();
-  
   return (
-    // Your app components
+    <AgentBridgeProvider 
+      applicationId="your-app-id"
+      communicationProvider={ablyProvider}
+    >
+      {/* Your app components */}
+      <YourApplication />
+    </AgentBridgeProvider>
   );
 }
 
 export default App;
 ```
 
-## How AI Agents Interact with Your App
+### Angular Application
 
-Once your app is properly configured with AgentBridge:
+```typescript
+// app.module.ts
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AgentBridgeModule } from '@agentbridge/angular';
+import { AblyProvider } from '@agentbridge/provider-ably';
 
-1. **For Pub/Sub Mode:** AI agents can connect to the same Ably channels using your app ID.
-2. **For Self-Hosted Mode:** AI agents connect to your WebSocket server.
+import { AppComponent } from './app.component';
 
-Agents can then:
+// Create a communication provider
+const ablyProvider = new AblyProvider({
+  apiKey: 'your-ably-api-key',
+});
 
-1. **Discover Capabilities**: Query available components and functions.
-2. **Control UI**: Update component properties and trigger actions.
-3. **Call Functions**: Execute registered application functions.
+@NgModule({
+  declarations: [AppComponent],
+  imports: [
+    BrowserModule,
+    AgentBridgeModule.forRoot({
+      applicationId: 'your-app-id',
+      communicationProvider: ablyProvider,
+    }),
+  ],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
+
+### React Native Application
+
+```jsx
+import React from 'react';
+import { SafeAreaView } from 'react-native';
+import { AgentBridgeProvider } from '@agentbridge/react-native';
+import { AblyProvider } from '@agentbridge/provider-ably';
+
+// Create a communication provider
+const ablyProvider = new AblyProvider({
+  apiKey: 'your-ably-api-key',
+});
+
+function App() {
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <AgentBridgeProvider 
+        applicationId="your-app-id"
+        communicationProvider={ablyProvider}
+      >
+        {/* Your app components */}
+        <YourApplication />
+      </AgentBridgeProvider>
+    </SafeAreaView>
+  );
+}
+
+export default App;
+```
+
+## Registering Components
+
+Components can be registered to allow AI agents to discover and interact with them.
+
+### React
+
+```jsx
+import React, { useState } from 'react';
+import { useAgentComponent } from '@agentbridge/react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+  
+  // Register this component with AgentBridge
+  useAgentComponent('counter-component', {
+    // Define the component properties that agents can access
+    properties: {
+      count,
+    },
+    // Define actions that agents can perform
+    actions: {
+      increment: () => {
+        setCount(count + 1);
+        return true;
+      },
+      decrement: () => {
+        setCount(count - 1);
+        return true;
+      },
+      reset: () => {
+        setCount(0);
+        return true;
+      }
+    }
+  });
+  
+  return (
+    <div>
+      <h2>Counter: {count}</h2>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <button onClick={() => setCount(count - 1)}>Decrement</button>
+      <button onClick={() => setCount(0)}>Reset</button>
+    </div>
+  );
+}
+```
+
+### Angular
+
+```typescript
+import { Component } from '@angular/core';
+import { AgentComponent } from '@agentbridge/angular';
+
+@Component({
+  selector: 'app-counter',
+  template: `
+    <div>
+      <h2>Counter: {{ count }}</h2>
+      <button (click)="increment()">Increment</button>
+      <button (click)="decrement()">Decrement</button>
+      <button (click)="reset()">Reset</button>
+    </div>
+  `
+})
+@AgentComponent({
+  id: 'counter-component',
+  properties: ['count'],
+  actions: ['increment', 'decrement', 'reset']
+})
+export class CounterComponent {
+  count = 0;
+  
+  increment() {
+    this.count++;
+    return true;
+  }
+  
+  decrement() {
+    this.count--;
+    return true;
+  }
+  
+  reset() {
+    this.count = 0;
+    return true;
+  }
+}
+```
+
+## Registering Functions
+
+Functions can be registered to allow AI agents to call them.
+
+### React
+
+```jsx
+import React, { useEffect } from 'react';
+import { useAgentBridge } from '@agentbridge/react';
+
+function WeatherFunction() {
+  const { registerFunction } = useAgentBridge();
+  
+  useEffect(() => {
+    // Register a function with AgentBridge
+    registerFunction({
+      name: 'getWeather',
+      description: 'Get weather information for a location',
+      parameters: {
+        type: 'object',
+        properties: {
+          location: { type: 'string' },
+          units: { type: 'string', enum: ['metric', 'imperial'] }
+        },
+        required: ['location']
+      },
+      handler: async (params) => {
+        const { location, units = 'metric' } = params;
+        
+        // Implementation (replace with actual API call)
+        console.log(`Getting weather for ${location} in ${units}`);
+        
+        // Mock weather data
+        return {
+          location,
+          temperature: 22,
+          conditions: 'sunny',
+          humidity: 45,
+          units
+        };
+      }
+    });
+    
+    // Clean up function when component unmounts
+    return () => {
+      // Unregister the function
+      // This is optional but recommended
+      unregisterFunction('getWeather');
+    };
+  }, [registerFunction]);
+  
+  return null; // This component doesn't render anything
+}
+```
+
+### Angular
+
+```typescript
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AgentBridgeService } from '@agentbridge/angular';
+
+@Component({
+  selector: 'app-weather-function',
+  template: '' // This component doesn't render anything
+})
+export class WeatherFunctionComponent implements OnInit, OnDestroy {
+  constructor(private agentBridge: AgentBridgeService) {}
+  
+  ngOnInit() {
+    // Register a function with AgentBridge
+    this.agentBridge.registerFunction({
+      name: 'getWeather',
+      description: 'Get weather information for a location',
+      parameters: {
+        type: 'object',
+        properties: {
+          location: { type: 'string' },
+          units: { type: 'string', enum: ['metric', 'imperial'] }
+        },
+        required: ['location']
+      },
+      handler: async (params) => {
+        const { location, units = 'metric' } = params;
+        
+        // Implementation (replace with actual API call)
+        console.log(`Getting weather for ${location} in ${units}`);
+        
+        // Mock weather data
+        return {
+          location,
+          temperature: 22,
+          conditions: 'sunny',
+          humidity: 45,
+          units
+        };
+      }
+    });
+  }
+  
+  ngOnDestroy() {
+    // Unregister the function when component is destroyed
+    this.agentBridge.unregisterFunction('getWeather');
+  }
+}
+```
+
+## Communication Modes
+
+AgentBridge supports two communication modes:
+
+### Pub/Sub Mode (Backend-less)
+
+In this mode, AgentBridge uses a third-party messaging service:
+
+```javascript
+// Example with Ably
+import { AblyProvider } from '@agentbridge/provider-ably';
+
+const ablyProvider = new AblyProvider({
+  apiKey: 'your-ably-api-key',
+});
+
+// Use this provider with AgentBridgeProvider
+```
+
+See the [Pub/Sub Configuration](../core/pubsub-config.md) documentation for more options and providers.
+
+### Self-Hosted Mode (With Backend)
+
+In this mode, AgentBridge connects to your backend via WebSockets:
+
+```javascript
+// Example with WebSocket
+import { WebSocketProvider } from '@agentbridge/communication-websocket';
+
+const wsProvider = new WebSocketProvider({
+  url: 'wss://your-server.com/agent-bridge',
+  // Optional authentication
+  headers: {
+    'Authorization': `Bearer ${token}`
+  }
+});
+
+// Use this provider with AgentBridgeProvider
+```
+
+See the [WebSocket Configuration](../core/websocket-config.md) documentation for more options.
+
+## Complete Example
+
+Here's a complete example with React that registers both components and functions:
+
+```jsx
+import React, { useState } from 'react';
+import { AgentBridgeProvider, useAgentComponent, useAgentFunction } from '@agentbridge/react';
+import { AblyProvider } from '@agentbridge/provider-ably';
+
+// Create a communication provider
+const ablyProvider = new AblyProvider({
+  apiKey: 'your-ably-api-key',
+});
+
+function Counter() {
+  const [count, setCount] = useState(0);
+  
+  // Register this component with AgentBridge
+  useAgentComponent('counter-component', {
+    properties: { count },
+    actions: {
+      increment: () => {
+        setCount(count + 1);
+        return true;
+      },
+      decrement: () => {
+        setCount(count - 1);
+        return true;
+      },
+      reset: () => {
+        setCount(0);
+        return true;
+      }
+    }
+  });
+  
+  return (
+    <div>
+      <h2>Counter: {count}</h2>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <button onClick={() => setCount(count - 1)}>Decrement</button>
+      <button onClick={() => setCount(0)}>Reset</button>
+    </div>
+  );
+}
+
+function Calculator() {
+  // Register a function
+  useAgentFunction({
+    name: 'calculate',
+    description: 'Perform a calculation',
+    parameters: {
+      type: 'object',
+      properties: {
+        operation: { type: 'string', enum: ['add', 'subtract', 'multiply', 'divide'] },
+        a: { type: 'number' },
+        b: { type: 'number' }
+      },
+      required: ['operation', 'a', 'b']
+    },
+    handler: async (params) => {
+      const { operation, a, b } = params;
+      
+      switch (operation) {
+        case 'add':
+          return { result: a + b };
+        case 'subtract':
+          return { result: a - b };
+        case 'multiply':
+          return { result: a * b };
+        case 'divide':
+          if (b === 0) {
+            throw new Error('Division by zero');
+          }
+          return { result: a / b };
+        default:
+          throw new Error('Unknown operation');
+      }
+    }
+  });
+  
+  return null; // This component doesn't render anything
+}
+
+function App() {
+  return (
+    <AgentBridgeProvider 
+      applicationId="your-app-id"
+      communicationProvider={ablyProvider}
+    >
+      <div>
+        <h1>AgentBridge Demo</h1>
+        <Counter />
+        <Calculator />
+      </div>
+    </AgentBridgeProvider>
+  );
+}
+
+export default App;
+```
 
 ## Next Steps
 
-- [Communication Modes](./communication-modes.md): Learn more about the different communication modes.
-- [Pub/Sub Configuration](../core/pubsub-config.md): Detailed configuration for Pub/Sub providers.
-- [WebSocket Configuration](../core/websocket-config.md): Detailed configuration for self-hosted WebSockets.
-- [Component Registration](../web/component-registration.md): Advanced component registration techniques.
-- [Function Registration](../core/function-registration.md): Advanced function registration techniques.
-- [React Integration](../web/react.md): In-depth React integration guide.
-- [React Native Integration](../mobile/react-native.md): Integrating with React Native applications.
-- [Security Best Practices](../advanced/security.md): Securing your AgentBridge implementation.
+- [React SDK](../web/react/overview.md): Learn more about the React SDK
+- [Angular SDK](../web/angular/overview.md): Learn more about the Angular SDK
+- [React Native SDK](../mobile/react-native/overview.md): Learn more about the React Native SDK
+- [Component Registry](../core/component-registry.md): Learn more about component registration
+- [Function Registry](../core/function-registry.md): Learn more about function registration
+- [Security Best Practices](../advanced/security.md): Secure your AgentBridge implementation

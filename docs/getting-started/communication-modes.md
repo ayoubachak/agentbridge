@@ -1,247 +1,255 @@
 # Communication Modes
 
-AgentBridge offers two distinct communication modes to accommodate different application architectures and requirements. This guide explains each mode, helping you choose the right one for your application.
+AgentBridge supports two primary communication modes to suit different application architectures:
 
-## Overview
+1. **Pub/Sub Mode**: For frontend-only applications without dedicated backends
+2. **Self-Hosted Mode**: For applications with dedicated backends
 
-The communication mode determines how AI agents communicate with your application through AgentBridge. The two available modes are:
-
-1. **Pub/Sub Mode**: Uses third-party real-time messaging services (like Ably, Firebase, etc.)
-2. **Self-Hosted Mode**: Uses WebSockets with your own backend server
+This guide will help you choose the right mode for your application and understand how to implement it.
 
 ## Pub/Sub Mode
 
-![Pub/Sub Architecture](../assets/images/pubsub-architecture.png)
+Pub/Sub mode uses third-party real-time messaging services to facilitate communication between AI agents and your application. This mode is ideal for applications without a dedicated backend.
+
+```mermaid
+graph TD
+    A[AI Agent] <-->|Pub/Sub Messages| B[Pub/Sub Service]
+    B <-->|Pub/Sub Messages| C[Application]
+    
+    subgraph "Application"
+        D[AgentBridge] <--> E[UI Components]
+        D <--> F[Function Registry]
+    end
+    
+    subgraph "Pub/Sub Service Options"
+        G[Ably]
+        H[Firebase]
+        I[Pusher]
+        J[Supabase]
+    end
+```
 
 ### How It Works
 
-1. Your frontend application initializes AgentBridge with a Pub/Sub provider
-2. AgentBridge connects to the Pub/Sub service (e.g., Ably) and creates/subscribes to channels
-3. Your frontend registers components and functions with AgentBridge
-4. AgentBridge publishes these capabilities to the Pub/Sub service
-5. AI agents connect to the same Pub/Sub service using the same channel names
-6. AI agents discover capabilities by listening to the capabilities channel
-7. AI agents send commands (function calls, component updates) through the commands channel
-8. Your frontend app receives these commands and executes them
-9. Results are published back to the responses channel
-
-### When to Use Pub/Sub Mode
-
-✅ **Ideal for**:
-- Frontend-only applications without a backend
-- Static websites (e.g., hosted on Netlify, Vercel, GitHub Pages)
-- Quick prototyping and rapid development
-- Applications that want to avoid managing server infrastructure
-- Projects with tight deadlines where setting up a backend would be time-consuming
-
-❌ **Not ideal for**:
-- Applications with strict security requirements (though you can implement authentication)
-- Applications that need fine-grained control over the communication layer
-- Applications that already have a backend infrastructure
+1. Your application initializes AgentBridge with a pub/sub provider (Ably, Firebase, etc.)
+2. AgentBridge connects to the pub/sub service and publishes capabilities
+3. AI agents connect to the same pub/sub service
+4. AI agents discover capabilities and send commands
+5. Your application executes commands and sends results
 
 ### Supported Providers
 
-AgentBridge currently supports the following Pub/Sub providers:
+AgentBridge supports several pub/sub providers:
 
 #### Ably
 
-[Ably](https://ably.com/) offers a robust real-time messaging platform with features like presence, history, and guaranteed message delivery.
+[Ably](https://ably.com/) is a real-time messaging service with a generous free tier.
 
-**Pros**:
-- Generous free tier (3M messages/month)
-- Reliable message delivery with ordering guarantees
-- Message history capability
+```javascript
+import { AblyProvider } from '@agentbridge/provider-ably';
 
-**Setup**:
-```bash
-npm install @agentbridge/provider-ably ably
+const ablyProvider = new AblyProvider({
+  apiKey: 'your-ably-api-key'
+});
+
+bridge.initialize(ablyProvider);
 ```
 
-#### Firebase Realtime Database
+#### Firebase
 
-[Firebase Realtime Database](https://firebase.google.com/docs/database) is Google's real-time NoSQL database that allows for synchronized data across clients.
+[Firebase Realtime Database](https://firebase.google.com/docs/database) is Google's real-time solution with a strong ecosystem.
 
-**Pros**:
-- Integrates well with other Firebase services
-- Strong authentication options
-- Familiar to many developers
+```javascript
+import { FirebaseProvider } from '@agentbridge/provider-firebase';
 
-**Setup**:
-```bash
-npm install @agentbridge/pubsub-firebase firebase
+const firebaseProvider = new FirebaseProvider({
+  firebaseConfig: {
+    // Your Firebase config
+  }
+});
+
+bridge.initialize(firebaseProvider);
 ```
 
 #### Pusher
 
-[Pusher](https://pusher.com/) is a popular hosted service for adding real-time functionality to web and mobile applications.
+[Pusher](https://pusher.com/) is a popular real-time messaging platform.
 
-**Pros**:
-- Simple API
-- Good dashboard monitoring
-- Widely used in production applications
+```javascript
+import { PusherProvider } from '@agentbridge/provider-pusher';
 
-**Setup**:
-```bash
-npm install @agentbridge/pubsub-pusher pusher-js
+const pusherProvider = new PusherProvider({
+  key: 'your-pusher-key',
+  cluster: 'eu'
+});
+
+bridge.initialize(pusherProvider);
 ```
 
-#### Supabase Realtime
+#### Supabase
 
-[Supabase Realtime](https://supabase.io/docs/guides/realtime) is an open-source alternative to Firebase, offering real-time capabilities.
+[Supabase Realtime](https://supabase.com/docs/guides/realtime) is an open-source Firebase alternative.
 
-**Pros**:
-- Open-source alternative to Firebase
-- PostgreSQL-backed (if using other Supabase features)
-- Self-hostable or hosted service options
+```javascript
+import { SupabaseProvider } from '@agentbridge/provider-supabase';
 
-**Setup**:
-```bash
-npm install @agentbridge/pubsub-supabase @supabase/supabase-js
+const supabaseProvider = new SupabaseProvider({
+  supabaseUrl: 'https://your-project.supabase.co',
+  supabaseKey: 'your-supabase-key'
+});
+
+bridge.initialize(supabaseProvider);
 ```
 
-### Custom Pub/Sub Provider
+### Custom Providers
 
-If you need to use a different Pub/Sub provider, you can implement your own by following our [custom provider guide](../advanced/custom-pubsub.md).
+You can implement custom pub/sub providers by implementing the `CommunicationProvider` interface. See the [Custom Pub/Sub Providers](../core/pubsub-config.md#custom-provider) documentation for more details.
+
+### Pros and Cons
+
+#### Pros
+- Simple to set up and maintain
+- No backend required
+- Multiple provider options
+- Low operational overhead
+
+#### Cons
+- Limited control over communication
+- Potential security concerns with client-side keys
+- Third-party dependencies
+- Possible usage limits or costs
 
 ## Self-Hosted Mode
 
-![Self-Hosted Architecture](../assets/images/self-hosted-architecture.png)
+Self-hosted mode uses WebSockets with your own backend server, which acts as a mediator between AI agents and your application.
+
+```mermaid
+graph TD
+    A[AI Agent] <-->|HTTP/WebSocket| B[Your Backend]
+    B <-->|WebSocket| C[Application]
+    
+    subgraph "Application"
+        D[AgentBridge] <--> E[UI Components]
+        D <--> F[Function Registry]
+    end
+    
+    subgraph "Your Backend"
+        G[WebSocket Server]
+        H[Authentication]
+        I[Business Logic]
+    end
+```
 
 ### How It Works
 
-1. You set up a backend server with WebSocket support
-2. Your frontend application initializes AgentBridge with the WebSocket provider
-3. AgentBridge establishes a WebSocket connection to your backend server
-4. Your frontend registers components and functions with AgentBridge
-5. AgentBridge sends these capabilities to your backend through the WebSocket
-6. AI agents connect to your backend server through a REST API or another WebSocket
-7. Your backend relays AI agent commands to the appropriate frontend instance
-8. Your frontend executes the commands and sends results back through the WebSocket
-9. Your backend relays the results back to the AI agent
+1. Your application initializes AgentBridge with the WebSocket provider
+2. AgentBridge connects to your backend server via WebSockets
+3. AI agents connect to your backend server (via HTTP or WebSockets)
+4. Your backend server mediates communication between AI agents and applications
+5. Your backend can implement additional logic, authentication, etc.
 
-### When to Use Self-Hosted Mode
+### Implementation
 
-✅ **Ideal for**:
-- Applications that already have a backend
-- Applications with strict security requirements
-- Applications that need to maintain control over all data and communication
-- Enterprise applications where data privacy is critical
-- Applications that need integration with existing backend services
-- Production applications that need custom scaling and monitoring
-
-❌ **Not ideal for**:
-- Simple applications without a backend
-- Quick prototypes or MVPs
-- Applications with tight deadlines where setting up backend infrastructure would be time-consuming
-
-### Setting Up a WebSocket Server
-
-For the Self-Hosted mode, you'll need to set up a WebSocket server. Here are some examples using popular backend frameworks:
-
-#### Node.js with Express and ws
+#### Frontend Configuration
 
 ```javascript
-const express = require('express');
-const http = require('http');
+import { WebSocketProvider } from '@agentbridge/communication-websocket';
+
+const wsProvider = new WebSocketProvider({
+  url: 'wss://your-server.com/agent-bridge',
+  headers: {
+    'Authorization': `Bearer ${token}`
+  }
+});
+
+bridge.initialize(wsProvider);
+```
+
+#### Backend Implementation
+
+You'll need to implement a WebSocket server on your backend. Here's a basic example using Node.js:
+
+```javascript
 const WebSocket = require('ws');
-const { AgentBridgeServer } = require('@agentbridge/server');
+const server = new WebSocket.Server({ port: 8080 });
 
-// Create Express app
-const app = express();
-const server = http.createServer(app);
-
-// Create WebSocket server
-const wss = new WebSocket.Server({ server });
-
-// Create AgentBridge server
-const agentBridgeServer = new AgentBridgeServer();
-
-// Set up WebSocket connection handler
-wss.on('connection', (ws) => {
-  // Handle new connection
-  const clientId = generateClientId(); // Implement this function
+server.on('connection', (ws, req) => {
+  // Handle authentication
+  const token = req.headers['authorization']?.split(' ')[1];
+  if (!validateToken(token)) {
+    ws.close(4001, 'Unauthorized');
+    return;
+  }
   
-  // Register client with AgentBridge server
-  agentBridgeServer.registerClient(clientId, {
-    send: (message) => {
-      ws.send(JSON.stringify(message));
-    }
-  });
-  
-  // Handle messages from client
+  // Handle messages
   ws.on('message', (message) => {
-    try {
-      const parsedMessage = JSON.parse(message);
-      agentBridgeServer.handleMessage(clientId, parsedMessage);
-    } catch (err) {
-      console.error('Error handling message:', err);
-    }
+    const parsedMessage = JSON.parse(message);
+    handleMessage(parsedMessage, ws);
   });
-  
-  // Handle disconnection
-  ws.on('close', () => {
-    agentBridgeServer.unregisterClient(clientId);
-  });
-});
-
-// AI agent API endpoints
-app.post('/api/agent/capabilities', (req, res) => {
-  const capabilities = agentBridgeServer.getCapabilities();
-  res.json(capabilities);
-});
-
-app.post('/api/agent/execute', (req, res) => {
-  const { clientId, action, params } = req.body;
-  
-  agentBridgeServer.executeAction(clientId, action, params)
-    .then(result => {
-      res.json(result);
-    })
-    .catch(err => {
-      res.status(500).json({ error: err.message });
-    });
-});
-
-// Start server
-const PORT = process.env.PORT || 3001;
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
 });
 ```
 
-For other backend frameworks (Python with FastAPI, Ruby on Rails, etc.), please refer to our [server implementations guide](../advanced/server-implementations.md).
+For detailed server implementation examples, see the [WebSocket Configuration](../core/websocket-config.md) documentation.
+
+### Pros and Cons
+
+#### Pros
+- Complete control over communication
+- Enhanced security options
+- Integration with existing backend systems
+- No third-party dependencies
+- No usage limits or costs
+
+#### Cons
+- More complex to set up and maintain
+- Requires backend development
+- Operational overhead
+- Scalability considerations
 
 ## Choosing the Right Mode
 
-| Consideration | Pub/Sub Mode | Self-Hosted Mode |
-|---------------|--------------|------------------|
-| **Ease of Setup** | Simpler - Just API keys | More complex - Requires server setup |
-| **Backend Required** | No | Yes |
-| **Security Control** | Limited to provider options | Full control |
-| **Scalability** | Handled by provider | Custom implementation required |
-| **Cost** | Provider pricing (often has free tier) | Server hosting costs |
-| **Development Speed** | Faster to implement | More setup time required |
-| **Infrastructure Control** | Minimal | Complete |
-| **Privacy** | Data passes through third party | Data stays within your infrastructure |
+Consider the following factors when choosing a communication mode:
 
-## Switching Between Modes
+### Choose Pub/Sub Mode If:
 
-You can switch between communication modes without changing your component and function registration code. Only the initialization code needs to be updated.
+- You don't have a backend or don't want to modify it
+- You need a quick and simple setup
+- You're building a prototype or MVP
+- You're comfortable with third-party services
+- Your application doesn't handle highly sensitive data
 
-### From Pub/Sub to Self-Hosted
+### Choose Self-Hosted Mode If:
 
-1. Set up your WebSocket server
-2. Update your AgentBridge initialization code to use the WebSocket provider
-3. Remove the Pub/Sub initialization code
+- You already have a backend
+- You need complete control over communication
+- You handle sensitive data with specific security requirements
+- You want to avoid third-party dependencies
+- You need to integrate with existing backend systems
+- You're concerned about third-party service limits or costs
 
-### From Self-Hosted to Pub/Sub
+## Configuration
 
-1. Register with your chosen Pub/Sub provider
-2. Update your AgentBridge initialization code to use the Pub/Sub provider
-3. Remove the WebSocket initialization code
+### Pub/Sub Configuration
+
+See the [Pub/Sub Configuration](../core/pubsub-config.md) documentation for detailed configuration options.
+
+### WebSocket Configuration
+
+See the [WebSocket Configuration](../core/websocket-config.md) documentation for detailed configuration options.
+
+## Security Considerations
+
+Both communication modes require careful security implementation:
+
+- **Authentication**: Implement proper authentication for both AI agents and users
+- **Authorization**: Control what actions AI agents can perform
+- **Data Validation**: Validate all data exchanged with AI agents
+- **Transport Security**: Use secure connections (HTTPS/WSS)
+
+For detailed security guidance, see the [Security Best Practices](../advanced/security.md) documentation.
 
 ## Next Steps
 
-- [Pub/Sub Configuration](../core/pubsub-config.md): Detailed configuration for Pub/Sub providers
-- [WebSocket Configuration](../core/websocket-config.md): Detailed configuration for self-hosted WebSockets
-- [Security Best Practices](../advanced/security.md): Securing your AgentBridge implementation 
+- [Installation Guide](installation.md): Install AgentBridge and its dependencies
+- [Quick Start](quick-start.md): Build your first AI-enabled application
+- [Core Concepts](../core/overview.md): Learn about the core concepts of AgentBridge 

@@ -129,7 +129,7 @@
         </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../web/react/overview/">
+<a class="md-tabs__link" href="../../web/web-features/">
           
   
   Web SDKs
@@ -137,7 +137,7 @@
         </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../mobile/react-native/overview/">
+<a class="md-tabs__link" href="../../mobile/mobile-features/">
           
   
   Mobile SDKs
@@ -243,32 +243,14 @@
       Installing the Core Package
     </span>
 </a>
-<nav aria-label="Installing the Core Package" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#using-npm">
-<span class="md-ellipsis">
-      Using npm
-    </span>
-</a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#using-yarn">
+<a class="md-nav__link" href="#installing-framework-sdks">
 <span class="md-ellipsis">
-      Using yarn
+      Installing Framework SDKs
     </span>
 </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#web-sdks">
-<span class="md-ellipsis">
-      Web SDKs
-    </span>
-</a>
-<nav aria-label="Web SDKs" class="md-nav">
+<nav aria-label="Installing Framework SDKs" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#react">
@@ -284,17 +266,6 @@
     </span>
 </a>
 </li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#mobile-sdks">
-<span class="md-ellipsis">
-      Mobile SDKs
-    </span>
-</a>
-<nav aria-label="Mobile SDKs" class="md-nav">
-<ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#react-native">
 <span class="md-ellipsis">
@@ -313,36 +284,96 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#environment-setup">
+<a class="md-nav__link" href="#installing-communication-providers">
 <span class="md-ellipsis">
-      Environment Setup
+      Installing Communication Providers
     </span>
 </a>
-<nav aria-label="Environment Setup" class="md-nav">
+<nav aria-label="Installing Communication Providers" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#web-applications">
+<a class="md-nav__link" href="#ably-provider">
 <span class="md-ellipsis">
-      Web Applications
+      Ably Provider
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#react-native-applications">
+<a class="md-nav__link" href="#firebase-provider">
 <span class="md-ellipsis">
-      React Native Applications
+      Firebase Provider
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#flutter-applications">
+<a class="md-nav__link" href="#pusher-provider">
 <span class="md-ellipsis">
-      Flutter Applications
+      Pusher Provider
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#supabase-provider">
+<span class="md-ellipsis">
+      Supabase Provider
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#websocket-provider-self-hosted-mode">
+<span class="md-ellipsis">
+      WebSocket Provider (Self-Hosted Mode)
     </span>
 </a>
 </li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#framework-specific-setup">
+<span class="md-ellipsis">
+      Framework-Specific Setup
+    </span>
+</a>
+<nav aria-label="Framework-Specific Setup" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#react-setup">
+<span class="md-ellipsis">
+      React Setup
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#angular-setup">
+<span class="md-ellipsis">
+      Angular Setup
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#react-native-setup">
+<span class="md-ellipsis">
+      React Native Setup
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#flutter-setup">
+<span class="md-ellipsis">
+      Flutter Setup
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#self-hosted-mode-setup">
+<span class="md-ellipsis">
+      Self-Hosted Mode Setup
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#verifying-installation">
@@ -353,16 +384,34 @@
 <nav aria-label="Verifying Installation" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#javascripttypescript">
+<a class="md-nav__link" href="#react-verification">
 <span class="md-ellipsis">
-      JavaScript/TypeScript
+      React Verification
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#troubleshooting">
+<span class="md-ellipsis">
+      Troubleshooting
+    </span>
+</a>
+<nav aria-label="Troubleshooting" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-issues">
+<span class="md-ellipsis">
+      Common Issues
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#dart-flutter">
+<a class="md-nav__link" href="#version-compatibility">
 <span class="md-ellipsis">
-      Dart (Flutter)
+      Version Compatibility
     </span>
 </a>
 </li>
@@ -383,6 +432,22 @@
 <a class="md-nav__link" href="../quick-start/">
 <span class="md-ellipsis">
     Quick Start
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../communication-modes/">
+<span class="md-ellipsis">
+    Communication Modes
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../migration-guide/">
+<span class="md-ellipsis">
+    Migration Guide
     
   </span>
 </a>
@@ -414,9 +479,25 @@
 </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="../../core/architecture/">
+<span class="md-ellipsis">
+    Architecture
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="../../core/api-reference/">
 <span class="md-ellipsis">
     API Reference
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../core/component-registry/">
+<span class="md-ellipsis">
+    Component Registry
     
   </span>
 </a>
@@ -433,6 +514,30 @@
 <a class="md-nav__link" href="../../core/type-system/">
 <span class="md-ellipsis">
     Type System
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../core/communication-protocol/">
+<span class="md-ellipsis">
+    Communication Protocol
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../core/pubsub-config/">
+<span class="md-ellipsis">
+    Pub/Sub Configuration
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../core/websocket-config/">
+<span class="md-ellipsis">
+    WebSocket Configuration
     
   </span>
 </a>
@@ -455,17 +560,25 @@
             Web SDKs
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../web/web-features/">
+<span class="md-ellipsis">
+    Features
+    
+  </span>
+</a>
+</li>
 <li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4_1" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
 <span class="md-ellipsis">
     React
     
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_4_1_label" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_4_1">
+<nav aria-expanded="false" aria-labelledby="__nav_4_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_2">
 <span class="md-nav__icon md-icon"></span>
             React
           </label>
@@ -494,20 +607,28 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../examples/react-examples/">
+<span class="md-ellipsis">
+    Examples
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4_2" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
 <span class="md-ellipsis">
     Angular
     
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_4_2_label" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_4_2">
+<nav aria-expanded="false" aria-labelledby="__nav_4_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_3">
 <span class="md-nav__icon md-icon"></span>
             Angular
           </label>
@@ -536,6 +657,14 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../examples/angular-examples/">
+<span class="md-ellipsis">
+    Examples
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -557,17 +686,25 @@
             Mobile SDKs
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../mobile/mobile-features/">
+<span class="md-ellipsis">
+    Features
+    
+  </span>
+</a>
+</li>
 <li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5_1" type="checkbox"/>
-<label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
 <span class="md-ellipsis">
     React Native
     
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_5_1_label" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_5_1">
+<nav aria-expanded="false" aria-labelledby="__nav_5_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_5_2">
 <span class="md-nav__icon md-icon"></span>
             React Native
           </label>
@@ -588,20 +725,36 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../mobile/react-native/hooks/">
+<span class="md-ellipsis">
+    Hooks
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../examples/react-native-examples/">
+<span class="md-ellipsis">
+    Examples
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5_2" type="checkbox"/>
-<label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
 <span class="md-ellipsis">
     Flutter
     
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_5_2_label" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_5_2">
+<nav aria-expanded="false" aria-labelledby="__nav_5_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_5_3">
 <span class="md-nav__icon md-icon"></span>
             Flutter
           </label>
@@ -618,6 +771,22 @@
 <a class="md-nav__link" href="../../mobile/flutter/components/">
 <span class="md-ellipsis">
     Components
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../mobile/flutter-api/">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../examples/flutter-examples/">
+<span class="md-ellipsis">
+    Examples
     
   </span>
 </a>
@@ -652,6 +821,14 @@
 </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="../../advanced/component-registration/">
+<span class="md-ellipsis">
+    Component Registration
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="../../advanced/error-handling/">
 <span class="md-ellipsis">
     Error Handling
@@ -668,9 +845,49 @@
 </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="../../advanced/custom-pubsub/">
+<span class="md-ellipsis">
+    Custom Pub/Sub Providers
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="../../advanced/mcp-integration/">
 <span class="md-ellipsis">
     MCP Integration
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../advanced/mcp-advanced/">
+<span class="md-ellipsis">
+    MCP Advanced
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../advanced/server-implementations/">
+<span class="md-ellipsis">
+    Server Implementations
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../advanced/security/">
+<span class="md-ellipsis">
+    Security
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../advanced/design-info/">
+<span class="md-ellipsis">
+    Design Info
     
   </span>
 </a>
@@ -725,6 +942,22 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/release-notes/">
+<span class="md-ellipsis">
+    Release Notes
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/roadmap/">
+<span class="md-ellipsis">
+    Roadmap
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -736,69 +969,322 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">¶</a></h1>
-<p>This guide will help you install AgentBridge in your application. AgentBridge is available for different platforms and frameworks, including React, Angular, React Native, and Flutter.</p>
+<p>This guide will walk you through installing AgentBridge for different frameworks and platforms.</p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
+<p>Before installing AgentBridge, ensure you have:</p>
 <ul>
-<li>Node.js 14.x or higher (for web applications)</li>
-<li>Flutter 3.0.0 or higher (for Flutter applications)</li>
+<li>Node.js 14.x or higher (for JavaScript packages)</li>
 <li>npm 7.x or higher or yarn 1.22.x or higher</li>
+<li>Flutter 3.0.0 or higher (for Flutter package)</li>
 </ul>
 <h2 id="installing-the-core-package">Installing the Core Package<a class="headerlink" href="#installing-the-core-package" title="Permanent link">¶</a></h2>
-<p>The core package provides the fundamental functionality of AgentBridge and is required by all platform-specific SDKs.</p>
-<h3 id="using-npm">Using npm<a class="headerlink" href="#using-npm" title="Permanent link">¶</a></h3>
+<p>The core package is required for all installations:</p>
 <div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>@agentbridge/core
 </code></pre></div>
-<h3 id="using-yarn">Using yarn<a class="headerlink" href="#using-yarn" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>yarn<span class="w"> </span>add<span class="w"> </span>@agentbridge/core
-</code></pre></div>
-<h2 id="web-sdks">Web SDKs<a class="headerlink" href="#web-sdks" title="Permanent link">¶</a></h2>
+<h2 id="installing-framework-sdks">Installing Framework SDKs<a class="headerlink" href="#installing-framework-sdks" title="Permanent link">¶</a></h2>
+<p>Choose the framework SDK that matches your application:</p>
 <h3 id="react">React<a class="headerlink" href="#react" title="Permanent link">¶</a></h3>
-<p>The React SDK provides components and hooks for integrating AgentBridge with React applications.</p>
 <div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>@agentbridge/react
 </code></pre></div>
 <h3 id="angular">Angular<a class="headerlink" href="#angular" title="Permanent link">¶</a></h3>
-<p>The Angular SDK provides services, components, and directives for integrating AgentBridge with Angular applications.</p>
 <div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>@agentbridge/angular
 </code></pre></div>
-<h2 id="mobile-sdks">Mobile SDKs<a class="headerlink" href="#mobile-sdks" title="Permanent link">¶</a></h2>
 <h3 id="react-native">React Native<a class="headerlink" href="#react-native" title="Permanent link">¶</a></h3>
-<p>The React Native SDK extends the React SDK and adds mobile-specific functionality for React Native applications.</p>
 <div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>@agentbridge/react-native
 </code></pre></div>
 <h3 id="flutter">Flutter<a class="headerlink" href="#flutter" title="Permanent link">¶</a></h3>
-<p>The Flutter SDK provides widgets and services for integrating AgentBridge with Flutter applications.</p>
-<div class="highlight"><pre><span></span><code>flutter<span class="w"> </span>pub<span class="w"> </span>add<span class="w"> </span>agentbridge
-</code></pre></div>
-<h2 id="environment-setup">Environment Setup<a class="headerlink" href="#environment-setup" title="Permanent link">¶</a></h2>
-<h3 id="web-applications">Web Applications<a class="headerlink" href="#web-applications" title="Permanent link">¶</a></h3>
-<p>For web applications, you need to make sure that your bundler (webpack, Rollup, etc.) is configured correctly to handle the AgentBridge packages.</p>
-<h3 id="react-native-applications">React Native Applications<a class="headerlink" href="#react-native-applications" title="Permanent link">¶</a></h3>
-<p>For React Native applications, you may need to install additional dependencies depending on the features you use:</p>
-<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>@agentbridge/react
-</code></pre></div>
-<h3 id="flutter-applications">Flutter Applications<a class="headerlink" href="#flutter-applications" title="Permanent link">¶</a></h3>
-<p>For Flutter applications, add the following dependency to your <code>pubspec.yaml</code> file:</p>
+<p>Add to your <code>pubspec.yaml</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">dependencies</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">agentbridge</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^0.1.0</span>
+<span class="w">  </span><span class="nt">agentbridge</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^0.2.0</span>
 </code></pre></div>
-<h2 id="verifying-installation">Verifying Installation<a class="headerlink" href="#verifying-installation" title="Permanent link">¶</a></h2>
-<p>To verify that AgentBridge is installed correctly, you can create a simple test application that imports the core package and initializes the AgentBridge instance:</p>
-<h3 id="javascripttypescript">JavaScript/TypeScript<a class="headerlink" href="#javascripttypescript" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">createAgentBridge</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/core'</span><span class="p">;</span>
+<p>Then run:</p>
+<div class="highlight"><pre><span></span><code>flutter<span class="w"> </span>pub<span class="w"> </span>get
+</code></pre></div>
+<h2 id="installing-communication-providers">Installing Communication Providers<a class="headerlink" href="#installing-communication-providers" title="Permanent link">¶</a></h2>
+<p>You'll need at least one communication provider to connect your application with AI agents:</p>
+<h3 id="ably-provider">Ably Provider<a class="headerlink" href="#ably-provider" title="Permanent link">¶</a></h3>
+<p><a href="https://ably.com/">Ably</a> offers a reliable real-time messaging service with an excellent free tier.</p>
+<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>@agentbridge/provider-ably
+</code></pre></div>
+<p>You'll need an Ably API key, which you can get by <a href="https://ably.com/sign-up">signing up for a free account</a>.</p>
+<h3 id="firebase-provider">Firebase Provider<a class="headerlink" href="#firebase-provider" title="Permanent link">¶</a></h3>
+<p><a href="https://firebase.google.com/">Firebase</a> provides a comprehensive platform with real-time database capabilities.</p>
+<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>@agentbridge/provider-firebase
+</code></pre></div>
+<p>You'll need to create a Firebase project and configure your application to use it.</p>
+<h3 id="pusher-provider">Pusher Provider<a class="headerlink" href="#pusher-provider" title="Permanent link">¶</a></h3>
+<p><a href="https://pusher.com/">Pusher</a> is a popular real-time messaging platform.</p>
+<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>@agentbridge/provider-pusher
+</code></pre></div>
+<p>You'll need a Pusher account and API credentials.</p>
+<h3 id="supabase-provider">Supabase Provider<a class="headerlink" href="#supabase-provider" title="Permanent link">¶</a></h3>
+<p><a href="https://supabase.com/">Supabase</a> is an open-source Firebase alternative with real-time capabilities.</p>
+<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>@agentbridge/provider-supabase
+</code></pre></div>
+<p>You'll need a Supabase project and API credentials.</p>
+<h3 id="websocket-provider-self-hosted-mode">WebSocket Provider (Self-Hosted Mode)<a class="headerlink" href="#websocket-provider-self-hosted-mode" title="Permanent link">¶</a></h3>
+<p>For applications with backends, you can use the WebSocket provider for direct communication:</p>
+<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>@agentbridge/communication-websocket
+</code></pre></div>
+<p>If you're using the self-hosted mode, you'll also need the server package:</p>
+<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>@agentbridge/server
+</code></pre></div>
+<h2 id="framework-specific-setup">Framework-Specific Setup<a class="headerlink" href="#framework-specific-setup" title="Permanent link">¶</a></h2>
+<h3 id="react-setup">React Setup<a class="headerlink" href="#react-setup" title="Permanent link">¶</a></h3>
+<ol>
+<li>Install the required packages:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>@agentbridge/core<span class="w"> </span>@agentbridge/react
+</code></pre></div>
+<ol>
+<li>Choose a communication provider (e.g., Ably):</li>
+</ol>
+<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>@agentbridge/provider-ably
+</code></pre></div>
+<ol>
+<li>Wrap your application with the AgentBridgeProvider:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react'</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AgentBridgeProvider</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/react'</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AblyProvider</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/provider-ably'</span><span class="p">;</span>
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">bridge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createAgentBridge</span><span class="p">();</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'AgentBridge initialized:'</span><span class="p">,</span><span class="w"> </span><span class="nx">bridge</span><span class="p">);</span>
+<span class="c1">// Create a communication provider</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">ablyProvider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">AblyProvider</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">apiKey</span><span class="o">:</span><span class="w"> </span><span class="s1">'your-ably-api-key'</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">App</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="p">&lt;</span><span class="nt">AgentBridgeProvider</span><span class="w"> </span>
+<span class="w">      </span><span class="na">applicationId</span><span class="o">=</span><span class="s">"your-app-id"</span>
+<span class="w">      </span><span class="na">communicationProvider</span><span class="o">=</span><span class="p">{</span><span class="nx">ablyProvider</span><span class="p">}</span>
+<span class="w">    </span><span class="p">&gt;</span>
+<span class="w">      </span><span class="p">{</span><span class="cm">/* Your app components */</span><span class="p">}</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">YourApp</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="w">    </span><span class="p">&lt;/</span><span class="nt">AgentBridgeProvider</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">App</span><span class="p">;</span>
 </code></pre></div>
-<h3 id="dart-flutter">Dart (Flutter)<a class="headerlink" href="#dart-flutter" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="s1">'package:agentbridge/agentbridge.dart'</span><span class="p">;</span>
+<h3 id="angular-setup">Angular Setup<a class="headerlink" href="#angular-setup" title="Permanent link">¶</a></h3>
+<ol>
+<li>Install the required packages:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>@agentbridge/core<span class="w"> </span>@agentbridge/angular
+</code></pre></div>
+<ol>
+<li>Choose a communication provider (e.g., Firebase):</li>
+</ol>
+<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>@agentbridge/provider-firebase
+</code></pre></div>
+<ol>
+<li>Import the AgentBridgeModule in your app module:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="c1">// app.module.ts</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">NgModule</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@angular/core'</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">BrowserModule</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@angular/platform-browser'</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AgentBridgeModule</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/angular'</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">FirebaseProvider</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/provider-firebase'</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AppComponent</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'./app.component'</span><span class="p">;</span>
+
+<span class="c1">// Create a communication provider</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">firebaseProvider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">FirebaseProvider</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">firebaseConfig</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">apiKey</span><span class="o">:</span><span class="w"> </span><span class="s1">'your-api-key'</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">authDomain</span><span class="o">:</span><span class="w"> </span><span class="s1">'your-auth-domain'</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">projectId</span><span class="o">:</span><span class="w"> </span><span class="s1">'your-project-id'</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">storageBucket</span><span class="o">:</span><span class="w"> </span><span class="s1">'your-storage-bucket'</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">messagingSenderId</span><span class="o">:</span><span class="w"> </span><span class="s1">'your-messaging-sender-id'</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">appId</span><span class="o">:</span><span class="w"> </span><span class="s1">'your-app-id'</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">@NgModule</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">declarations</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">AppComponent</span><span class="p">],</span>
+<span class="w">  </span><span class="nx">imports</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nx">BrowserModule</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">AgentBridgeModule</span><span class="p">.</span><span class="nx">forRoot</span><span class="p">({</span>
+<span class="w">      </span><span class="nx">applicationId</span><span class="o">:</span><span class="w"> </span><span class="s1">'your-app-id'</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">communicationProvider</span><span class="o">:</span><span class="w"> </span><span class="kt">firebaseProvider</span>
+<span class="w">    </span><span class="p">})</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nx">providers</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">  </span><span class="nx">bootstrap</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">AppComponent</span><span class="p">]</span>
+<span class="p">})</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">AppModule</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<h3 id="react-native-setup">React Native Setup<a class="headerlink" href="#react-native-setup" title="Permanent link">¶</a></h3>
+<ol>
+<li>Install the required packages:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>@agentbridge/core<span class="w"> </span>@agentbridge/react-native
+</code></pre></div>
+<ol>
+<li>Choose a communication provider (e.g., Pusher):</li>
+</ol>
+<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>@agentbridge/provider-pusher
+</code></pre></div>
+<ol>
+<li>Wrap your application with the AgentBridgeProvider:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react'</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">SafeAreaView</span><span class="p">,</span><span class="w"> </span><span class="nx">StatusBar</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react-native'</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AgentBridgeProvider</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/react-native'</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">PusherProvider</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/provider-pusher'</span><span class="p">;</span>
+
+<span class="c1">// Create a communication provider</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">pusherProvider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">PusherProvider</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">appId</span><span class="o">:</span><span class="w"> </span><span class="s1">'your-pusher-app-id'</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">key</span><span class="o">:</span><span class="w"> </span><span class="s1">'your-pusher-key'</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">cluster</span><span class="o">:</span><span class="w"> </span><span class="s1">'your-pusher-cluster'</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">App</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="p">&lt;</span><span class="nt">SafeAreaView</span><span class="w"> </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">flex</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="p">}}&gt;</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">StatusBar</span><span class="w"> </span><span class="na">barStyle</span><span class="o">=</span><span class="s">"dark-content"</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">AgentBridgeProvider</span><span class="w"> </span>
+<span class="w">        </span><span class="na">applicationId</span><span class="o">=</span><span class="s">"your-app-id"</span>
+<span class="w">        </span><span class="na">communicationProvider</span><span class="o">=</span><span class="p">{</span><span class="nx">pusherProvider</span><span class="p">}</span>
+<span class="w">      </span><span class="p">&gt;</span>
+<span class="w">        </span><span class="p">{</span><span class="cm">/* Your app components */</span><span class="p">}</span>
+<span class="w">        </span><span class="p">&lt;</span><span class="nt">YourApp</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="w">      </span><span class="p">&lt;/</span><span class="nt">AgentBridgeProvider</span><span class="p">&gt;</span>
+<span class="w">    </span><span class="p">&lt;/</span><span class="nt">SafeAreaView</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">App</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="flutter-setup">Flutter Setup<a class="headerlink" href="#flutter-setup" title="Permanent link">¶</a></h3>
+<ol>
+<li>Add dependencies to <code>pubspec.yaml</code>:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="nt">dependencies</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">agentbridge</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^0.2.0</span>
+<span class="w">  </span><span class="nt">supabase_flutter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^1.10.0</span><span class="w">  </span><span class="c1"># If using Supabase provider</span>
+</code></pre></div>
+<ol>
+<li>
+<p>Run <code>flutter pub get</code></p>
+</li>
+<li>
+<p>Initialize AgentBridge in your app:</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="s1">'package:flutter/material.dart'</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="s1">'package:agentbridge/agentbridge.dart'</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="s1">'package:agentbridge/providers/supabase_provider.dart'</span><span class="p">;</span>
 
 <span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">final</span><span class="w"> </span><span class="n">bridge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AgentBridge</span><span class="p">();</span>
-<span class="w">  </span><span class="n">print</span><span class="p">(</span><span class="s1">'AgentBridge initialized: </span><span class="si">$</span><span class="n">bridge</span><span class="s1">'</span><span class="p">);</span>
+<span class="w">  </span><span class="n">runApp</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">MyApp</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="kd">class</span><span class="w"> </span><span class="nc">MyApp</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">StatelessWidget</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">MyApp</span><span class="p">({</span><span class="n">Key</span><span class="o">?</span><span class="w"> </span><span class="n">key</span><span class="p">})</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">super</span><span class="p">(</span><span class="nl">key:</span><span class="w"> </span><span class="n">key</span><span class="p">);</span>
+
+<span class="w">  </span><span class="nd">@override</span>
+<span class="w">  </span><span class="n">Widget</span><span class="w"> </span><span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Create a Supabase provider</span>
+<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="n">supabaseProvider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SupabaseProvider</span><span class="p">(</span>
+<span class="w">      </span><span class="nl">url:</span><span class="w"> </span><span class="s1">'your-supabase-url'</span><span class="p">,</span>
+<span class="w">      </span><span class="nl">anonKey:</span><span class="w"> </span><span class="s1">'your-supabase-anon-key'</span><span class="p">,</span>
+<span class="w">    </span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">MaterialApp</span><span class="p">(</span>
+<span class="w">      </span><span class="nl">title:</span><span class="w"> </span><span class="s1">'AgentBridge Demo'</span><span class="p">,</span>
+<span class="w">      </span><span class="nl">home:</span><span class="w"> </span><span class="n">AgentBridgeProvider</span><span class="p">(</span>
+<span class="w">        </span><span class="nl">applicationId:</span><span class="w"> </span><span class="s1">'your-app-id'</span><span class="p">,</span>
+<span class="w">        </span><span class="nl">communicationProvider:</span><span class="w"> </span><span class="n">supabaseProvider</span><span class="p">,</span>
+<span class="w">        </span><span class="nl">child:</span><span class="w"> </span><span class="n">MyHomePage</span><span class="p">(),</span>
+<span class="w">      </span><span class="p">),</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
+<h2 id="self-hosted-mode-setup">Self-Hosted Mode Setup<a class="headerlink" href="#self-hosted-mode-setup" title="Permanent link">¶</a></h2>
+<p>If you're using self-hosted mode, you'll need to set up the server component:</p>
+<ol>
+<li>Install the server package:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>@agentbridge/server
+</code></pre></div>
+<ol>
+<li>Create a server instance:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="c1">// server.js</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AgentBridgeServer</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/server'</span><span class="p">;</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">AgentBridgeServer</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">port</span><span class="o">:</span><span class="w"> </span><span class="kt">3000</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">authenticationHandler</span><span class="o">:</span><span class="w"> </span><span class="kt">async</span><span class="w"> </span><span class="p">(</span><span class="nx">token</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Implement your authentication logic</span>
+<span class="w">    </span><span class="c1">// Return null if authentication fails, or user info if it succeeds</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s1">'user-123'</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">'John Doe'</span><span class="w"> </span><span class="p">};</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">});</span>
+
+<span class="nx">server</span><span class="p">.</span><span class="nx">start</span><span class="p">().</span><span class="nx">then</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'AgentBridge server running on port 3000'</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div>
+<ol>
+<li>Connect your client application:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">WebSocketProvider</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/communication-websocket'</span><span class="p">;</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">webSocketProvider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">WebSocketProvider</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">url</span><span class="o">:</span><span class="w"> </span><span class="s1">'ws://localhost:3000'</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">authToken</span><span class="o">:</span><span class="w"> </span><span class="s1">'your-auth-token'</span>
+<span class="p">});</span>
+
+<span class="c1">// Then use this provider with your framework's AgentBridgeProvider</span>
+</code></pre></div>
+<h2 id="verifying-installation">Verifying Installation<a class="headerlink" href="#verifying-installation" title="Permanent link">¶</a></h2>
+<p>To verify that AgentBridge is installed correctly, you can implement a simple component and function:</p>
+<h3 id="react-verification">React Verification<a class="headerlink" href="#react-verification" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react'</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useAgentFunction</span><span class="p">,</span><span class="w"> </span><span class="nx">AgentButton</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/react'</span><span class="p">;</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">VerificationComponent</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">useAgentFunction</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">'ping'</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">'Test function that returns a pong response'</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">parameters</span><span class="o">:</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">    </span><span class="nx">handler</span><span class="o">:</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">'pong'</span><span class="p">,</span><span class="w"> </span><span class="nx">timestamp</span><span class="o">:</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Date</span><span class="p">().</span><span class="nx">toISOString</span><span class="p">()</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">});</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span><span class="nx">AgentBridge</span><span class="w"> </span><span class="nx">Test</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">AgentButton</span><span class="w"> </span>
+<span class="w">        </span><span class="na">id</span><span class="o">=</span><span class="s">"test-button"</span>
+<span class="w">        </span><span class="na">label</span><span class="o">=</span><span class="s">"Test Button"</span>
+<span class="w">        </span><span class="na">onClick</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Button clicked'</span><span class="p">)}</span>
+<span class="w">      </span><span class="p">/&gt;</span>
+<span class="w">    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
+<h3 id="common-issues">Common Issues<a class="headerlink" href="#common-issues" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Connection failed</strong>: Check your API keys and network connection</li>
+<li><strong>Components not registered</strong>: Ensure your components have unique IDs</li>
+<li><strong>Functions not working</strong>: Verify the function registration and parameters</li>
+<li><strong>WebSocket connection issues</strong>: Check port availability and firewall settings</li>
+<li><strong>React/Angular provider errors</strong>: Make sure the provider is wrapped correctly</li>
+</ol>
+<h3 id="version-compatibility">Version Compatibility<a class="headerlink" href="#version-compatibility" title="Permanent link">¶</a></h3>
+<p>Ensure all your AgentBridge packages have compatible versions. It's recommended to use the same version number for all packages.</p>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
-<p>Now that you have installed AgentBridge, you can proceed to the <a href="../quick-start/">Quick Start</a> guide to learn how to use it in your application. </p>
+<ul>
+<li><a href="../quick-start/">Quick Start Guide</a>: Build your first AI-enabled application</li>
+<li><a href="../communication-modes/">Choose a Communication Mode</a>: Learn more about Pub/Sub vs. Self-Hosted modes </li>
+</ul>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
