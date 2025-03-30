@@ -241,7 +241,7 @@ export class AgentBridge {
     return functions.map(func => ({
       name: func.definition.name,
       description: func.definition.description,
-      parameters: func.definition.parameters.describe(),
+      parameters: func.definition.parameters.describe("Parameters"),
       authLevel: func.definition.authLevel || 'public',
       tags: func.definition.tags || []
     }));

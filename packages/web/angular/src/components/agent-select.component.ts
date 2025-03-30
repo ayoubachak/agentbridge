@@ -96,7 +96,7 @@ export class AgentSelectComponent implements OnInit, OnDestroy, ControlValueAcce
     if (this.elementRef.nativeElement) {
       const selectElement = this.elementRef.nativeElement.querySelector('select');
       if (selectElement) {
-        const options = Array.from(selectElement.options);
+        const options = Array.from(selectElement.options) as HTMLOptionElement[];
         this.options = options.map(option => ({
           value: option.value,
           text: option.text
