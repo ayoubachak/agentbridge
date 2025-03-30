@@ -102,6 +102,26 @@ const updatePackageJsonFiles = async (version, packages, updateRepo = true) => {
         packageJson.files = repoInfo.files;
       }
       
+      // Update internal dependencies versions to match
+      if (packageJson.dependencies) {
+        Object.keys(packageJson.dependencies).forEach(dep => {
+          if (dep.startsWith('@agentbridge/')) {
+            packageJson.dependencies[dep] = version;
+            console.log(`   Updated dependency: ${dep} → ${version}`);
+          }
+        });
+      }
+      
+      // Update internal peer dependencies versions to match
+      if (packageJson.peerDependencies) {
+        Object.keys(packageJson.peerDependencies).forEach(dep => {
+          if (dep.startsWith('@agentbridge/')) {
+            packageJson.peerDependencies[dep] = version;
+            console.log(`   Updated peer dependency: ${dep} → ${version}`);
+          }
+        });
+      }
+      
       // Write the updated package.json
       fs.writeFileSync(fullPath, JSON.stringify(packageJson, null, 2) + '\n');
       
