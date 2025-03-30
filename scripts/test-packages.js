@@ -8,7 +8,12 @@ const jsPackages = [
   '@agentbridge/core',
   '@agentbridge/react',
   '@agentbridge/angular',
-  '@agentbridge/react-native'
+  '@agentbridge/react-native',
+  '@agentbridge/provider-ably',
+  '@agentbridge/provider-firebase',
+  '@agentbridge/provider-pusher',
+  '@agentbridge/provider-supabase',
+  '@agentbridge/server'
 ];
 
 const flutterPackage = 'agentbridge';
@@ -61,11 +66,20 @@ async function testJavaScriptPackages(tempDir) {
   for (const packageName of jsPackages) {
     console.log(`\nTesting ${packageName}...`);
     
-    // Get package directory
-    const packageDir = path.join(process.cwd(), '..', '..', 'packages', 
-      packageName.includes('core') ? 'core' : 
-      packageName.includes('react-native') ? 'mobile/react-native' : 
-      `web/${packageName.split('/')[1]}`);
+    // Get package directory based on package name
+    let packageDir;
+    if (packageName === '@agentbridge/core') {
+      packageDir = path.join(process.cwd(), '..', '..', 'packages', 'core');
+    } else if (packageName.includes('provider-')) {
+      const providerName = packageName.split('provider-')[1];
+      packageDir = path.join(process.cwd(), '..', '..', 'packages', 'providers', providerName);
+    } else if (packageName === '@agentbridge/server') {
+      packageDir = path.join(process.cwd(), '..', '..', 'packages', 'server');
+    } else {
+      // For frameworks (react, angular, react-native)
+      const frameworkName = packageName.split('/')[1];
+      packageDir = path.join(process.cwd(), '..', '..', 'packages', 'frameworks', frameworkName);
+    }
     
     try {
       // Link the package
@@ -120,7 +134,7 @@ async function testFlutterPackage(tempDir) {
     let pubspecContent = fs.readFileSync(pubspecPath, 'utf8');
     
     // Add the agentbridge dependency to the pubspec
-    const agentbridgePath = path.join(process.cwd(), '..', '..', '..', 'packages', 'mobile', 'flutter');
+    const agentbridgePath = path.join(process.cwd(), '..', '..', '..', 'packages', 'frameworks', 'flutter');
     pubspecContent = pubspecContent.replace(
       'dependencies:',
       `dependencies:

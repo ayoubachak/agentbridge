@@ -20,13 +20,18 @@ if (!/^\d+\.\d+\.\d+$/.test(newVersion)) {
 const packagePaths = [
   'package.json', // root package.json
   'packages/core/package.json',
-  'packages/web/react/package.json',
-  'packages/web/angular/package.json',
-  'packages/mobile/react-native/package.json'
+  'packages/frameworks/react/package.json',
+  'packages/frameworks/angular/package.json',
+  'packages/frameworks/react-native/package.json',
+  'packages/providers/ably/package.json',
+  'packages/providers/firebase/package.json',
+  'packages/providers/pusher/package.json',
+  'packages/providers/supabase/package.json',
+  'packages/server/package.json'
 ];
 
 // Path to Flutter pubspec.yaml
-const flutterPubspecPath = 'packages/mobile/flutter/pubspec.yaml';
+const flutterPubspecPath = 'packages/frameworks/flutter/pubspec.yaml';
 
 // Update version in package.json files
 console.log(`Updating JavaScript/TypeScript package versions to ${newVersion}...`);
