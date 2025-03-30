@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../adapter.dart';
-import '../provider.dart';
 import '../utils.dart';
 
 /// Button widget that can be controlled by AI agents

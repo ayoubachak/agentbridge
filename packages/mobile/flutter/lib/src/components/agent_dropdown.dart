@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../adapter.dart';
-import '../provider.dart';
 import '../utils.dart';
 
 /// Dropdown widget that can be controlled by AI agents
