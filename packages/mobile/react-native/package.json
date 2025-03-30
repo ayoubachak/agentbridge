@@ -27,7 +27,7 @@
   "dependencies": {
     "@agentbridge/core": "0.1.0",
     "react": "^17.0.0 || ^18.0.0",
-    "react-native": ">=0.69.0"
+    "react-native": ">=0.69.0 <0.78.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.5",
@@ -47,7 +47,7 @@
   },
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0",
-    "react-native": ">=0.69.0"
+    "react-native": ">=0.69.0 <0.78.0"
   },
   "repository": {
     "type": "git",

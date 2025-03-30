@@ -32,9 +32,9 @@ jobs:
           node-version: '18'
           cache: 'npm'
       - name: Install dependencies
-        run: npm install --no-package-lock
+        run: npm install --no-package-lock --legacy-peer-deps
       - name: Install @types/uuid
-        run: npm install --save-dev @types/uuid --workspace=@agentbridge/core
+        run: npm install --save-dev @types/uuid --workspace=@agentbridge/core --legacy-peer-deps
       - name: Run linter
         run: npm run lint:js || true
       - name: Run tests
@@ -89,7 +89,7 @@ jobs:
           node-version: '18'
           cache: 'npm'
       - name: Install dependencies
-        run: npm install --no-package-lock
+        run: npm install --no-package-lock --legacy-peer-deps
       - name: Configure Git
         run: |
           git config --local user.email "action@github.com"
@@ -153,9 +153,9 @@ jobs:
           node-version: '18'
           cache: 'npm'
       - name: Install dependencies
-        run: npm install --no-package-lock
+        run: npm install --no-package-lock --legacy-peer-deps
       - name: Install @types/uuid
-        run: npm install --save-dev @types/uuid --workspace=@agentbridge/core
+        run: npm install --save-dev @types/uuid --workspace=@agentbridge/core --legacy-peer-deps
       - name: Build packages
         run: npm run build:js || true
       - name: Upload build artifacts
@@ -206,9 +206,9 @@ jobs:
           node-version: '18'
           registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies
-        run: npm install --no-package-lock
+        run: npm install --no-package-lock --legacy-peer-deps
       - name: Install @types/uuid
-        run: npm install --save-dev @types/uuid --workspace=@agentbridge/core
+        run: npm install --save-dev @types/uuid --workspace=@agentbridge/core --legacy-peer-deps
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
