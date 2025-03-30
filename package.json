@@ -1,0 +1,25 @@
+{
+  "name": "agentbridge-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "packages/core",
+    "packages/web/*",
+    "packages/mobile/react-native"
+  ],
+  "scripts": {
+    "install:all": "npm install && cd packages/mobile/flutter && flutter pub get",
+    "build:js": "npm run build --workspaces",
+    "build:flutter": "cd packages/mobile/flutter && flutter build",
+    "build:all": "npm run build:js && npm run build:flutter",
+    "test:js": "npm run test --workspaces",
+    "test:flutter": "cd packages/mobile/flutter && flutter test",
+    "test:all": "npm run test:js && npm run test:flutter",
+    "clean": "npm run clean --workspaces && cd packages/mobile/flutter && flutter clean",
+    "lint": "npm run lint --workspaces && cd packages/mobile/flutter && flutter analyze",
+    "create:examples": "node scripts/create-examples.js"
+  },
+  "devDependencies": {
+    "fs-extra": "^11.1.1"
+  }
+} 

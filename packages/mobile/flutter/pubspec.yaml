@@ -1,0 +1,35 @@
+name: agentbridge_flutter
+description: Flutter SDK for the AgentBridge framework, enabling AI agents to interact with Flutter applications
+version: 0.1.0
+homepage: https://github.com/yourusername/agentbridge
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=2.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # Basic HTTP requests
+  http: ^0.13.4
+  # State management
+  provider: ^6.0.2
+  # UUID generation
+  uuid: ^3.0.6
+  # Local storage
+  shared_preferences: ^2.0.13
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.4
+
+# Flutter-specific configurations
+flutter:
+  # No Flutter-specific assets or fonts yet
+
+# This is a placeholder file. In a real implementation, we would:
+# 1. Define proper version constraints
+# 2. Add necessary dependencies for JSON serialization/deserialization
+# 3. Set up proper platform-specific configurations
+# 4. Potentially include assets or fonts 

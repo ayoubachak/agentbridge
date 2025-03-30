@@ -1,0 +1,123 @@
+site_name: AgentBridge Documentation
+site_description: Documentation for the AgentBridge framework
+site_author: AgentBridge Team
+site_url: https://agentbridge.ai
+repo_url: https://github.com/agentbridge/agentbridge
+repo_name: agentbridge/agentbridge
+
+theme:
+  name: material
+  palette:
+    primary: indigo
+    accent: blue
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - toc.integrate
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
+  - meta
+  - pymdownx.highlight
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Installation: getting-started/installation.md
+    - Quick Start: getting-started/quick-start.md
+  - Core:
+    - Overview: core/overview.md
+    - API Reference: core/api-reference.md
+    - Function Registry: core/function-registry.md
+    - Type System: core/type-system.md
+  - Web SDKs:
+    - React:
+      - Overview: web/react/overview.md
+      - Components: web/react/components.md
+      - Hooks: web/react/hooks.md
+    - Angular:
+      - Overview: web/angular/overview.md
+      - Components: web/angular/components.md
+      - Services: web/angular/services.md
+  - Mobile SDKs:
+    - React Native:
+      - Overview: mobile/react-native/overview.md
+      - Components: mobile/react-native/components.md
+    - Flutter:
+      - Overview: mobile/flutter/overview.md
+      - Components: mobile/flutter/components.md
+  - Advanced:
+    - Authentication: advanced/authentication.md
+    - Error Handling: advanced/error-handling.md
+    - Custom Adapters: advanced/custom-adapters.md
+    - MCP Integration: advanced/mcp-integration.md
+  - Development:
+    - Contributing: development/contributing.md
+    - Architecture: development/architecture.md
+    - Package Deployment: development/deployment.md
+    - MCP Evaluation: development/mcp-evaluation.md
+
+plugins:
+  - search
+  - git-revision-date-localized:
+      fallback_to_build_date: true
+  - mermaid2
+
+extra_javascript:
+  - https://unpkg.com/mermaid@9.1.7/dist/mermaid.min.js
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Installation: getting-started/installation.md
+    - Quick Start: getting-started/quick-start.md
+  - Core:
+    - Overview: core/overview.md
+    - API Reference: core/api-reference.md
+    - Function Registry: core/function-registry.md
+    - Type System: core/type-system.md
+  - Web SDKs:
+    - React:
+      - Overview: web/react/overview.md
+      - Components: web/react/components.md
+      - Hooks: web/react/hooks.md
+    - Angular:
+      - Overview: web/angular/overview.md
+      - Components: web/angular/components.md
+      - Services: web/angular/services.md
+  - Mobile SDKs:
+    - React Native:
+      - Overview: mobile/react-native/overview.md
+      - Components: mobile/react-native/components.md
+    - Flutter:
+      - Overview: mobile/flutter/overview.md
+      - Components: mobile/flutter/components.md
+  - Advanced:
+    - Authentication: advanced/authentication.md
+    - Error Handling: advanced/error-handling.md
+    - Custom Adapters: advanced/custom-adapters.md
+    - MCP Integration: advanced/mcp-integration.md
+  - Development:
+    - Contributing: development/contributing.md
+    - Architecture: development/architecture.md
+    - Package Deployment: development/deployment.md
+    - MCP Evaluation: development/mcp-evaluation.md 
