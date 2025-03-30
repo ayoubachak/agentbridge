@@ -256,6 +256,15 @@ jobs:
         with:
           name: js-packages
           path: packages
+      - name: Create npm organization if it doesn't exist
+        run: |
+          echo "Creating or verifying npm organization @agentbridge"
+          npx npm-cli-login -u "$NPM_USERNAME" -p "$NPM_PASSWORD" -e "$NPM_EMAIL"
+          npm org create agentbridge "AgentBridge Organization" --no-publish-access || echo "Organization may already exist, continuing..."
+        env:
+          NPM_USERNAME: ${{ secrets.NPM_USERNAME }}
+          NPM_PASSWORD: ${{ secrets.NPM_TOKEN }}
+          NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
       - name: Get version if from tag
         id: get_version
         if: startsWith(github.ref, 'refs/tags/v')
