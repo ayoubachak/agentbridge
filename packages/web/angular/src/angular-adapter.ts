@@ -104,7 +104,7 @@ export class AngularAdapter implements FrameworkAdapter {
       'Get all registered components',
       // Using any instead of Zod schema for simplicity
       { type: 'object', properties: {} } as any,
-      async (_, context) => {
+      async (_params, _context) => {
         return Array.from(this.components.entries()).map(([id, info]) => ({
           id,
           type: info.type,
@@ -128,7 +128,7 @@ export class AngularAdapter implements FrameworkAdapter {
         },
         required: ['componentId', 'state']
       } as any,
-      async (params, context) => {
+      async (params, _context) => {
         const { componentId, state } = params;
         this.updateComponentState(componentId, state);
         return { success: true };
@@ -150,7 +150,7 @@ export class AngularAdapter implements FrameworkAdapter {
         },
         required: ['componentId', 'event']
       } as any,
-      async (params, context) => {
+      async (params, _context) => {
         const { componentId, event, payload } = params;
         const component = this.components.get(componentId);
         

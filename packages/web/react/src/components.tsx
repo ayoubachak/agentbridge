@@ -18,7 +18,7 @@ interface AgentButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, Agen
 
 export const AgentButton = forwardRef<HTMLButtonElement, AgentButtonProps>(
   ({ agentId, agentType = 'button', agentProps = {}, onClick, children, ...props }, ref) => {
-    const { state, updateState } = useAgentComponent(agentId, agentType, {
+    const { state: _state, updateState } = useAgentComponent(agentId, agentType, {
       ...agentProps,
       ...props
     });

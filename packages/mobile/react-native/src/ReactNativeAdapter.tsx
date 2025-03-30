@@ -93,7 +93,7 @@ export class ReactNativeAdapter implements FrameworkAdapter {
       'Get information about the device',
       // Using zod here would be ideal but for simplicity we'll use any
       { type: 'object', properties: {} } as any,
-      async (_, context) => {
+      async (_params, _context) => {
         return {
           platform: Platform.OS,
           version: Platform.Version,
@@ -109,7 +109,7 @@ export class ReactNativeAdapter implements FrameworkAdapter {
       'Get all registered components',
       // Using zod here would be ideal but for simplicity we'll use any
       { type: 'object', properties: {} } as any,
-      async (_, context) => {
+      async (_params, _context) => {
         return Array.from(this.components.entries()).map(([id, info]) => ({
           id,
           type: info.type,
@@ -133,7 +133,7 @@ export class ReactNativeAdapter implements FrameworkAdapter {
         },
         required: ['componentId', 'state']
       } as any,
-      async (params, context) => {
+      async (params, _context) => {
         const { componentId, state } = params;
         this.updateComponentState(componentId, state);
         return { success: true };
@@ -155,7 +155,7 @@ export class ReactNativeAdapter implements FrameworkAdapter {
         },
         required: ['componentId', 'event']
       } as any,
-      async (params, context) => {
+      async (params, _context) => {
         const { componentId, event, payload } = params;
         const component = this.components.get(componentId);
         
@@ -196,7 +196,7 @@ export class ReactNativeAdapter implements FrameworkAdapter {
           duration: { type: 'number' }
         }
       } as any,
-      async (params, context) => {
+      async (params, _context) => {
         const { pattern, duration = 400 } = params;
         
         try {
