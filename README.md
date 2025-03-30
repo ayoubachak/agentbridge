@@ -64,7 +64,7 @@ npm install @agentbridge/react-native
 ```bash
 # Add to pubspec.yaml
 dependencies:
-  agentbridge: ^1.0.0
+  agentbridge_flutter: ^0.1.0
 ```
 
 ### Basic Usage
@@ -209,4 +209,54 @@ We welcome contributions to AgentBridge! Please see our [Contributing Guide](./C
 
 ## License
 
-MIT 
+MIT
+
+## Development
+
+### Publishing Packages
+
+AgentBridge uses GitHub Actions for automated package publishing. Here's how to publish new versions:
+
+#### Manual Publishing
+
+1. Update all package versions simultaneously:
+   ```bash
+   npm run prepare-publish 1.0.0
+   ```
+
+2. Commit the changes:
+   ```bash
+   git add .
+   git commit -m "chore: prepare release v1.0.0"
+   ```
+
+3. Tag the release:
+   ```bash
+   git tag v1.0.0
+   git push --tags
+   ```
+
+4. Push to the repository:
+   ```bash
+   git push
+   ```
+
+#### Automated Publishing via GitHub Actions
+
+1. The GitHub workflow will automatically publish packages to npm and pub.dev when a tag starting with 'v' is pushed (e.g., v1.0.0).
+
+2. The workflow will:
+   - Run tests for all packages
+   - Build all packages
+   - Publish JavaScript packages to npm
+   - Publish the Flutter package to pub.dev
+   - Create a GitHub release with release notes
+
+3. Required secrets for automated publishing:
+   - `NPM_TOKEN`: Access token for npm publishing
+   - `PUB_DEV_CREDENTIALS`: Credentials for pub.dev publishing
+
+#### Publishing Requirements
+
+- For npm packages: Ensure you have logged in with `npm login` and have the appropriate access rights.
+- For Flutter package: Ensure you have authenticated with pub.dev using `flutter pub login`. 

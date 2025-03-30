@@ -19,7 +19,9 @@
     "lint:js": "npm run lint --workspaces",
     "lint:flutter": "cd packages/mobile/flutter && flutter analyze || true",
     "lint": "npm run lint:js && npm run lint:flutter",
-    "create:examples": "node scripts/create-examples.js"
+    "create:examples": "node scripts/create-examples.js",
+    "prepare-publish": "node scripts/prepare-packages.js",
+    "version": "npm run prepare-publish && git add ."
   },
   "devDependencies": {
     "fs-extra": "^11.1.1"
