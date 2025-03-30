@@ -2,4 +2,12 @@ node_modules/
 docs-venv/
 .env
 .vscode/
+**/dist/**
+**/build/**
+**/coverage/**
+**/logs/**
+**/temp/**
+**/temp/**
+
+
 
