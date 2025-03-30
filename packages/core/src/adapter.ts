@@ -1,11 +1,15 @@
-import { AgentBridge } from './agent-bridge';
-import { FunctionCallResult } from './types';
+import { EventEmitter } from 'events';
+import { MessageQueue } from './types';
+
+export type ConnectionStatus = 'connected' | 'connecting' | 'disconnected' | 'error';
 
 /**
- * Adapter interface for different frameworks
- * This will allow AgentBridge to work with different UI frameworks
+ * Adapter interface for different UI frameworks
+ * 
+ * This enables AgentBridge to work with different UI frameworks (React, Angular, Vue, etc.)
+ * by providing a standardized way to register and interact with UI components.
  */
-export interface FrameworkAdapter {
+export interface Adapter {
   /**
    * Initialize the adapter with an AgentBridge instance
    * @param bridge AgentBridge instance
@@ -13,12 +17,23 @@ export interface FrameworkAdapter {
   initialize(bridge: AgentBridge): void;
   
   /**
-   * Register a UI component that can be controlled by the AI agent
-   * @param componentId Unique identifier for the component
-   * @param componentType Type of the component (e.g., 'button', 'input', 'list')
-   * @param props Additional properties for the component
+   * Register a framework-specific UI component that can be controlled by AI agents
+   * 
+   * This method is called by framework-specific code to register a component with AgentBridge.
+   * The implementation should translate framework-specific concepts to AgentBridge's component model.
+   * 
+   * @param component The framework-specific component object or reference
+   * @param definition Component definition including ID, description, and type
+   * @param handlers Object containing handlers for component updates and actions
    */
-  registerComponent(componentId: string, componentType: string, props?: Record<string, any>): void;
+  registerComponent(
+    component: any,
+    definition: ComponentDefinition,
+    handlers: {
+      updateHandler?: (properties: any, context: ExecutionContext) => Promise<void>;
+      actionHandlers?: Record<string, (params: any, context: ExecutionContext) => Promise<any>>;
+    }
+  ): void;
   
   /**
    * Unregister a UI component
@@ -27,39 +42,87 @@ export interface FrameworkAdapter {
   unregisterComponent(componentId: string): void;
   
   /**
-   * Update a UI component's state
+   * Update a UI component based on properties received from an AI agent
+   * 
+   * This method is called by AgentBridge when an AI agent wants to update a component.
+   * The implementation should translate AgentBridge's property model to framework-specific updates.
+   * 
    * @param componentId Component identifier
-   * @param state New state object
+   * @param properties New properties to apply to the component
+   * @param context Execution context
    */
-  updateComponentState(componentId: string, state: Record<string, any>): void;
+  updateComponent(
+    componentId: string, 
+    properties: any, 
+    context: ExecutionContext
+  ): Promise<void>;
   
   /**
-   * Handle a function call made by an AI agent
-   * @param functionName Name of the function to call
-   * @param params Parameters for the function
-   * @param context Context information
-   * @returns Result of the function call
+   * Execute a component action triggered by an AI agent
+   * 
+   * This method is called by AgentBridge when an AI agent wants to trigger a component action.
+   * The implementation should translate AgentBridge's action model to framework-specific actions.
+   * 
+   * @param componentId Component identifier
+   * @param action Action name
+   * @param params Action parameters
+   * @param context Execution context
    */
-  handleFunctionCall(
-    functionName: string, 
-    params: any, 
-    context: Record<string, any>
-  ): Promise<FunctionCallResult>;
+  executeComponentAction(
+    componentId: string,
+    action: string,
+    params: any,
+    context: ExecutionContext
+  ): Promise<any>;
   
   /**
-   * Get the list of registered components
-   * @returns Map of component IDs to component information
+   * Get component definitions for all registered components
+   * 
+   * This method is called by AgentBridge to gather information about all registered components
+   * for sharing with AI agents.
+   * 
+   * @returns Array of component definitions
    */
-  getComponents(): Map<string, {
-    type: string;
-    props: Record<string, any>;
-    state: Record<string, any>;
-  }>;
+  getComponentDefinitions(): ComponentDefinition[];
   
   /**
-   * Convert the adapter to a different framework
-   * @param targetFramework Name of the target framework
-   * @returns A new adapter for the target framework
+   * Called when the adapter should clean up resources
    */
-  convertTo(targetFramework: string): FrameworkAdapter | null;
+  dispose(): void;
+}
+
+export abstract class CommunicationAdapter<MessageType = unknown> extends EventEmitter {
+  protected connectionStatus: ConnectionStatus = 'disconnected';
+  protected readonly messageQueue: MessageQueue<MessageType> = [];
+  
+  /**
+   * Send a message to the agent
+   * @param message Message to send to the agent
+   */
+  public abstract sendMessage(message: MessageType): void;
+
+  /**
+   * Connect to the agent
+   */
+  public abstract connect(): Promise<void>;
+
+  /**
+   * Disconnect from the agent
+   */
+  public abstract disconnect(): Promise<void>;
+
+  /**
+   * Get the current connection status
+   */
+  public getConnectionStatus(): ConnectionStatus {
+    return this.connectionStatus;
+  }
+  
+  /**
+   * Handle incoming message from the adapter
+   * @param message Message received from the agent
+   */
+  protected handleIncomingMessage(message: any): void {
+    this.emit('message', message);
+  }
 } 

@@ -185,3 +185,6 @@ export class StateMonitorComponent implements OnInit, OnDestroy {
 - Learn more about the [Angular components](components.md)
 - Learn more about the [Angular services](services.md)
 - Explore the [Core API](../../core/overview.md)
+
+// Update any references to the old package structure
+import { AblyProvider } from '@agentbridge/provider-ably';

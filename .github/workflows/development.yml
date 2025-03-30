@@ -69,7 +69,7 @@ jobs:
           channel: 'stable'
       - name: Create test directory if needed
         run: mkdir -p test
-        working-directory: ./packages/mobile/flutter
+        working-directory: ./packages/frameworks/flutter
       - name: Create placeholder test file if needed
         run: |
           if [ ! -f "test/widget_test.dart" ]; then
@@ -81,13 +81,13 @@ jobs:
               });
             }' > test/widget_test.dart
           fi
-        working-directory: ./packages/mobile/flutter
+        working-directory: ./packages/frameworks/flutter
       - name: Install dependencies
         run: flutter pub get
-        working-directory: ./packages/mobile/flutter
+        working-directory: ./packages/frameworks/flutter
       - name: Run Flutter analyze
         run: flutter analyze || true
-        working-directory: ./packages/mobile/flutter
+        working-directory: ./packages/frameworks/flutter
 
   test-flutter:
     name: Test Flutter
@@ -100,7 +100,7 @@ jobs:
           channel: 'stable'
       - name: Create test directory if needed
         run: mkdir -p test
-        working-directory: ./packages/mobile/flutter
+        working-directory: ./packages/frameworks/flutter
       - name: Create placeholder test file if needed
         run: |
           if [ ! -f "test/widget_test.dart" ]; then
@@ -112,18 +112,18 @@ jobs:
               });
             }' > test/widget_test.dart
           fi
-        working-directory: ./packages/mobile/flutter
+        working-directory: ./packages/frameworks/flutter
       - name: Install dependencies
         run: flutter pub get
-        working-directory: ./packages/mobile/flutter
+        working-directory: ./packages/frameworks/flutter
       - name: Run Flutter tests
         run: flutter test --coverage || true
-        working-directory: ./packages/mobile/flutter
+        working-directory: ./packages/frameworks/flutter
       - name: Upload coverage reports
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./packages/mobile/flutter/coverage/lcov.info
+          file: ./packages/frameworks/flutter/coverage/lcov.info
           fail_ci_if_error: false
 
   docs:

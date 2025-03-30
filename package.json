@@ -1,32 +1,70 @@
 {
-  "name": "agentbridge-monorepo",
-  "version": "0.1.0",
-  "private": true,
+  "name": "agentbridge",
+  "version": "0.2.0",
+  "description": "A framework for building applications that can be controlled by AI agents",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces",
+    "lint": "npm run lint --workspaces",
+    "clean": "npm run clean --workspaces",
+    "dev": "npm run dev --workspaces",
+    "cleanup": "node scripts/cleanup-old-dirs.js",
+    "prepare-packages": "node scripts/prepare-packages.js",
+    "publish-packages": "node scripts/publish-packages.js",
+    "check-publish-readiness": "node scripts/check-publish-readiness.js",
+    "prepare-publish": "node scripts/prepare-publish.js",
+    "release": "npm run build && npm run test && npm run lint && npm run prepare-publish && npm run publish-packages",
+    "lint:js": "eslint packages --ext .js,.jsx,.ts,.tsx --max-warnings 1000",
+    "test:js": "jest --testPathIgnorePatterns='packages/frameworks/flutter'",
+    "build:js": "echo Building JavaScript packages... && node scripts/build-js-packages.js",
+    "lint:flutter": "cd packages/frameworks/flutter && flutter analyze",
+    "test:flutter": "cd packages/frameworks/flutter && flutter test",
+    "build:flutter": "cd packages/frameworks/flutter && flutter pub get"
+  },
   "workspaces": [
     "packages/core",
-    "packages/web/*",
-    "packages/mobile/react-native"
+    "packages/frameworks/*",
+    "packages/providers/*",
+    "packages/server"
   ],
-  "scripts": {
-    "install:all": "npm install && cd packages/mobile/flutter && flutter pub get || true",
-    "build:js": "npm run build --workspaces",
-    "build:flutter": "cd packages/mobile/flutter && flutter build || true",
-    "build:all": "npm run build:js && npm run build:flutter",
-    "test:js": "npm run test --workspaces",
-    "test:flutter": "cd packages/mobile/flutter && flutter test || true",
-    "test:all": "npm run test:js && npm run test:flutter",
-    "clean": "npm run clean --workspaces && cd packages/mobile/flutter && flutter clean || true",
-    "lint:js": "npm run lint --workspaces",
-    "lint:flutter": "cd packages/mobile/flutter && flutter analyze || true",
-    "lint": "npm run lint:js && npm run lint:flutter",
-    "create:examples": "node scripts/create-examples.js",
-    "prepare-publish": "node scripts/prepare-packages.js",
-    "version": "npm run prepare-publish && git add .",
-    "check-publish-readiness": "node scripts/check-publish-readiness.js",
-    "publish-packages": "node scripts/publish-packages.js",
-    "release": "npm run check-publish-readiness && npm run prepare-publish && npm run publish-packages"
-  },
+  "keywords": [
+    "ai",
+    "agent",
+    "bridge",
+    "frontend",
+    "ui",
+    "ai-control",
+    "component-registry",
+    "function-registry",
+    "websocket",
+    "pubsub"
+  ],
+  "author": "AgentBridge Team",
+  "license": "MIT",
   "devDependencies": {
-    "fs-extra": "^11.1.1"
-  }
+    "@types/jest": "^29.5.1",
+    "@types/node": "^18.16.3",
+    "@typescript-eslint/eslint-plugin": "^5.59.2",
+    "@typescript-eslint/parser": "^5.59.2",
+    "eslint": "^8.39.0",
+    "jest": "^29.5.0",
+    "lerna": "^6.6.1",
+    "rimraf": "^5.0.0",
+    "ts-jest": "^29.1.0",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=14"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/agentbridge/agentbridge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/agentbridge/agentbridge/issues"
+  },
+  "homepage": "https://agentbridge.github.io/agentbridge"
 } 

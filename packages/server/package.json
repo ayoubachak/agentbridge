@@ -1,0 +1,64 @@
+{
+  "name": "@agentbridge/server",
+  "version": "0.2.0",
+  "description": "Server components for AgentBridge framework",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint src --ext .ts",
+    "clean": "rimraf dist",
+    "start": "node dist/index.js"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "api",
+    "bridge",
+    "framework",
+    "server"
+  ],
+  "author": {
+    "name": "Ayoub Achak",
+    "email": "ayoub.achak01@gmail.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@agentbridge/core": "0.2.0",
+    "express": "^4.18.2",
+    "ws": "^8.14.2",
+    "cors": "^2.8.5",
+    "body-parser": "^1.20.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.5",
+    "@types/node": "^20.8.2",
+    "@types/ws": "^8.5.8",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
+    "eslint": "^8.50.0",
+    "jest": "^29.7.0",
+    "rimraf": "^5.0.5",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ayoubachak/agentbridge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ayoubachak/agentbridge/issues"
+  },
+  "homepage": "https://github.com/ayoubachak/agentbridge",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ]
+} 

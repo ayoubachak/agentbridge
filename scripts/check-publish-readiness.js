@@ -10,9 +10,15 @@ const { execSync } = require('child_process');
 // List of packages to check
 const packagesToCheck = [
   'packages/core',
-  'packages/web/react',
-  'packages/web/angular',
-  'packages/mobile/react-native'
+  'packages/frameworks/react',
+  'packages/frameworks/angular',
+  'packages/frameworks/react-native',
+  'packages/frameworks/flutter',
+  'packages/providers/ably',
+  'packages/providers/firebase',
+  'packages/providers/pusher',
+  'packages/providers/supabase',
+  'packages/server'
 ];
 
 // Required fields in package.json for publishing

@@ -26,18 +26,43 @@ const publishOrder = [
   },
   {
     name: 'React Package',
-    path: 'packages/web/react',
+    path: 'packages/frameworks/react',
     package: '@agentbridge/react'
   },
   {
     name: 'Angular Package',
-    path: 'packages/web/angular',
+    path: 'packages/frameworks/angular',
     package: '@agentbridge/angular'
   },
   {
     name: 'React Native Package',
-    path: 'packages/mobile/react-native',
+    path: 'packages/frameworks/react-native',
     package: '@agentbridge/react-native'
+  },
+  {
+    name: 'Ably Provider',
+    path: 'packages/providers/ably',
+    package: '@agentbridge/provider-ably'
+  },
+  {
+    name: 'Firebase Provider',
+    path: 'packages/providers/firebase',
+    package: '@agentbridge/provider-firebase'
+  },
+  {
+    name: 'Pusher Provider',
+    path: 'packages/providers/pusher',
+    package: '@agentbridge/provider-pusher'
+  },
+  {
+    name: 'Supabase Provider',
+    path: 'packages/providers/supabase',
+    package: '@agentbridge/provider-supabase'
+  },
+  {
+    name: 'Server Package',
+    path: 'packages/server',
+    package: '@agentbridge/server'
   }
 ];
 

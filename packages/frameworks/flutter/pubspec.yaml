@@ -1,0 +1,53 @@
+name: agentbridge_flutter
+description: Flutter SDK for the AgentBridge framework
+version: 0.2.0
+homepage: https://github.com/ayoubachak/agentbridge
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=3.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # Basic HTTP requests
+  http: ^1.1.0
+  # WebSocket channel
+  web_socket_channel: ^2.4.0
+  # UUID generation
+  uuid: ^4.0.0
+  # Provider for state management
+  provider: ^6.0.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+# Flutter-specific configurations
+flutter:
+  # This section identifies this Flutter package as a plugin project.
+  # The 'pluginClass' specifies the class (in Java, Kotlin, Swift, Objective-C, etc.)
+  # which should be registered in the plugin registry.
+  plugin:
+    platforms:
+      android:
+        package: com.ayoubachak.agentbridge_flutter
+        pluginClass: AgentBridgeFlutterPlugin
+      ios:
+        pluginClass: AgentBridgeFlutterPlugin
+      web:
+        pluginClass: AgentBridgeFlutterWeb
+        fileName: agentbridge_flutter_web.dart
+
+# Additional Pub Points
+topics:
+  - ai
+  - agent
+  - framework
+
+# This is a placeholder file. In a real implementation, we would:
+# 1. Define proper version constraints
+# 2. Add necessary dependencies for JSON serialization/deserialization
+# 3. Set up proper platform-specific configurations
+# 4. Potentially include assets or fonts 

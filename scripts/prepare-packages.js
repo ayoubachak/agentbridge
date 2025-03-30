@@ -44,9 +44,14 @@ const repoInfo = {
 // Packages to update
 const packagesToUpdate = [
   'packages/core/package.json',
-  'packages/web/react/package.json',
-  'packages/web/angular/package.json',
-  'packages/mobile/react-native/package.json'
+  'packages/frameworks/react/package.json',
+  'packages/frameworks/angular/package.json',
+  'packages/frameworks/react-native/package.json',
+  'packages/providers/ably/package.json',
+  'packages/providers/firebase/package.json',
+  'packages/providers/pusher/package.json',
+  'packages/providers/supabase/package.json',
+  'packages/server/package.json'
 ];
 
 // Get the current version from the root package.json
@@ -142,7 +147,7 @@ const updatePackageJsonFiles = async (version, packages, updateRepo = true) => {
 
 // Update Flutter pubspec.yaml
 const updateFlutterPubspec = async (version) => {
-  const pubspecPath = path.resolve(process.cwd(), 'packages/mobile/flutter/pubspec.yaml');
+  const pubspecPath = path.resolve(process.cwd(), 'packages/frameworks/flutter/pubspec.yaml');
   
   try {
     // Check if file exists

@@ -1,21 +1,36 @@
-// Main class
-export { AgentBridge } from './agent-bridge';
+// Export the main AgentBridge class
+export { AgentBridge, CommunicationManager } from './agent-bridge';
 
-// Types
+// Export registry implementations
+export { InMemoryFunctionRegistry } from './registry';
+export { InMemoryComponentRegistry } from './component-registry';
+
+// Export adapter
+export { Adapter } from './adapter';
+
+// Export types
 export {
+  AgentBridgeConfig,
+  ExecutionContext,
   FunctionDefinition,
   FunctionImplementation,
-  ExecutionContext,
-  FunctionCallResult,
   FunctionRegistry,
-  AgentBridgeConfig
+  ComponentDefinition,
+  ComponentImplementation,
+  ComponentRegistry,
+  CallResult,
+  CommunicationMode,
+  MessageType,
+  Message,
+  CapabilitiesMessage,
+  FunctionCallMessage,
+  ComponentUpdateMessage,
+  ComponentActionMessage,
+  ResultMessage,
+  ErrorMessage,
+  SessionMessage,
+  QueryCapabilitiesMessage
 } from './types';
-
-// Registry
-export { InMemoryFunctionRegistry } from './registry';
-
-// Adapter
-export { FrameworkAdapter } from './adapter';
 
 // Utility function to create a simple AgentBridge instance
 import { AgentBridge } from './agent-bridge';

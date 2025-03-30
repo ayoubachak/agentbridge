@@ -1,181 +1,161 @@
 # Contributing to AgentBridge
 
-Thank you for considering contributing to AgentBridge! This document outlines the process for contributing to the project and provides guidelines to follow.
+Thank you for your interest in contributing to AgentBridge! This document provides guidelines and instructions for contributing to the project.
 
 ## Code of Conduct
 
-By participating in this project, you agree to abide by our [Code of Conduct](./CODE_OF_CONDUCT.md).
+Please read and follow our [Code of Conduct](CODE_OF_CONDUCT.md) to help us maintain a healthy and welcoming community.
 
-## How Can I Contribute?
+## Project Structure
 
-### Reporting Bugs
+AgentBridge is organized as a monorepo with the following structure:
 
-Before creating a bug report:
-
-1. Check the existing issues to see if the problem has already been reported
-2. Try to reproduce the issue in the latest version of the package
-3. Collect as much information as possible about the bug
-
-When creating a bug report, please include:
-
-- A clear and descriptive title
-- The exact steps to reproduce the problem
-- The expected behavior and what actually happened
-- Code snippets or screenshots if applicable
-- Your environment (OS, browser, package versions, etc.)
-
-### Suggesting Enhancements
-
-We welcome feature requests and improvements. When suggesting an enhancement:
-
-1. Provide a clear and descriptive title
-2. Describe the current behavior and explain the behavior you'd like to see
-3. Explain why this enhancement would be useful
-4. Specify which package(s) the enhancement applies to
-
-### Pull Requests
-
-We welcome pull requests for bug fixes, enhancements, and documentation improvements. Here's how to submit a pull request:
-
-1. Fork the repository
-2. Create a new branch for your feature or bug fix
-3. Make your changes, following our coding standards
-4. Add or update tests as necessary
-5. Update documentation if needed
-6. Submit a pull request targeting the `main` branch
+```
+packages/
+├── core/                 # Core library
+├── frameworks/           # Framework adapters
+│   ├── react/            # React SDK
+│   ├── angular/          # Angular SDK 
+│   ├── react-native/     # React Native SDK
+│   └── flutter/          # Flutter SDK
+├── providers/            # Communication providers
+│   ├── ably/             # Ably implementation
+│   ├── firebase/         # Firebase implementation
+│   ├── pusher/           # Pusher implementation
+│   └── supabase/         # Supabase implementation
+├── communication/        # Communication protocols
+│   └── websocket/        # WebSocket implementation
+└── server/               # Server components
+```
 
 ## Development Setup
 
-### Prerequisites
+1. **Fork and clone the repository**
 
-- Node.js 16+ for JavaScript/TypeScript development
-- Flutter 3.13+ for Flutter development
-- Python 3.8+ for documentation
-
-### Setting Up the Development Environment
-
-1. Clone the repository
    ```bash
-   git clone https://github.com/your-organization/agentbridge.git
+   git clone https://github.com/YOUR_USERNAME/agentbridge.git
    cd agentbridge
    ```
 
-2. Install dependencies
+2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
-3. For Flutter development
+3. **Build the packages**
+
    ```bash
-   cd flutter
-   flutter pub get
+   npm run build
    ```
 
-4. For documentation
+4. **Run tests**
+
    ```bash
-   pip install mkdocs mkdocs-material pymdown-extensions
+   npm run test
    ```
 
-### Project Structure
+## Development Workflow
 
-- `/packages`: Contains all package source code
-  - `/core`: Core functionality
-  - `/react`, `/angular`, `/react-native`: Framework adapters
-  - `/flutter`: Flutter package
-- `/docs`: Documentation
-- `/examples`: Example applications
-- `/tests`: Test suite
-- `/.github`: GitHub workflows
+1. **Create a new branch for your feature or bugfix**
 
-### Building
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+
+2. **Make your changes**
+
+   Implement your feature or bugfix.
+
+3. **Run linting and tests**
+
+   ```bash
+   npm run lint
+   npm run test
+   ```
+
+4. **Build the packages to ensure everything compiles**
+
+   ```bash
+   npm run build
+   ```
+
+5. **Commit your changes using conventional commits**
+
+   ```bash
+   git commit -m "feat: add new feature"
+   ```
+
+   We follow the [Conventional Commits](https://www.conventionalcommits.org/) specification.
+
+6. **Push your branch and create a pull request**
+
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+
+   Then go to GitHub and create a pull request against the `main` branch.
+
+## Working with Packages
+
+### Creating a New Package
+
+1. Run the placeholder generator to create a starting structure:
+
+   ```bash
+   node scripts/generate-placeholders.js
+   ```
+
+2. Implement the required functionality for your package.
+
+3. Update the root `package.json` if necessary.
+
+### Testing Changes Across Packages
+
+Since packages depend on each other, you may need to test changes across multiple packages. The best way to do this is to use the workspace feature:
 
 ```bash
-# Build all JavaScript packages
-npm run build
-
-# Build a specific package
-npm run build --workspace=@agentbridge/core
-npm run build --workspace=@agentbridge/react
+npm run build  # Build all packages
 ```
 
-For Flutter:
-```bash
-cd flutter
-flutter build
-```
+## Pull Request Process
 
-### Testing
-
-```bash
-# Run all JavaScript tests
-npm run test
-
-# Run tests for a specific package
-npm run test --workspace=@agentbridge/core
-```
-
-For Flutter:
-```bash
-cd flutter
-flutter test
-```
-
-### Documentation
-
-We use MkDocs for documentation. To serve documentation locally:
-
-```bash
-mkdocs serve
-```
-
-## Coding Standards
-
-### JavaScript/TypeScript
-
-- Follow ESLint rules defined in the project
-- Write code in TypeScript where possible
-- Use async/await for async operations
-- Write comprehensive tests for new functionality
-
-### Flutter/Dart
-
-- Follow the official [Dart style guide](https://dart.dev/guides/language/effective-dart/style)
-- Use the built-in formatter: `flutter format .`
-- Run static analysis before submitting: `flutter analyze`
-- Write unit tests for new functionality
-
-## Git Workflow
-
-- Create a branch for each feature or bug fix
-- Use descriptive branch names (`feature/add-xy-feature`, `fix/issue-123`)
-- Make focused, atomic commits with descriptive messages
-- Rebase your branch on the latest `main` before submitting a PR
-
-### Commit Message Format
-
-We follow the Conventional Commits specification:
-
-```
-<type>(<scope>): <description>
-
-[optional body]
-
-[optional footer(s)]
-```
-
-Where `type` is one of: feat, fix, docs, style, refactor, perf, test, chore
+1. Ensure your code passes all tests and linting.
+2. Update documentation if necessary.
+3. Add tests for new functionality.
+4. Make sure your PR description clearly describes the problem and solution.
+5. Request a review from at least one of the maintainers.
 
 ## Release Process
 
-Release management is handled by the core team. The general process is:
+Releases are managed by the maintainers. If you'd like to request a release, please open an issue.
 
-1. Update version numbers according to [Semantic Versioning](https://semver.org/)
-2. Update CHANGELOG.md
-3. Create a tag for the new version
-4. Push the tag to trigger the deployment workflow
+The release process involves:
 
-## Questions?
+1. Preparing packages with version updates
+   ```bash
+   npm run prepare-publish
+   ```
 
-If you have any questions about contributing, feel free to open an issue with the "question" label.
+2. Publishing packages to npm
+   ```bash
+   npm run publish-packages
+   ```
 
-Thank you for your contributions! 
+## Reporting Bugs
+
+Please report bugs by opening a new issue on GitHub. Include as much information as possible:
+
+- Package version
+- Platform/OS
+- Reproduction steps
+- Expected vs actual behavior
+- Code examples if possible
+
+## Suggesting Features
+
+We welcome feature suggestions! Please open an issue describing your proposed feature, why it's valuable, and how it should work.
+
+## License
+
+By contributing to AgentBridge, you agree that your contributions will be licensed under the project's [MIT License](LICENSE). 

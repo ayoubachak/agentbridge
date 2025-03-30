@@ -1,0 +1,58 @@
+{
+  "name": "@agentbridge/provider-firebase",
+  "version": "0.2.0",
+  "description": "Firebase Realtime Database provider for AgentBridge framework",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint src --ext .ts",
+    "clean": "rimraf dist"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "api",
+    "bridge",
+    "framework",
+    "firebase",
+    "pubsub"
+  ],
+  "author": {
+    "name": "Ayoub Achak",
+    "email": "ayoub.achak01@gmail.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@agentbridge/core": "0.2.0",
+    "firebase": "^10.10.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.5",
+    "@types/node": "^20.8.2",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
+    "eslint": "^8.50.0",
+    "jest": "^29.7.0",
+    "rimraf": "^5.0.5",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ayoubachak/agentbridge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ayoubachak/agentbridge/issues"
+  },
+  "homepage": "https://github.com/ayoubachak/agentbridge",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ]
+} 

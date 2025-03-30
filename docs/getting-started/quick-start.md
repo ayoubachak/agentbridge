@@ -1,467 +1,374 @@
-# Quick Start
+# Quick Start Guide
 
-This guide will help you get started with AgentBridge by building a simple application that exposes functionality to AI agents. We'll cover the basics of initializing AgentBridge, registering functions, and registering UI components.
+This guide will help you quickly integrate AgentBridge into a React application, enabling AI agents to interact with your UI components and application functions.
 
-## Basic Setup
+## Prerequisites
 
-First, let's create a new project and install the required dependencies:
+- Node.js (v14 or higher)
+- npm or yarn
+- A React application (create-react-app or similar)
 
-=== "React"
-    ```bash
-    npx create-react-app my-agentbridge-app
-    cd my-agentbridge-app
-    npm install @agentbridge/core @agentbridge/react
-    ```
+## Installation
 
-=== "Angular"
-    ```bash
-    ng new my-agentbridge-app
-    cd my-agentbridge-app
-    npm install @agentbridge/core @agentbridge/angular
-    ```
+Install the required AgentBridge packages:
 
-=== "React Native"
-    ```bash
-    npx react-native init MyAgentBridgeApp
-    cd MyAgentBridgeApp
-    npm install @agentbridge/core @agentbridge/react-native
-    ```
+```bash
+# Core package
+npm install @agentbridge/core
 
-=== "Flutter"
-    ```bash
-    flutter create my_agentbridge_app
-    cd my_agentbridge_app
-    # Add agentbridge dependency to pubspec.yaml
-    ```
+# React SDK
+npm install @agentbridge/react
 
-## Initializing AgentBridge
+# Choose one of the communication providers:
+# For Pub/Sub mode with Ably:
+npm install @agentbridge/provider-ably ably
+# OR for Self-Hosted mode with WebSockets:
+npm install @agentbridge/comm-websocket isomorphic-ws
+```
 
-Now let's initialize AgentBridge in our application:
+## Setting Up AgentBridge
 
-=== "React"
-    ```jsx
-    // src/App.js
-    import React from 'react';
-    import { AgentBridgeProvider, createAgentBridge } from '@agentbridge/react';
+### 1. Create an AgentBridge Instance
 
-    // Create an AgentBridge instance
-    const bridge = createAgentBridge();
+First, let's create and configure an AgentBridge instance based on your preferred communication mode.
 
-    function App() {
-      return (
-        <AgentBridgeProvider bridge={bridge}>
-          <div className="App">
-            <h1>My AgentBridge App</h1>
-            {/* Your components go here */}
-          </div>
-        </AgentBridgeProvider>
-      );
-    }
+#### Option A: Pub/Sub Mode (with Ably)
 
-    export default App;
-    ```
+```jsx
+// src/agentBridge.js
+import { createReactBridge } from '@agentbridge/react';
+import { initializeAblyProvider } from '@agentbridge/provider-ably';
 
-=== "Angular"
-    ```typescript
-    // app.module.ts
-    import { NgModule } from '@angular/core';
-    import { BrowserModule } from '@angular/platform-browser';
-    import { AgentBridgeModule } from '@agentbridge/angular';
-    import { AppComponent } from './app.component';
+// Create a unique ID for your application
+const APP_ID = 'my-awesome-app';
 
-    @NgModule({
-      declarations: [AppComponent],
-      imports: [
-        BrowserModule,
-        AgentBridgeModule.forRoot()
-      ],
-      providers: [],
-      bootstrap: [AppComponent]
-    })
-    export class AppModule { }
-    ```
+// Create the bridge
+const bridge = createReactBridge(APP_ID, {
+  appName: 'My Awesome App',
+  environment: process.env.NODE_ENV,
+  // Configure Pub/Sub with Ably
+  pubsub: {
+    provider: 'ably',
+    apiKey: 'YOUR_ABLY_API_KEY' // Get this from your Ably dashboard
+  },
+  logging: {
+    level: 'debug' // Use 'info' or 'error' in production
+  }
+});
 
-=== "React Native"
-    ```jsx
-    // App.js
-    import React from 'react';
-    import { SafeAreaView, Text } from 'react-native';
-    import { AgentBridgeProvider, createAgentBridge } from '@agentbridge/react-native';
+// Initialize the Ably provider
+initializeAblyProvider(bridge, {
+  appId: APP_ID,
+  apiKey: 'YOUR_ABLY_API_KEY'
+});
 
-    // Create an AgentBridge instance
-    const bridge = createAgentBridge();
+export default bridge;
+```
 
-    function App() {
-      return (
-        <AgentBridgeProvider bridge={bridge}>
-          <SafeAreaView>
-            <Text>My AgentBridge App</Text>
-            {/* Your components go here */}
-          </SafeAreaView>
-        </AgentBridgeProvider>
-      );
-    }
+#### Option B: Self-Hosted Mode (with WebSockets)
 
-    export default App;
-    ```
+```jsx
+// src/agentBridge.js
+import { AgentBridge } from '@agentbridge/core';
+import { initializeWebSocketProvider } from '@agentbridge/comm-websocket';
 
-=== "Flutter"
-    ```dart
-    // lib/main.dart
-    import 'package:flutter/material.dart';
-    import 'package:agentbridge/agentbridge.dart';
+// Create the bridge
+const bridge = new AgentBridge({
+  communication: {
+    mode: 'self-hosted'
+  },
+  logging: {
+    level: 'debug' // Use 'info' or 'error' in production
+  }
+});
 
-    void main() {
-      runApp(const MyApp());
-    }
+// Initialize the WebSocket provider
+initializeWebSocketProvider(bridge, {
+  url: 'wss://your-websocket-server.com/agent-bridge', // Your WebSocket server URL
+  reconnect: {
+    enabled: true
+  }
+});
 
-    class MyApp extends StatelessWidget {
-      const MyApp({Key? key}) : super(key: key);
+export default bridge;
+```
 
-      @override
-      Widget build(BuildContext context) {
-        // Create an AgentBridge instance
-        final bridge = AgentBridge();
-        
-        return MaterialApp(
-          title: 'AgentBridge Demo',
-          home: AgentBridgeProvider(
-            bridge: bridge,
-            child: Scaffold(
-              appBar: AppBar(
-                title: const Text('AgentBridge Demo'),
-              ),
-              body: const Center(
-                child: Text('My AgentBridge App'),
-              ),
-            ),
-          ),
-        );
-      }
-    }
-    ```
+### 2. Add the AgentBridge Provider to Your App
 
-## Registering Functions
+Wrap your application with the AgentBridge provider to make it available throughout your component tree:
 
-Now let's register some functions that AI agents can call:
+```jsx
+// src/index.js or App.js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import bridge from './agentBridge';
+import { AgentBridgeProvider } from '@agentbridge/react';
 
-=== "React"
-    ```jsx
-    // src/App.js
-    import React, { useEffect } from 'react';
-    import { AgentBridgeProvider, createAgentBridge, useAgentBridge } from '@agentbridge/react';
-
-    const bridge = createAgentBridge();
-
-    function FunctionRegistration() {
-      const { registerFunction } = useAgentBridge();
-      
-      useEffect(() => {
-        // Register a simple function
-        registerFunction(
-          'greet',
-          'Greet a user by name',
-          {
-            type: 'object',
-            properties: {
-              name: { type: 'string' }
-            },
-            required: ['name']
-          },
-          async ({ name }) => {
-            return { message: `Hello, ${name}!` };
-          }
-        );
-      }, [registerFunction]);
-      
-      return null;
-    }
-
-    function App() {
-      return (
-        <AgentBridgeProvider bridge={bridge}>
-          <FunctionRegistration />
-          <div className="App">
-            <h1>My AgentBridge App</h1>
-          </div>
-        </AgentBridgeProvider>
-      );
-    }
-
-    export default App;
-    ```
-
-=== "Angular"
-    ```typescript
-    // app.component.ts
-    import { Component, OnInit } from '@angular/core';
-    import { AgentBridgeService } from '@agentbridge/angular';
-
-    @Component({
-      selector: 'app-root',
-      template: `
-        <div class="app">
-          <h1>My AgentBridge App</h1>
-        </div>
-      `
-    })
-    export class AppComponent implements OnInit {
-      constructor(private agentBridgeService: AgentBridgeService) {}
-      
-      ngOnInit() {
-        // Register a simple function
-        this.agentBridgeService.registerFunction(
-          'greet',
-          'Greet a user by name',
-          {
-            type: 'object',
-            properties: {
-              name: { type: 'string' }
-            },
-            required: ['name']
-          },
-          async ({ name }) => {
-            return { message: `Hello, ${name}!` };
-          }
-        );
-      }
-    }
-    ```
-
-=== "Flutter"
-    ```dart
-    // lib/main.dart
-    import 'package:flutter/material.dart';
-    import 'package:agentbridge/agentbridge.dart';
-
-    void main() {
-      runApp(const MyApp());
-    }
-
-    class MyApp extends StatefulWidget {
-      const MyApp({Key? key}) : super(key: key);
-
-      @override
-      _MyAppState createState() => _MyAppState();
-    }
-
-    class _MyAppState extends State<MyApp> {
-      late final AgentBridge bridge;
-      
-      @override
-      void initState() {
-        super.initState();
-        bridge = AgentBridge();
-        
-        // Register a simple function
-        bridge.registerFunction(
-          name: 'greet',
-          description: 'Greet a user by name',
-          handler: (params, context) async {
-            final name = params['name'] as String;
-            return { 'message': 'Hello, $name!' };
-          },
-        );
-      }
-      
-      @override
-      Widget build(BuildContext context) {
-        return MaterialApp(
-          title: 'AgentBridge Demo',
-          home: AgentBridgeProvider(
-            bridge: bridge,
-            child: Scaffold(
-              appBar: AppBar(
-                title: const Text('AgentBridge Demo'),
-              ),
-              body: const Center(
-                child: Text('My AgentBridge App'),
-              ),
-            ),
-          ),
-        );
-      }
-    }
-    ```
+ReactDOM.render(
+  <React.StrictMode>
+    <AgentBridgeProvider bridge={bridge}>
+      <App />
+    </AgentBridgeProvider>
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+```
 
 ## Registering UI Components
 
-Now let's register some UI components that AI agents can interact with:
+Now, let's make UI components controllable by AI agents. AgentBridge offers several approaches:
 
-=== "React"
-    ```jsx
-    // src/App.js
-    import React, { useState } from 'react';
-    import { AgentBridgeProvider, createAgentBridge, useAgentComponent } from '@agentbridge/react';
+### Approach 1: Using the `useRegisterComponent` Hook
 
-    const bridge = createAgentBridge();
+```jsx
+// src/components/SubmitButton.jsx
+import React, { useState } from 'react';
+import { useRegisterComponent } from '@agentbridge/react';
+import { z } from 'zod';
 
-    function AgentButton() {
-      const [clickCount, setClickCount] = useState(0);
-      
-      const buttonProps = useAgentComponent('main-button', 'button', {
-        clickCount
-      });
-      
-      const handleClick = () => {
-        setClickCount(clickCount + 1);
-      };
-      
-      return (
-        <button
-          {...buttonProps}
-          onClick={handleClick}
-          style={{ padding: '10px 20px', fontSize: '16px' }}
-        >
-          Click me! ({clickCount})
-        </button>
-      );
+const SubmitButton = ({ onSubmit, label = 'Submit' }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const handleClick = async () => {
+    setIsLoading(true);
+    try {
+      await onSubmit();
+    } finally {
+      setIsLoading(false);
     }
+  };
+  
+  // Register this component with AgentBridge
+  useRegisterComponent({
+    id: 'submit-button',
+    description: 'A button to submit the current form',
+    componentType: 'button',
+    // Define actions the AI can trigger
+    actions: {
+      click: {
+        description: 'Click the submit button',
+        handler: async (params, context) => {
+          await handleClick();
+          return { success: true };
+        }
+      }
+    },
+    // Properties the AI can update (optional)
+    properties: z.object({
+      disabled: z.boolean().optional(),
+      label: z.string().optional()
+    }),
+    // Handler for property updates
+    updateHandler: async (properties, context) => {
+      // You'd typically update state here
+      if (properties.label) {
+        // Update label (in a real component, you'd use state)
+      }
+    },
+    // Optional metadata
+    tags: ['form', 'button', 'submit'],
+    path: '/checkout/form'
+  });
+  
+  return (
+    <button
+      onClick={handleClick}
+      disabled={isLoading || isDisabled}
+    >
+      {isLoading ? 'Loading...' : label}
+    </button>
+  );
+};
 
-    function App() {
-      return (
-        <AgentBridgeProvider bridge={bridge}>
-          <div className="App">
-            <h1>My AgentBridge App</h1>
-            <AgentButton />
-          </div>
-        </AgentBridgeProvider>
-      );
-    }
+export default SubmitButton;
+```
 
-    export default App;
-    ```
+### Approach 2: Using the `AgentBridgeComponent` Wrapper
 
-=== "Angular"
-    ```html
-    <!-- app.component.html -->
-    <div class="app">
-      <h1>My AgentBridge App</h1>
-      <agent-button agentId="main-button" (clicked)="handleButtonClick()">
-        Click me! ({{ clickCount }})
-      </agent-button>
+```jsx
+// src/components/TextField.jsx
+import React from 'react';
+import { AgentBridgeComponent } from '@agentbridge/react';
+import { z } from 'zod';
+
+const TextField = ({ id, label, placeholder }) => {
+  return (
+    <AgentBridgeComponent
+      register={{
+        id: `input-${id}`,
+        description: `Text input field for ${label}`,
+        componentType: 'input',
+        properties: z.object({
+          value: z.string().optional(),
+          placeholder: z.string().optional(),
+          disabled: z.boolean().optional()
+        }),
+        tags: ['form', 'input', 'text']
+      }}
+      initialState={{ value: '', placeholder, disabled: false }}
+    >
+      {(state, setState) => (
+        <div className="form-field">
+          <label htmlFor={id}>{label}</label>
+          <input
+            id={id}
+            type="text"
+            value={state.value}
+            placeholder={state.placeholder}
+            disabled={state.disabled}
+            onChange={(e) => setState({ ...state, value: e.target.value })}
+          />
+        </div>
+      )}
+    </AgentBridgeComponent>
+  );
+};
+
+export default TextField;
+```
+
+### Approach 3: Using the Higher-Order Component
+
+```jsx
+// src/components/Checkbox.jsx
+import React from 'react';
+import { withAgentBridge } from '@agentbridge/react';
+import { z } from 'zod';
+
+const Checkbox = ({ id, label, checked, onChange, disabled }) => {
+  return (
+    <div className="checkbox-field">
+      <input
+        id={id}
+        type="checkbox"
+        checked={checked}
+        onChange={onChange}
+        disabled={disabled}
+      />
+      <label htmlFor={id}>{label}</label>
     </div>
-    ```
+  );
+};
 
-    ```typescript
-    // app.component.ts
-    import { Component } from '@angular/core';
+// Wrap the component with AgentBridge
+export default withAgentBridge(Checkbox, {
+  id: 'terms-checkbox',
+  description: 'Checkbox for accepting terms and conditions',
+  componentType: 'checkbox',
+  properties: z.object({
+    checked: z.boolean(),
+    disabled: z.boolean().optional()
+  }),
+  tags: ['form', 'checkbox', 'terms']
+});
+```
 
-    @Component({
-      selector: 'app-root',
-      templateUrl: './app.component.html'
-    })
-    export class AppComponent {
-      clickCount = 0;
-      
-      handleButtonClick() {
-        this.clickCount++;
+## Registering Application Functions
+
+You can also expose application-level functions (like API calls or business logic) to AI agents:
+
+```jsx
+// src/hooks/useAuthFunctions.js
+import { useRegisterFunction } from '@agentbridge/react';
+import { z } from 'zod';
+import { useAuth } from './useAuth'; // Your auth hook
+
+export function useAuthFunctions() {
+  const { login, logout, register } = useAuth();
+  
+  // Register login function
+  useRegisterFunction(
+    'login',
+    'Authenticate a user with email and password',
+    z.object({
+      email: z.string().email(),
+      password: z.string().min(6)
+    }),
+    async (params, context) => {
+      try {
+        const result = await login(params.email, params.password);
+        return { success: true, user: result.user };
+      } catch (error) {
+        return { success: false, message: error.message };
       }
-    }
-    ```
-
-=== "Flutter"
-    ```dart
-    // lib/main.dart
-    import 'package:flutter/material.dart';
-    import 'package:agentbridge/agentbridge.dart';
-
-    void main() {
-      runApp(const MyApp());
-    }
-
-    class MyApp extends StatefulWidget {
-      const MyApp({Key? key}) : super(key: key);
-
-      @override
-      _MyAppState createState() => _MyAppState();
-    }
-
-    class _MyAppState extends State<MyApp> {
-      late final AgentBridge bridge;
-      int clickCount = 0;
-      
-      @override
-      void initState() {
-        super.initState();
-        bridge = AgentBridge();
+    },
+    { authLevel: 'public' }
+  );
+  
+  // Register logout function
+  useRegisterFunction(
+    'logout',
+    'Log out the current user',
+    z.object({}),
+    async (params, context) => {
+      await logout();
+      return { success: true };
+    },
+    { authLevel: 'user' }
+  );
+  
+  // Register user registration function
+  useRegisterFunction(
+    'register',
+    'Register a new user account',
+    z.object({
+      email: z.string().email(),
+      password: z.string().min(6),
+      name: z.string().min(1)
+    }),
+    async (params, context) => {
+      try {
+        const result = await register(params);
+        return { success: true, user: result.user };
+      } catch (error) {
+        return { success: false, message: error.message };
       }
-      
-      void handleButtonClick() {
-        setState(() {
-          clickCount++;
-        });
-      }
-      
-      @override
-      Widget build(BuildContext context) {
-        return MaterialApp(
-          title: 'AgentBridge Demo',
-          home: AgentBridgeProvider(
-            bridge: bridge,
-            child: Scaffold(
-              appBar: AppBar(
-                title: const Text('AgentBridge Demo'),
-              ),
-              body: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('My AgentBridge App'),
-                    const SizedBox(height: 20),
-                    AgentButton(
-                      agentId: 'main-button',
-                      onPressed: handleButtonClick,
-                      child: Text('Click me! ($clickCount)'),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      }
-    }
-    ```
+    },
+    { authLevel: 'public' }
+  );
+}
+```
 
-## Testing with an AI Agent
+Then use this hook in your app:
 
-Now that we've set up our application with AgentBridge, let's test it with an AI agent. For this example, we'll use the console to simulate an AI agent calling our functions and interacting with our components.
+```jsx
+// src/App.jsx
+import React from 'react';
+import { useAuthFunctions } from './hooks/useAuthFunctions';
 
-=== "JavaScript"
-    ```javascript
-    // Open the browser console and run:
-    
-    // Get the AgentBridge instance
-    const bridge = window._agentBridge;
-    
-    // Call the greet function
-    bridge.callFunction('greet', { name: 'John' })
-      .then(result => console.log(result));
-    // Output: { success: true, data: { message: "Hello, John!" }, ... }
-    
-    // Get all registered components
-    bridge.callFunction('getComponents', {})
-      .then(result => console.log(result));
-    // Output: Information about registered components
-    
-    // Trigger a click on the button
-    bridge.callFunction('triggerComponentEvent', {
-      componentId: 'main-button',
-      event: 'click'
-    })
-      .then(result => console.log(result));
-    // This will increment the click counter
-    ```
+function App() {
+  // Register auth functions with AgentBridge
+  useAuthFunctions();
+  
+  return (
+    // Your app components
+  );
+}
+
+export default App;
+```
+
+## How AI Agents Interact with Your App
+
+Once your app is properly configured with AgentBridge:
+
+1. **For Pub/Sub Mode:** AI agents can connect to the same Ably channels using your app ID.
+2. **For Self-Hosted Mode:** AI agents connect to your WebSocket server.
+
+Agents can then:
+
+1. **Discover Capabilities**: Query available components and functions.
+2. **Control UI**: Update component properties and trigger actions.
+3. **Call Functions**: Execute registered application functions.
 
 ## Next Steps
 
-Congratulations! You've built your first application with AgentBridge. Here are some next steps to explore:
-
-1. Learn about the [Core API](../core/overview.md) in more detail
-2. Explore the UI component APIs for your framework:
-   - [React Components](../web/react/components.md)
-   - [Angular Components](../web/angular/components.md)
-   - [Flutter Components](../mobile/flutter/components.md)
-3. Learn about [authentication and permissions](../advanced/authentication.md)
-4. Explore [error handling](../advanced/error-handling.md) strategies
+- [Communication Modes](./communication-modes.md): Learn more about the different communication modes.
+- [Pub/Sub Configuration](../core/pubsub-config.md): Detailed configuration for Pub/Sub providers.
+- [WebSocket Configuration](../core/websocket-config.md): Detailed configuration for self-hosted WebSockets.
+- [Component Registration](../web/component-registration.md): Advanced component registration techniques.
+- [Function Registration](../core/function-registration.md): Advanced function registration techniques.
+- [React Integration](../web/react.md): In-depth React integration guide.
+- [React Native Integration](../mobile/react-native.md): Integrating with React Native applications.
+- [Security Best Practices](../advanced/security.md): Securing your AgentBridge implementation.

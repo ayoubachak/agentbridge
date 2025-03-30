@@ -1,34 +1,26 @@
-# Installation
+# Installation Guide
 
-This guide will help you install AgentBridge in your application. AgentBridge is available for different platforms and frameworks, including React, Angular, React Native, and Flutter.
+This guide covers how to install AgentBridge in various environments and frameworks. AgentBridge is designed to work with both web and mobile applications, with packages tailored for different frameworks.
 
-## Prerequisites
+## Core Package
 
-- Node.js 14.x or higher (for web applications)
-- Flutter 3.0.0 or higher (for Flutter applications)
-- npm 7.x or higher or yarn 1.22.x or higher
-
-## Installing the Core Package
-
-The core package provides the fundamental functionality of AgentBridge and is required by all platform-specific SDKs.
-
-### Using npm
+The core package provides the foundation for AgentBridge and is required regardless of your framework or communication mode.
 
 ```bash
 npm install @agentbridge/core
 ```
 
-### Using yarn
+or with yarn:
 
 ```bash
 yarn add @agentbridge/core
 ```
 
-## Web SDKs
+## Framework-Specific SDKs
 
 ### React
 
-The React SDK provides components and hooks for integrating AgentBridge with React applications.
+For React web applications, install the React SDK:
 
 ```bash
 npm install @agentbridge/react
@@ -36,17 +28,15 @@ npm install @agentbridge/react
 
 ### Angular
 
-The Angular SDK provides services, components, and directives for integrating AgentBridge with Angular applications.
+For Angular applications, install the Angular SDK:
 
 ```bash
 npm install @agentbridge/angular
 ```
 
-## Mobile SDKs
-
 ### React Native
 
-The React Native SDK extends the React SDK and adds mobile-specific functionality for React Native applications.
+For React Native mobile applications, install the React Native SDK:
 
 ```bash
 npm install @agentbridge/react-native
@@ -54,59 +44,120 @@ npm install @agentbridge/react-native
 
 ### Flutter
 
-The Flutter SDK provides widgets and services for integrating AgentBridge with Flutter applications.
-
-```bash
-flutter pub add agentbridge
-```
-
-## Environment Setup
-
-### Web Applications
-
-For web applications, you need to make sure that your bundler (webpack, Rollup, etc.) is configured correctly to handle the AgentBridge packages.
-
-### React Native Applications
-
-For React Native applications, you may need to install additional dependencies depending on the features you use:
-
-```bash
-npm install @agentbridge/react
-```
-
-### Flutter Applications
-
-For Flutter applications, add the following dependency to your `pubspec.yaml` file:
+For Flutter applications, add the AgentBridge Flutter package to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  agentbridge: ^0.1.0
+  agent_bridge: ^0.2.0
 ```
 
-## Verifying Installation
+Then run:
 
-To verify that AgentBridge is installed correctly, you can create a simple test application that imports the core package and initializes the AgentBridge instance:
-
-### JavaScript/TypeScript
-
-```typescript
-import { createAgentBridge } from '@agentbridge/core';
-
-const bridge = createAgentBridge();
-console.log('AgentBridge initialized:', bridge);
+```bash
+flutter pub get
 ```
 
-### Dart (Flutter)
+## Communication Providers
 
-```dart
-import 'package:agentbridge/agentbridge.dart';
+AgentBridge supports two communication modes: Pub/Sub and Self-Hosted. You'll need to install the appropriate provider package for your chosen mode.
 
-void main() {
-  final bridge = AgentBridge();
-  print('AgentBridge initialized: $bridge');
-}
+### Pub/Sub Providers
+
+#### Ably Provider
+
+To use Ably as your Pub/Sub provider:
+
+```bash
+npm install @agentbridge/provider-ably ably
+```
+
+#### Firebase Provider
+
+To use Firebase Realtime Database as your Pub/Sub provider:
+
+```bash
+npm install @agentbridge/provider-firebase firebase
+```
+
+#### Pusher Provider
+
+To use Pusher as your Pub/Sub provider:
+
+```bash
+npm install @agentbridge/provider-pusher pusher-js
+```
+
+#### Supabase Provider
+
+To use Supabase Realtime as your Pub/Sub provider:
+
+```bash
+npm install @agentbridge/provider-supabase @supabase/supabase-js
+```
+
+### Self-Hosted Mode
+
+For the self-hosted WebSocket mode, you'll be using the server package directly:
+
+```bash
+npm install @agentbridge/server ws
+```
+
+## Complete Installation Examples
+
+Here are complete installation examples for common setups:
+
+### React + Ably (Pub/Sub Mode)
+
+```bash
+npm install @agentbridge/core @agentbridge/react @agentbridge/provider-ably ably
+```
+
+### React + Self-Hosted WebSocket
+
+```bash
+# Frontend
+npm install @agentbridge/core @agentbridge/react
+
+# Backend (Node.js)
+npm install @agentbridge/server ws express
+```
+
+### Angular + Firebase (Pub/Sub Mode)
+
+```bash
+npm install @agentbridge/core @agentbridge/angular @agentbridge/provider-firebase firebase
+```
+
+### React Native + Pusher (Pub/Sub Mode)
+
+```bash
+npm install @agentbridge/core @agentbridge/react-native @agentbridge/provider-pusher pusher-js
+```
+
+### Flutter + Supabase (Pub/Sub Mode)
+
+In `pubspec.yaml`:
+
+```yaml
+dependencies:
+  agent_bridge: ^0.2.0
+  agent_bridge_provider_supabase: ^0.2.0
+  supabase_flutter: ^1.0.0
+```
+
+## TypeScript Support
+
+All JavaScript packages include TypeScript definitions. To ensure full TypeScript support, make sure you have TypeScript installed in your project:
+
+```bash
+npm install typescript --save-dev
 ```
 
 ## Next Steps
 
-Now that you have installed AgentBridge, you can proceed to the [Quick Start](quick-start.md) guide to learn how to use it in your application. 
+Now that you've installed the required packages, you can proceed to set up AgentBridge in your application:
+
+1. [Quick Start Guide](./quick-start.md): Build your first AI-enabled application
+2. [Communication Modes](./communication-modes.md): Learn about the different communication modes
+3. [Framework-Specific Guides](../web/index.md): Integration guides for specific frameworks 

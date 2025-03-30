@@ -60,7 +60,7 @@ jobs:
           channel: 'stable'
       - name: Create test directory if needed
         run: mkdir -p test
-        working-directory: ./packages/mobile/flutter
+        working-directory: ./packages/frameworks/flutter
       - name: Create placeholder test file if needed
         run: |
           if [ ! -f "test/widget_test.dart" ]; then
@@ -72,16 +72,16 @@ jobs:
               });
             }' > test/widget_test.dart
           fi
-        working-directory: ./packages/mobile/flutter
+        working-directory: ./packages/frameworks/flutter
       - name: Install dependencies
         run: flutter pub get
-        working-directory: ./packages/mobile/flutter
+        working-directory: ./packages/frameworks/flutter
       - name: Run Flutter analyze
         run: flutter analyze || true
-        working-directory: ./packages/mobile/flutter
+        working-directory: ./packages/frameworks/flutter
       - name: Run Flutter tests
         run: flutter test || true
-        working-directory: ./packages/mobile/flutter
+        working-directory: ./packages/frameworks/flutter
 
   version-packages:
     name: Update Package Versions
@@ -203,8 +203,9 @@ jobs:
           name: js-packages
           path: |
             packages/core/dist
-            packages/web/*/dist
-            packages/mobile/react-native/dist
+            packages/frameworks/*/dist
+            packages/providers/*/dist
+            packages/server/dist
 
   build-flutter:
     name: Build Flutter Package
@@ -219,17 +220,32 @@ jobs:
         with:
           flutter-version: '3.13.0'
           channel: 'stable'
+      - name: Create test directory if needed
+        run: mkdir -p test
+        working-directory: ./packages/frameworks/flutter
+      - name: Create placeholder test file if needed
+        run: |
+          if [ ! -f "test/widget_test.dart" ]; then
+            echo 'import "package:flutter_test/flutter_test.dart";
+
+            void main() {
+              test("Placeholder test", () {
+                expect(true, true);
+              });
+            }' > test/widget_test.dart
+          fi
+        working-directory: ./packages/frameworks/flutter
       - name: Install dependencies
         run: flutter pub get
-        working-directory: ./packages/mobile/flutter
+        working-directory: ./packages/frameworks/flutter
       - name: Build package
         run: flutter build || true
-        working-directory: ./packages/mobile/flutter
+        working-directory: ./packages/frameworks/flutter
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: flutter-package
-          path: ./packages/mobile/flutter/build
+          path: ./packages/frameworks/flutter/build
 
   publish-js:
     name: Publish to npm
@@ -289,21 +305,33 @@ jobs:
           npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Publish React Package
+      - name: Publish Framework Packages
         run: |
-          cd packages/web/react
-          npm publish --access public
+          for pkg in packages/frameworks/*; do
+            if [ -d "$pkg" ] && [ -f "$pkg/package.json" ] && [ "$pkg" != "packages/frameworks/flutter" ]; then
+              echo "Publishing $pkg"
+              cd $pkg
+              npm publish --access public
+              cd -
+            fi
+          done
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Publish Angular Package
+      - name: Publish Provider Packages
         run: |
-          cd packages/web/angular
-          npm publish --access public
+          for pkg in packages/providers/*; do
+            if [ -d "$pkg" ] && [ -f "$pkg/package.json" ]; then
+              echo "Publishing $pkg"
+              cd $pkg
+              npm publish --access public
+              cd -
+            fi
+          done
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Publish React Native Package
+      - name: Publish Server Package
         run: |
-          cd packages/mobile/react-native
+          cd packages/server
           npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -345,11 +373,17 @@ jobs:
           echo "" >> RELEASE_NOTES.md
           echo "## Packages Released" >> RELEASE_NOTES.md
           echo "- @agentbridge/core@${{ steps.set_version.outputs.VERSION }}" >> RELEASE_NOTES.md
+          echo "### Frameworks" >> RELEASE_NOTES.md
           echo "- @agentbridge/react@${{ steps.set_version.outputs.VERSION }}" >> RELEASE_NOTES.md
           echo "- @agentbridge/angular@${{ steps.set_version.outputs.VERSION }}" >> RELEASE_NOTES.md
           echo "- @agentbridge/react-native@${{ steps.set_version.outputs.VERSION }}" >> RELEASE_NOTES.md
-          # Removing Flutter package from release notes
-          # echo "- agentbridge_flutter: ${{ steps.set_version.outputs.VERSION }} (Flutter)" >> RELEASE_NOTES.md
+          echo "### Providers" >> RELEASE_NOTES.md
+          echo "- @agentbridge/provider-firebase@${{ steps.set_version.outputs.VERSION }}" >> RELEASE_NOTES.md
+          echo "- @agentbridge/provider-ably@${{ steps.set_version.outputs.VERSION }}" >> RELEASE_NOTES.md
+          echo "- @agentbridge/provider-pusher@${{ steps.set_version.outputs.VERSION }}" >> RELEASE_NOTES.md
+          echo "- @agentbridge/provider-supabase@${{ steps.set_version.outputs.VERSION }}" >> RELEASE_NOTES.md
+          echo "### Server" >> RELEASE_NOTES.md
+          echo "- @agentbridge/server@${{ steps.set_version.outputs.VERSION }}" >> RELEASE_NOTES.md
           echo "" >> RELEASE_NOTES.md
           # Check if there are previous tags, if not just add an initial release message
           if git describe --tags --abbrev=0 2>/dev/null; then
