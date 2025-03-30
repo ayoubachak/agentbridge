@@ -67,10 +67,10 @@ jobs:
           channel: 'stable'
       - name: Install dependencies
         run: flutter pub get
-        working-directory: ./flutter
+        working-directory: ./packages/mobile/flutter
       - name: Run Flutter analyze
         run: flutter analyze
-        working-directory: ./flutter
+        working-directory: ./packages/mobile/flutter
 
   test-flutter:
     name: Test Flutter
@@ -83,15 +83,15 @@ jobs:
           channel: 'stable'
       - name: Install dependencies
         run: flutter pub get
-        working-directory: ./flutter
+        working-directory: ./packages/mobile/flutter
       - name: Run Flutter tests
         run: flutter test --coverage
-        working-directory: ./flutter
+        working-directory: ./packages/mobile/flutter
       - name: Upload coverage reports
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./flutter/coverage/lcov.info
+          file: ./packages/mobile/flutter/coverage/lcov.info
           fail_ci_if_error: false
 
   docs:
