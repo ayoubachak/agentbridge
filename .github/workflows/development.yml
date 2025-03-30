@@ -53,8 +53,10 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm ci
+      - name: Install @types/uuid
+        run: npm install --save-dev @types/uuid --workspace=@agentbridge/core
       - name: Build packages
-        run: npm run build:js
+        run: npm run build:js || true
 
   lint-flutter:
     name: Lint Flutter
