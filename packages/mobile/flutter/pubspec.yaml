@@ -1,6 +1,6 @@
 name: agentbridge_flutter
 description: Flutter SDK for the AgentBridge framework, enabling AI agents to interact with Flutter applications
-version: 0.1.0
+version: 1.0.0
 repository: https://github.com/yourusername/agentbridge
 homepage: https://github.com/yourusername/agentbridge
 issue_tracker: https://github.com/yourusername/agentbridge/issues

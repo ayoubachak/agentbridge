@@ -18,19 +18,27 @@ const prompt = (question) => new Promise((resolve) => rl.question(question, reso
 
 // Repository information
 const repoInfo = {
-  author: 'Your Organization',
+  author: {
+    name: "Ayoub Achak",
+    email: "ayoub.achak01@gmail.com"
+  },
   license: 'MIT',
   repository: {
     type: 'git',
-    url: 'https://github.com/yourusername/agentbridge.git'
+    url: 'https://github.com/ayoubachak/agentbridge.git'
   },
   bugs: {
-    url: 'https://github.com/yourusername/agentbridge/issues'
+    url: 'https://github.com/ayoubachak/agentbridge/issues'
   },
-  homepage: 'https://github.com/yourusername/agentbridge',
+  homepage: 'https://github.com/ayoubachak/agentbridge',
   publishConfig: {
     access: 'public'
-  }
+  },
+  files: [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ]
 };
 
 // Packages to update
@@ -90,6 +98,8 @@ const updatePackageJsonFiles = async (version, packages, updateRepo = true) => {
         packageJson.bugs = repoInfo.bugs;
         packageJson.homepage = repoInfo.homepage;
         packageJson.publishConfig = repoInfo.publishConfig;
+        // Ensure files field is added
+        packageJson.files = repoInfo.files;
       }
       
       // Write the updated package.json

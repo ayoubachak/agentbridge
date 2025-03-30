@@ -1,6 +1,6 @@
 {
   "name": "@agentbridge/react-native",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "React Native SDK for AgentBridge framework",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -19,7 +19,10 @@
     "react-native",
     "mobile"
   ],
-  "author": "",
+  "author": {
+    "name": "Ayoub Achak",
+    "email": "ayoub.achak01@gmail.com"
+  },
   "license": "MIT",
   "dependencies": {
     "@agentbridge/core": "^0.1.0",
@@ -45,5 +48,21 @@
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0",
     "react-native": ">=0.69.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ayoubachak/agentbridge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ayoubachak/agentbridge/issues"
+  },
+  "homepage": "https://github.com/ayoubachak/agentbridge",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ]
 }
