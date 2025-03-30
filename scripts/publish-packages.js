@@ -1,161 +1,260 @@
+/**
+ * This script handles manual publishing of packages in the correct order
+ * It should be run after prepare-packages.js and check-publish-readiness.js
+ */
+
 const { execSync } = require('child_process');
-const fs = require('fs-extra');
+const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
 
+// Setup readline interface
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
 
-// Package definitions
-const packages = [
+// Promisify readline.question
+const prompt = (question) => new Promise((resolve) => rl.question(question, resolve));
+
+// Package publishing order (important for dependencies)
+const publishOrder = [
   {
-    name: '@agentbridge/core',
+    name: 'Core Package',
     path: 'packages/core',
-    type: 'npm'
+    package: '@agentbridge/core'
   },
   {
-    name: '@agentbridge/react',
+    name: 'React Package',
     path: 'packages/web/react',
-    type: 'npm'
+    package: '@agentbridge/react'
   },
   {
-    name: '@agentbridge/angular',
+    name: 'Angular Package',
     path: 'packages/web/angular',
-    type: 'npm'
+    package: '@agentbridge/angular'
   },
   {
-    name: '@agentbridge/react-native',
+    name: 'React Native Package',
     path: 'packages/mobile/react-native',
-    type: 'npm'
-  },
-  {
-    name: 'agentbridge',
-    path: 'packages/mobile/flutter',
-    type: 'flutter'
+    package: '@agentbridge/react-native'
   }
 ];
 
-// Main function
-async function publishPackages() {
-  console.log('🚀 AgentBridge Package Publisher\n');
-  
-  // Check if user is logged in to npm
+// Execute command and return output
+const execCommand = (command, cwd) => {
   try {
-    execSync('npm whoami', { stdio: 'pipe' });
-    console.log('✅ You are logged in to npm');
+    console.log(`\n> ${command}`);
+    const options = { cwd, stdio: 'inherit' };
+    execSync(command, options);
+    return { success: true };
   } catch (error) {
-    console.log('❌ You are not logged in to npm. Please run "npm login" first.');
-    process.exit(1);
+    return { 
+      success: false, 
+      error: error.message 
+    };
   }
-  
-  // Build all packages first
-  console.log('\n📦 Building all packages...');
-  
-  try {
-    console.log('Building JavaScript packages...');
-    execSync('npm run build:js', { stdio: 'inherit' });
-    
-    console.log('Building Flutter package...');
-    execSync('cd packages/mobile/flutter && flutter pub get && flutter build', { stdio: 'inherit' });
-  } catch (error) {
-    console.error('❌ Error building packages:', error.message);
-    process.exit(1);
-  }
-  
-  // Ask which packages to publish
-  const response = await askQuestion('\nWhich packages would you like to publish? (all, js, flutter, or comma-separated package names): ');
-  
-  let selectedPackages = [];
-  
-  if (response.toLowerCase() === 'all') {
-    selectedPackages = packages;
-  } else if (response.toLowerCase() === 'js') {
-    selectedPackages = packages.filter(pkg => pkg.type === 'npm');
-  } else if (response.toLowerCase() === 'flutter') {
-    selectedPackages = packages.filter(pkg => pkg.type === 'flutter');
-  } else {
-    const packageNames = response.split(',').map(name => name.trim());
-    selectedPackages = packages.filter(pkg => packageNames.includes(pkg.name));
-  }
-  
-  if (selectedPackages.length === 0) {
-    console.log('❌ No valid packages selected. Exiting.');
-    process.exit(1);
-  }
-  
-  console.log(`\nSelected packages to publish: ${selectedPackages.map(pkg => pkg.name).join(', ')}`);
-  
-  const confirmPublish = await askQuestion('Are you sure you want to publish these packages? (yes/no): ');
-  
-  if (confirmPublish.toLowerCase() !== 'yes') {
-    console.log('❌ Publishing cancelled.');
-    process.exit(0);
-  }
+};
 
-  // Publish each selected package
-  for (const pkg of selectedPackages) {
-    console.log(`\n📦 Publishing ${pkg.name}...`);
+// Check if package exists on npm
+const checkPackageExists = (packageName, version) => {
+  try {
+    const result = execSync(`npm view ${packageName}@${version} version`, { encoding: 'utf8' }).trim();
+    return result === version;
+  } catch (error) {
+    return false;
+  }
+};
+
+// Publish a single package
+const publishPackage = async (packageInfo, options) => {
+  const { name, path: packagePath, package: packageName } = packageInfo;
+  
+  console.log(`\n📦 Publishing ${name} (${packageName})...`);
+  
+  // Read package.json to get the version
+  const packageJsonPath = `${packagePath}/package.json`;
+  if (!fs.existsSync(packageJsonPath)) {
+    console.error(`❌ package.json not found in ${packagePath}`);
+    return false;
+  }
+  
+  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+  const version = packageJson.version;
+  
+  // Check if this version already exists on npm
+  if (checkPackageExists(packageName, version)) {
+    console.log(`⚠️ ${packageName}@${version} already exists on npm registry`);
     
-    try {
-      if (pkg.type === 'npm') {
-        const packageDir = path.join(process.cwd(), pkg.path);
-        process.chdir(packageDir);
-        
-        // Check if the package already exists
-        try {
-          const npmInfo = execSync(`npm view ${pkg.name} version`, { stdio: 'pipe' }).toString().trim();
-          console.log(`Current version on npm: ${npmInfo}`);
-          
-          const localInfo = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-          console.log(`Local version: ${localInfo.version}`);
-          
-          if (npmInfo === localInfo.version) {
-            const answer = await askQuestion(`Warning: Version ${localInfo.version} already exists. Publish anyway? (yes/no): `);
-            if (answer.toLowerCase() !== 'yes') {
-              console.log(`Skipping ${pkg.name}.`);
-              process.chdir(process.cwd());
-              continue;
-            }
-          }
-        } catch (e) {
-          console.log(`Package ${pkg.name} does not exist on npm yet.`);
-        }
-        
-        console.log(`Publishing ${pkg.name}...`);
-        execSync('npm publish --access public', { stdio: 'inherit' });
-        console.log(`✅ Successfully published ${pkg.name}`);
-      } else if (pkg.type === 'flutter') {
-        const packageDir = path.join(process.cwd(), pkg.path);
-        process.chdir(packageDir);
-        
-        console.log(`Publishing ${pkg.name}...`);
-        execSync('flutter pub publish --force', { stdio: 'inherit' });
-        console.log(`✅ Successfully published ${pkg.name}`);
+    if (!options.force) {
+      const answer = await prompt('Continue anyway? (y/n): ');
+      if (answer.toLowerCase() !== 'y') {
+        console.log(`Skipping ${packageName}`);
+        return false;
       }
-      
-      process.chdir(process.cwd()); // Return to root dir
-    } catch (error) {
-      console.error(`❌ Error publishing ${pkg.name}:`, error.message);
     }
   }
   
-  console.log('\n✅ Publishing completed!');
-  rl.close();
-}
+  // Build package if needed
+  if (options.build) {
+    console.log(`Building ${name}...`);
+    const buildResult = execCommand('npm run build', packagePath);
+    if (!buildResult.success) {
+      console.error(`❌ Failed to build ${name}`);
+      if (!options.continueOnError) {
+        return false;
+      }
+    }
+  }
+  
+  // Create publish command with any extra options
+  let publishCommand = 'npm publish --access public';
+  if (options.tag) {
+    publishCommand += ` --tag ${options.tag}`;
+  }
+  if (options.dryRun) {
+    publishCommand += ' --dry-run';
+  }
+  
+  // Execute publish command
+  const publishResult = execCommand(publishCommand, packagePath);
+  
+  if (publishResult.success) {
+    console.log(`✅ Successfully published ${packageName}@${version}`);
+    return true;
+  } else {
+    console.error(`❌ Failed to publish ${packageName}@${version}`);
+    if (options.continueOnError) {
+      return false;
+    } else {
+      throw new Error(`Publishing ${name} failed`);
+    }
+  }
+};
 
-// Helper function to ask a question
-function askQuestion(question) {
-  return new Promise((resolve) => {
-    rl.question(question, (answer) => {
-      resolve(answer);
+// Main function
+const main = async () => {
+  console.log('🚀 AgentBridge Package Publisher 🚀');
+  console.log('===================================');
+  
+  try {
+    // Gather options
+    const dryRun = await prompt('Run in dry-run mode? (y/n): ');
+    const shouldBuild = await prompt('Build packages before publishing? (y/n): ');
+    const useTag = await prompt('Use a distribution tag? (leave empty for latest): ');
+    const continueOnError = await prompt('Continue publishing if a package fails? (y/n): ');
+    const forcePublish = await prompt('Force publish even if versions exist? (y/n): ');
+    
+    // Confirm publishing order
+    console.log('\nPackages will be published in this order:');
+    publishOrder.forEach((pkg, idx) => {
+      console.log(`${idx + 1}. ${pkg.name} (${pkg.package})`);
     });
-  });
-}
+    
+    const confirmOrder = await prompt('\nProceed with publishing in this order? (y/n): ');
+    if (confirmOrder.toLowerCase() !== 'y') {
+      console.log('🛑 Publishing cancelled.');
+      rl.close();
+      return;
+    }
+    
+    // Select packages to publish
+    const packageSelection = await prompt('Enter package numbers to publish (comma-separated) or "all" for all packages: ');
+    
+    let selectedPackages = [];
+    if (packageSelection.toLowerCase() === 'all') {
+      selectedPackages = [...publishOrder];
+    } else {
+      const selections = packageSelection.split(',').map(n => parseInt(n.trim(), 10));
+      selectedPackages = selections
+        .filter(n => !isNaN(n) && n > 0 && n <= publishOrder.length)
+        .map(n => publishOrder[n - 1]);
+    }
+    
+    if (selectedPackages.length === 0) {
+      console.log('❌ No valid packages selected. Exiting...');
+      rl.close();
+      return;
+    }
+    
+    // Create options object
+    const options = {
+      dryRun: dryRun.toLowerCase() === 'y',
+      build: shouldBuild.toLowerCase() === 'y',
+      tag: useTag.trim() || null,
+      continueOnError: continueOnError.toLowerCase() === 'y',
+      force: forcePublish.toLowerCase() === 'y'
+    };
+    
+    // Final confirmation
+    const modeDesc = options.dryRun ? 'DRY RUN (no actual publishing)' : 'REAL PUBLISHING';
+    console.log(`\n⚠️ WARNING: You are about to run in ${modeDesc} mode!`);
+    
+    if (!options.dryRun) {
+      console.log('\n🔒 Security Check:');
+      
+      // Verify npm user
+      try {
+        const user = execSync('npm whoami', { encoding: 'utf8' }).trim();
+        console.log(`- Logged in as: ${user}`);
+      } catch (error) {
+        console.error('❌ Not logged in to npm! Run npm login first.');
+        rl.close();
+        return;
+      }
+      
+      // Verify registry
+      const registry = execSync('npm config get registry', { encoding: 'utf8' }).trim();
+      console.log(`- Publishing to registry: ${registry}`);
+      
+      const finalConfirm = await prompt('\n⚠️ Are you absolutely sure you want to publish these packages? This cannot be undone. (yes/no): ');
+      if (finalConfirm.toLowerCase() !== 'yes') {
+        console.log('🛑 Publishing cancelled.');
+        rl.close();
+        return;
+      }
+    }
+    
+    // Publish packages
+    console.log('\n📤 Starting publishing process...');
+    
+    const results = [];
+    for (const pkg of selectedPackages) {
+      try {
+        const success = await publishPackage(pkg, options);
+        results.push({ ...pkg, success });
+        if (!success && !options.continueOnError) {
+          console.error(`❌ Failed to publish ${pkg.name}. Stopping.`);
+          break;
+        }
+      } catch (error) {
+        console.error(`❌ Error publishing ${pkg.name}:`, error.message);
+        results.push({ ...pkg, success: false });
+        if (!options.continueOnError) {
+          break;
+        }
+      }
+    }
+    
+    // Print summary
+    console.log('\n📊 Publishing Summary:');
+    results.forEach(result => {
+      const icon = result.success ? '✅' : '❌';
+      console.log(`${icon} ${result.name} (${result.package})`);
+    });
+    
+    const successCount = results.filter(r => r.success).length;
+    if (options.dryRun) {
+      console.log(`\n🧪 Dry run completed. ${successCount}/${results.length} packages would be published.`);
+    } else {
+      console.log(`\n🎉 Publishing completed. ${successCount}/${results.length} packages published successfully.`);
+    }
+  } catch (error) {
+    console.error('\n❌ Unexpected error:', error);
+  } finally {
+    rl.close();
+  }
+};
 
-// Run the main function
-publishPackages().catch(error => {
-  console.error('Error:', error);
-  process.exit(1);
-}); 
+// Run the script
+main(); 

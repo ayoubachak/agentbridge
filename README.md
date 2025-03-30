@@ -215,48 +215,97 @@ MIT
 
 ### Publishing Packages
 
-AgentBridge uses GitHub Actions for automated package publishing. Here's how to publish new versions:
+AgentBridge uses a streamlined process for publishing packages to npm. The process includes several tools to ensure consistency and reliability.
 
-#### Manual Publishing
+#### Publishing Tools
 
-1. Update all package versions simultaneously:
+1. **Check Publish Readiness**
+   ```bash
+   npm run check-publish-readiness
+   ```
+   This tool validates all packages to ensure they meet the requirements for publishing, including:
+   - Checking required fields in package.json
+   - Verifying dist folders exist and contain build artifacts
+   - Confirming version consistency across packages
+   - Validating npm login status
+
+2. **Prepare Package Versions**
+   ```bash
+   npm run prepare-publish
+   ```
+   Interactive tool that prompts you to:
+   - Select which packages to update
+   - Choose a new version number
+   - Update repository metadata
+   
+   Can also be run with a version argument:
    ```bash
    npm run prepare-publish 1.0.0
    ```
 
-2. Commit the changes:
+3. **Publish Packages**
+   ```bash
+   npm run publish-packages
+   ```
+   Interactive publishing tool that:
+   - Publishes packages in the correct dependency order
+   - Offers dry-run mode to test without actually publishing
+   - Provides options for building before publishing
+   - Allows setting npm distribution tags
+
+4. **All-in-One Release Command**
+   ```bash
+   npm run release
+   ```
+   Runs all the above tools in sequence for a complete release process.
+
+#### Manual Publishing Steps
+
+1. Check if packages are ready for publishing:
+   ```bash
+   npm run check-publish-readiness
+   ```
+
+2. Update all package versions:
+   ```bash
+   npm run prepare-publish 1.0.0
+   ```
+
+3. Commit the changes:
    ```bash
    git add .
    git commit -m "chore: prepare release v1.0.0"
    ```
 
-3. Tag the release:
+4. Tag the release:
    ```bash
    git tag v1.0.0
-   git push --tags
    ```
 
-4. Push to the repository:
+5. Publish packages to npm:
    ```bash
-   git push
+   npm run publish-packages
+   ```
+
+6. Push changes and tags to GitHub:
+   ```bash
+   git push && git push --tags
    ```
 
 #### Automated Publishing via GitHub Actions
 
-1. The GitHub workflow will automatically publish packages to npm and pub.dev when a tag starting with 'v' is pushed (e.g., v1.0.0).
+1. The GitHub workflow will automatically publish packages to npm when a tag starting with 'v' is pushed (e.g., v1.0.0).
 
 2. The workflow will:
    - Run tests for all packages
    - Build all packages
    - Publish JavaScript packages to npm
-   - Publish the Flutter package to pub.dev
    - Create a GitHub release with release notes
 
 3. Required secrets for automated publishing:
    - `NPM_TOKEN`: Access token for npm publishing
-   - `PUB_DEV_CREDENTIALS`: Credentials for pub.dev publishing
 
 #### Publishing Requirements
 
 - For npm packages: Ensure you have logged in with `npm login` and have the appropriate access rights.
-- For Flutter package: Ensure you have authenticated with pub.dev using `flutter pub login`. 
+- Make sure all packages have been built before publishing: `npm run build:js` 
