@@ -21,6 +21,11 @@ on:
         required: false
         type: 'string'
 
+# Add permissions for the GITHUB_TOKEN
+permissions:
+  contents: write    # This is required for checking out code, creating releases and pushing tags
+  packages: write    # This is required for pushing to GitHub Packages (if you use it)
+
 jobs:
   test-js:
     name: Test JavaScript Packages
@@ -88,7 +93,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0 # Fetch all history for proper version tracking
       - uses: actions/setup-node@v4
         with:
@@ -98,8 +102,8 @@ jobs:
         run: npm install --no-package-lock --legacy-peer-deps
       - name: Configure Git
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
       - name: Determine new version
         id: set-version
         run: |
@@ -138,17 +142,30 @@ jobs:
       - name: Check if changes were made
         id: check-changes
         run: |
+          # Check if there are any changes to commit
           if git diff --quiet; then
             echo "No changes detected. Current version matches target version."
             echo "changes_made=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          # Changes detected, proceed with commit and push
+          echo "Changes detected. Updating versions."
+          echo "changes_made=true" >> $GITHUB_OUTPUT
+          
+          # Add files, commit, and create tag
+          git add .
+          git commit -m "chore: update package versions to ${{ steps.set-version.outputs.new_version }}"
+          git tag "v${{ steps.set-version.outputs.new_version }}"
+          
+          # Try to push changes and tags
+          echo "Pushing changes to repository..."
+          if git push && git push --tags; then
+            echo "Successfully pushed changes and tags!"
           else
-            echo "Changes detected. Updating versions."
-            echo "changes_made=true" >> $GITHUB_OUTPUT
-            git add .
-            git commit -m "chore: update package versions to ${{ steps.set-version.outputs.new_version }}"
-            git tag v${{ steps.set-version.outputs.new_version }}
-            git push --tags
-            git push
+            echo "::warning::Failed to push changes. Make sure GITHUB_TOKEN has proper permissions."
+            echo "You can also set proper permissions in repo settings: Settings -> Actions -> General -> Workflow permissions"
+            # Don't fail the workflow, we'll continue with the artifacts we have
           fi
 
   build-js:
@@ -334,5 +351,5 @@ jobs:
           body_path: RELEASE_NOTES.md
           draft: false
           prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          # No need to explicitly set the GITHUB_TOKEN as an env var for this action
+          # as it will automatically use the token provided by the workflow permissions 
