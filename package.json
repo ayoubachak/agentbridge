@@ -16,7 +16,8 @@
     "test:flutter": "cd packages/mobile/flutter && flutter test",
     "test:all": "npm run test:js && npm run test:flutter",
     "clean": "npm run clean --workspaces && cd packages/mobile/flutter && flutter clean",
-    "lint": "npm run lint --workspaces && cd packages/mobile/flutter && flutter analyze",
+    "lint:js": "npm run lint --workspaces",
+    "lint": "npm run lint:js && cd packages/mobile/flutter && flutter analyze",
     "create:examples": "node scripts/create-examples.js"
   },
   "devDependencies": {
