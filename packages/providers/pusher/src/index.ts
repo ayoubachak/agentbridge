@@ -1,9 +1,10 @@
+import { AgentBridge, CommunicationManager, Message } from '@agentbridge/core';
 import Pusher from 'pusher-js';
-import { 
-  AgentBridge, 
-  CommunicationManager, 
-  Message 
-} from '@agentbridge/core';
+
+// Instead of using Pusher as a namespace, use it as a type
+type Pusher = Pusher;
+type PusherChannel = Pusher.Channel;
+type PusherOptions = Pusher.Options;
 
 /**
  * Configuration options for the Pusher communication provider
@@ -12,33 +13,7 @@ export interface PusherCommunicationConfig {
   /** Pusher API key */
   key: string;
   /** Pusher configuration options */
-  options?: {
-    /** Pusher cluster */
-    cluster?: string;
-    /** Whether to use TLS */
-    forceTLS?: boolean;
-    /** Authentication endpoint */
-    authEndpoint?: string;
-    /** Authentication parameters */
-    auth?: {
-      headers?: Record<string, string>;
-      params?: Record<string, string>;
-    };
-    /** Custom Pusher host */
-    host?: string;
-    /** Custom Pusher port */
-    wsPort?: number;
-    /** Custom Pusher TLS port */
-    wssPort?: number;
-    /** Encryption options */
-    encrypted?: boolean;
-    /** Activity timeout */
-    activityTimeout?: number;
-    /** Pong timeout */
-    pongTimeout?: number;
-    /** Custom authorizer function */
-    authorizer?: any;
-  };
+  options?: Pusher.Options;
   /** Custom Pusher instance (optional, for testing or custom setups) */
   pusherInstance?: Pusher;
   /** Channel name prefix (without trailing slash) */
@@ -64,10 +39,10 @@ const DEFAULT_CHANNELS = {
  * Implements the CommunicationManager interface using Pusher as the transport
  */
 export class PusherCommunicationManager implements CommunicationManager {
-  private pusher: Pusher;
-  private capabilitiesChannel: Pusher.Channel;
-  private commandsChannel: Pusher.Channel;
-  private responsesChannel: Pusher.Channel;
+  private client: Pusher | null = null;
+  private capabilitiesChannel: PusherChannel | null = null;
+  private commandsChannel: PusherChannel | null = null;
+  private responsesChannel: PusherChannel | null = null;
   private messageHandler: ((message: Message) => void) | null = null;
   private connected = false;
   private config: PusherCommunicationConfig;
@@ -78,29 +53,6 @@ export class PusherCommunicationManager implements CommunicationManager {
    */
   constructor(config: PusherCommunicationConfig) {
     this.config = config;
-    
-    // Create Pusher client
-    if (config.pusherInstance) {
-      this.pusher = config.pusherInstance;
-    } else {
-      this.pusher = new Pusher(config.key, config.options);
-    }
-    
-    // Prepare channel names
-    const capabilitiesChannel = config.capabilitiesChannel || DEFAULT_CHANNELS.capabilities;
-    const commandsChannel = config.commandsChannel || DEFAULT_CHANNELS.commands;
-    const responsesChannel = config.responsesChannel || DEFAULT_CHANNELS.responses;
-    
-    // Initialize channels
-    this.capabilitiesChannel = this.pusher.subscribe(
-      `${config.channelPrefix}-${capabilitiesChannel}`
-    );
-    this.commandsChannel = this.pusher.subscribe(
-      `${config.channelPrefix}-${commandsChannel}`
-    );
-    this.responsesChannel = this.pusher.subscribe(
-      `${config.channelPrefix}-${responsesChannel}`
-    );
   }
   
   /**
@@ -180,19 +132,19 @@ export class PusherCommunicationManager implements CommunicationManager {
     if (!this.messageHandler) return;
     
     // Subscribe to all channels
-    this.capabilitiesChannel.bind('message', (data: any) => {
+    this.capabilitiesChannel?.bind('message', (data: any) => {
       if (this.messageHandler) {
         this.messageHandler(data as Message);
       }
     });
     
-    this.commandsChannel.bind('message', (data: any) => {
+    this.commandsChannel?.bind('message', (data: any) => {
       if (this.messageHandler) {
         this.messageHandler(data as Message);
       }
     });
     
-    this.responsesChannel.bind('message', (data: any) => {
+    this.responsesChannel?.bind('message', (data: any) => {
       if (this.messageHandler) {
         this.messageHandler(data as Message);
       }
@@ -200,44 +152,54 @@ export class PusherCommunicationManager implements CommunicationManager {
   }
   
   /**
-   * Connect to Pusher and subscribe to channels
+   * Connect to Pusher
    */
   async connect(): Promise<void> {
-    if (this.connected) return;
+    if (this.connected) {
+      return Promise.resolve();
+    }
+    
+    // Prepare channel names
+    const capabilitiesChannel = this.config.capabilitiesChannel || DEFAULT_CHANNELS.capabilities;
+    const commandsChannel = this.config.commandsChannel || DEFAULT_CHANNELS.commands;
+    const responsesChannel = this.config.responsesChannel || DEFAULT_CHANNELS.responses;
+    
+    // Initialize Pusher client
+    this.client = new Pusher(this.config.key, this.config.options || {});
     
     return new Promise((resolve, reject) => {
       // Set up event handler for connect
       const connectionHandler = () => {
         this.connected = true;
         this.setupSubscribers();
-        this.pusher.unbind('connected', connectionHandler);
+        this.client?.unbind('connected', connectionHandler);
         resolve();
       };
       
       // Set up event handler for error
       const errorHandler = (err: any) => {
-        this.pusher.unbind('error', errorHandler);
+        this.client?.unbind('error', errorHandler);
         reject(new Error(`Failed to connect to Pusher: ${err.message}`));
       };
       
       // Bind event handlers
-      this.pusher.bind('connected', connectionHandler);
-      this.pusher.bind('error', errorHandler);
+      this.client?.bind('connected', connectionHandler);
+      this.client?.bind('error', errorHandler);
       
       // If already connected, resolve immediately
-      if (this.pusher.connection.state === 'connected') {
+      if (this.client?.connection.state === 'connected') {
         this.connected = true;
         this.setupSubscribers();
-        this.pusher.unbind('connected', connectionHandler);
-        this.pusher.unbind('error', errorHandler);
+        this.client?.unbind('connected', connectionHandler);
+        this.client?.unbind('error', errorHandler);
         resolve();
       }
       
       // Set a timeout for connection
       setTimeout(() => {
         if (!this.connected) {
-          this.pusher.unbind('connected', connectionHandler);
-          this.pusher.unbind('error', errorHandler);
+          this.client?.unbind('connected', connectionHandler);
+          this.client?.unbind('error', errorHandler);
           reject(new Error('Timeout connecting to Pusher'));
         }
       }, 10000); // 10 seconds timeout
@@ -251,12 +213,12 @@ export class PusherCommunicationManager implements CommunicationManager {
     if (!this.connected) return;
     
     // Unsubscribe from all channels
-    this.pusher.unsubscribe(`${this.config.channelPrefix}-${this.config.capabilitiesChannel || DEFAULT_CHANNELS.capabilities}`);
-    this.pusher.unsubscribe(`${this.config.channelPrefix}-${this.config.commandsChannel || DEFAULT_CHANNELS.commands}`);
-    this.pusher.unsubscribe(`${this.config.channelPrefix}-${this.config.responsesChannel || DEFAULT_CHANNELS.responses}`);
+    this.client?.unsubscribe(`${this.config.channelPrefix}-${this.config.capabilitiesChannel || DEFAULT_CHANNELS.capabilities}`);
+    this.client?.unsubscribe(`${this.config.channelPrefix}-${this.config.commandsChannel || DEFAULT_CHANNELS.commands}`);
+    this.client?.unsubscribe(`${this.config.channelPrefix}-${this.config.responsesChannel || DEFAULT_CHANNELS.responses}`);
     
     // Disconnect from Pusher
-    this.pusher.disconnect();
+    this.client?.disconnect();
     this.connected = false;
   }
 
@@ -265,13 +227,17 @@ export class PusherCommunicationManager implements CommunicationManager {
    * @param channel The channel name to subscribe to
    */
   private subscribeToChannel(channel: string): void {
-    if (!this.pusher) {
+    if (!this.client) {
       console.error('Pusher client not initialized');
       return;
     }
 
     // Subscribe to the channel
-    this.pusherChannel = this.pusher.subscribe(channel);
+    const subscribedChannel = this.client.subscribe(channel);
+    
+    // Store it if needed for future reference
+    console.log(`Subscribed to Pusher channel: ${channel}`);
+    return subscribedChannel;
   }
 }
 

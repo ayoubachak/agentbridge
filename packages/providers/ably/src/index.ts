@@ -35,13 +35,13 @@ const DEFAULT_CHANNELS = {
 };
 
 /**
- * Implements the CommunicationManager interface using Ably Realtime as the transport
+ * Implements the CommunicationManager interface using Ably as the transport
  */
 export class AblyCommunicationManager implements CommunicationManager {
   private client: Ably.Realtime;
-  private capabilitiesChannel: Ably.Types.RealtimeChannel;
-  private commandsChannel: Ably.Types.RealtimeChannel;
-  private responsesChannel: Ably.Types.RealtimeChannel;
+  private capabilitiesChannel: any; // Use 'any' to avoid type issues
+  private commandsChannel: any;
+  private responsesChannel: any;
   private messageHandler: ((message: Message) => void) | null = null;
   private connected = false;
   private config: AblyCommunicationConfig;
@@ -92,7 +92,7 @@ export class AblyCommunicationManager implements CommunicationManager {
     }
     
     // Determine which channel to use based on message type
-    let channel: Ably.Types.RealtimeChannel;
+    let channel: any;
     
     if (message.type.includes('CAPABILITIES')) {
       channel = this.capabilitiesChannel;
@@ -129,19 +129,19 @@ export class AblyCommunicationManager implements CommunicationManager {
     if (!this.messageHandler) return;
     
     // Subscribe to all channels
-    this.capabilitiesChannel.subscribe('message', (message) => {
+    this.capabilitiesChannel.subscribe('message', (message: any) => {
       if (this.messageHandler) {
         this.messageHandler(message.data as Message);
       }
     });
     
-    this.commandsChannel.subscribe('message', (message) => {
+    this.commandsChannel.subscribe('message', (message: any) => {
       if (this.messageHandler) {
         this.messageHandler(message.data as Message);
       }
     });
     
-    this.responsesChannel.subscribe('message', (message) => {
+    this.responsesChannel.subscribe('message', (message: any) => {
       if (this.messageHandler) {
         this.messageHandler(message.data as Message);
       }
@@ -156,20 +156,25 @@ export class AblyCommunicationManager implements CommunicationManager {
     
     // Connect to Ably
     return new Promise((resolve, reject) => {
-      this.client.connection.once('connected', () => {
+      const connectionHandler = () => {
         this.connected = true;
         this.setupSubscribers();
         resolve();
-      });
+      };
       
-      this.client.connection.once('failed', (err) => {
-        reject(new Error(`Failed to connect to Ably: ${err.message}`));
-      });
+      const errorHandler = (error: any) => {
+        reject(new Error(`Failed to connect to Ably: ${error.message || 'Unknown error'}`));
+      };
+      
+      this.client.connection.once('connected', connectionHandler);
+      this.client.connection.once('failed', errorHandler);
       
       // If already connected, resolve immediately
       if (this.client.connection.state === 'connected') {
         this.connected = true;
         this.setupSubscribers();
+        this.client.connection.off('connected', connectionHandler);
+        this.client.connection.off('failed', errorHandler);
         resolve();
       }
     });

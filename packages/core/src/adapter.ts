@@ -1,5 +1,20 @@
 import { EventEmitter } from 'events';
-import { MessageQueue } from './types';
+import { ComponentDefinition, ExecutionContext, MessageQueue } from './types';
+
+// Forward reference for AgentBridge (to avoid circular dependency)
+export interface AgentBridge {
+  registerComponent(component: any, definition: ComponentDefinition, handlers: any): void;
+  unregisterComponent(componentId: string): void;
+  
+  // Add properties and methods that are accessed in agent-bridge.ts
+  components?: any[];
+  adapter?: any;
+  removeAllListeners?(): void;
+  callFunction(name: string, params: any, context?: any): Promise<any>;
+  on(event: string, listener: (...args: any[]) => void): any;
+  connect(): Promise<void>;
+  disconnect(): Promise<void>;
+}
 
 export type ConnectionStatus = 'connected' | 'connecting' | 'disconnected' | 'error';
 
@@ -84,6 +99,11 @@ export interface Adapter {
    * @returns Array of component definitions
    */
   getComponentDefinitions(): ComponentDefinition[];
+  
+  /**
+   * Disconnect from the framework and clean up resources
+   */
+  disconnect(): Promise<void>;
   
   /**
    * Called when the adapter should clean up resources

@@ -101,7 +101,7 @@ export class SupabaseCommunicationManager implements CommunicationManager {
           console.error('[AgentBridge Supabase] Error sending message:', result.error);
         }
       })
-      .catch((error) => {
+      .catch((error: any) => {
         console.error('[AgentBridge Supabase] Error sending message:', error);
       });
   }
@@ -136,40 +136,31 @@ export class SupabaseCommunicationManager implements CommunicationManager {
     // Subscribe to realtime changes on the table
     
     // Capabilities channel subscription
-    const capabilitiesSub = this.client
-      .from(`${this.tableName}:channel_prefix=eq.${this.config.channelPrefix}:channel=eq.${capabilitiesChannel}`)
-      .on('INSERT', (payload) => {
-        if (this.messageHandler && payload.new && payload.new.message) {
-          this.messageHandler(payload.new.message as Message);
-        }
-      })
-      .subscribe();
-    
-    this.subscriptions.push(capabilitiesSub);
+    this.setupSubscription(capabilitiesChannel, 'INSERT', this.messageHandler);
     
     // Commands channel subscription
-    const commandsSub = this.client
-      .from(`${this.tableName}:channel_prefix=eq.${this.config.channelPrefix}:channel=eq.${commandsChannel}`)
-      .on('INSERT', (payload) => {
-        if (this.messageHandler && payload.new && payload.new.message) {
-          this.messageHandler(payload.new.message as Message);
-        }
-      })
-      .subscribe();
-    
-    this.subscriptions.push(commandsSub);
+    this.setupSubscription(commandsChannel, 'INSERT', this.messageHandler);
     
     // Responses channel subscription
-    const responsesSub = this.client
-      .from(`${this.tableName}:channel_prefix=eq.${this.config.channelPrefix}:channel=eq.${responsesChannel}`)
-      .on('INSERT', (payload) => {
-        if (this.messageHandler && payload.new && payload.new.message) {
-          this.messageHandler(payload.new.message as Message);
+    this.setupSubscription(responsesChannel, 'INSERT', this.messageHandler);
+  }
+  
+  /**
+   * Handle subscription to a Supabase realtime channel
+   */
+  private setupSubscription(channel: string, eventType: string, handler: (message: Message) => void): void {
+    // Create a channel with the given name
+    const subscription = this.client
+      .channel(channel)
+      .on('broadcast', { event: eventType }, (payload: any) => {
+        if (payload && payload.payload && handler) {
+          handler(payload.payload as Message);
         }
       })
       .subscribe();
     
-    this.subscriptions.push(responsesSub);
+    // Store the subscription for later cleanup
+    this.subscriptions.push(subscription);
   }
   
   /**

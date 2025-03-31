@@ -289,6 +289,47 @@ export interface Message {
   timestamp: string;
   /** Session ID (when applicable) */
   sessionId?: string;
+  /** Correlation ID for linking requests and responses */
+  correlationId?: string;
+  /** Error code */
+  code?: string;
+  /** Functions for capabilities */
+  functions?: any[];
+  /** Components for capabilities */
+  components?: any[];
+  /** Success status */
+  success?: boolean;
+  /** Result data */
+  data?: any;
+  /** Error details */
+  error?: {
+    code: string;
+    message: string;
+    details?: any;
+  };
+  /** Function name */
+  name?: string;
+  /** Function parameters */
+  parameters?: any;
+  /** Component ID */
+  componentId?: string;
+  /** Component properties */
+  properties?: any;
+  /** Action name */
+  action?: string;
+  /** Text message content */
+  message?: string;
+  /** Additional error details */
+  details?: any;
+  /** Metadata about the operation */
+  meta?: {
+    /** Execution duration in milliseconds */
+    durationMs: number;
+    /** Timestamp when execution started */
+    startedAt: Date;
+    /** Timestamp when execution completed */
+    completedAt: Date;
+  };
 }
 
 /**
@@ -412,4 +453,117 @@ export interface QueryCapabilitiesMessage extends Message {
     componentAuthLevel?: string;
     componentPath?: string;
   };
+}
+
+/**
+ * Result of a function call operation
+ */
+export interface FunctionCallResult<T = any> extends CallResult<T> {
+  /** The function that was called */
+  function: string;
+  /** The parameters that were passed */
+  params: any;
+}
+
+/**
+ * Queue for storing messages when disconnected
+ */
+export type MessageQueue<T = any> = Array<T>;
+
+/**
+ * Base framework adapter interface that all framework-specific adapters should implement
+ */
+export interface FrameworkAdapter {
+  /**
+   * Render a component based on its properties
+   * @param component Component to render
+   * @param props Component properties
+   */
+  renderComponent(component: any, props: any): any;
+  
+  // Include required Adapter methods
+  initialize(bridge: any): void;
+  registerComponent(component: any, definition: ComponentDefinition, handlers: any): void;
+  unregisterComponent(componentId: string): void;
+  updateComponent(componentId: string, properties: any, context: ExecutionContext): Promise<void>;
+  executeComponentAction(componentId: string, action: string, params: any, context: ExecutionContext): Promise<any>;
+  getComponentDefinitions(): ComponentDefinition[];
+  dispose(): void;
+}
+
+/**
+ * Command types for AI agent to UI component communication
+ */
+export enum CommandType {
+  /** Call a function */
+  CALL_FUNCTION = 'call_function',
+  /** Update a component */
+  UPDATE_COMPONENT = 'update_component',
+  /** Call a component action */
+  CALL_COMPONENT_ACTION = 'call_component_action',
+  /** Query capabilities */
+  QUERY_CAPABILITIES = 'query_capabilities'
+}
+
+/**
+ * Command object for AI agent to UI component communication
+ */
+export interface Command {
+  /** Command type */
+  type: CommandType;
+  /** Command ID for correlation */
+  id: string;
+  /** Command parameters */
+  params: any;
+  /** Target (function name or component ID) */
+  target?: string;
+  /** Action name (for component actions) */
+  action?: string;
+}
+
+/**
+ * Response status for UI component to AI agent communication
+ */
+export enum ResponseStatus {
+  /** Success response */
+  SUCCESS = 'success',
+  /** Error response */
+  ERROR = 'error'
+}
+
+/**
+ * Response object for UI component to AI agent communication
+ */
+export interface Response {
+  /** Response status */
+  status: ResponseStatus;
+  /** Response data */
+  data?: any;
+  /** Error information */
+  error?: {
+    /** Error code */
+    code: string;
+    /** Error message */
+    message: string;
+    /** Additional error details */
+    details?: any;
+  };
+  /** Command ID that this response is for */
+  commandId: string;
+}
+
+/**
+ * Communication Provider interface for backend communication
+ */
+export interface CommunicationProvider {
+  /** Connect to the communication channel */
+  connect(): Promise<void>;
+  /** Disconnect from the communication channel */
+  disconnect(): Promise<void>;
+  /** Send a message */
+  send(message: any): void;
+  /** Set a message handler */
+  onMessage(handler: (message: any) => void): void;
+  /** Get the current connection status */
+  getStatus(): string;
 } 

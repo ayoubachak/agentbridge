@@ -3,8 +3,19 @@ import {
   CommunicationManager, 
   Message 
 } from '@agentbridge/core';
-import firebase from 'firebase/app';
-import 'firebase/database';
+import { initializeApp, getApp, getApps } from 'firebase/app';
+import { 
+  getDatabase, 
+  ref, 
+  push, 
+  set, 
+  onChildAdded, 
+  off, 
+  serverTimestamp, 
+  onDisconnect,
+  Database,
+  DatabaseReference
+} from 'firebase/database';
 
 /**
  * Configuration options for the Firebase communication provider
@@ -21,7 +32,7 @@ export interface FirebaseCommunicationConfig {
     appId?: string;
   };
   /** Custom Firebase app (optional, for testing or custom setups) */
-  app?: firebase.app.App;
+  app?: any; // Changed from firebase.app.App
   /** Channel name prefix (without trailing slash) */
   channelPrefix: string;
   /** Name of the capabilities channel */
@@ -45,11 +56,11 @@ const DEFAULT_CHANNELS = {
  * Implements the CommunicationManager interface using Firebase Realtime Database as the transport
  */
 export class FirebaseCommunicationManager implements CommunicationManager {
-  private app: firebase.app.App;
-  private database: firebase.database.Database;
-  private capabilitiesRef: firebase.database.Reference;
-  private commandsRef: firebase.database.Reference;
-  private responsesRef: firebase.database.Reference;
+  private app: any; // Changed from firebase.app.App
+  private database: Database;
+  private capabilitiesRef: DatabaseReference;
+  private commandsRef: DatabaseReference;
+  private responsesRef: DatabaseReference;
   private messageHandler: ((message: Message) => void) | null = null;
   private connected = false;
   private config: FirebaseCommunicationConfig;
@@ -67,14 +78,14 @@ export class FirebaseCommunicationManager implements CommunicationManager {
       this.app = config.app;
     } else {
       // Check if Firebase is already initialized
-      if (firebase.apps.length === 0) {
-        this.app = firebase.initializeApp(config.firebaseConfig);
+      if (getApps().length === 0) {
+        this.app = initializeApp(config.firebaseConfig);
       } else {
-        this.app = firebase.app();
+        this.app = getApp();
       }
     }
     
-    this.database = this.app.database();
+    this.database = getDatabase(this.app);
     
     // Prepare channel names
     const capabilitiesChannel = config.capabilitiesChannel || DEFAULT_CHANNELS.capabilities;
@@ -82,9 +93,9 @@ export class FirebaseCommunicationManager implements CommunicationManager {
     const responsesChannel = config.responsesChannel || DEFAULT_CHANNELS.responses;
     
     // Initialize references
-    this.capabilitiesRef = this.database.ref(`${config.channelPrefix}/${capabilitiesChannel}`);
-    this.commandsRef = this.database.ref(`${config.channelPrefix}/${commandsChannel}`);
-    this.responsesRef = this.database.ref(`${config.channelPrefix}/${responsesChannel}`);
+    this.capabilitiesRef = ref(this.database, `${config.channelPrefix}/${capabilitiesChannel}`);
+    this.commandsRef = ref(this.database, `${config.channelPrefix}/${commandsChannel}`);
+    this.responsesRef = ref(this.database, `${config.channelPrefix}/${responsesChannel}`);
   }
   
   /**
@@ -98,7 +109,7 @@ export class FirebaseCommunicationManager implements CommunicationManager {
     }
     
     // Determine which reference to use based on message type
-    let ref: firebase.database.Reference;
+    let ref: DatabaseReference;
     
     if (message.type.includes('CAPABILITIES')) {
       ref = this.capabilitiesRef;
@@ -112,17 +123,17 @@ export class FirebaseCommunicationManager implements CommunicationManager {
     }
     
     // Generate a unique key for the message
-    const newMessageRef = ref.push();
+    const newMessageRef = push(ref);
     
     // Save the message
-    newMessageRef.set({
-      timestamp: firebase.database.ServerValue.TIMESTAMP,
+    set(newMessageRef, {
+      timestamp: serverTimestamp(),
       data: message
     });
     
     // Set up automatic cleanup for messages after 1 hour
     // This prevents the database from growing indefinitely
-    newMessageRef.onDisconnect().remove();
+    onDisconnect(newMessageRef).remove();
   }
   
   /**
@@ -148,7 +159,7 @@ export class FirebaseCommunicationManager implements CommunicationManager {
     this.removeListeners();
     
     // Listen for capabilities messages
-    this.capabilitiesRef.limitToLast(50).on('child_added', (snapshot) => {
+    onChildAdded(this.capabilitiesRef, (snapshot) => {
       const value = snapshot.val();
       if (value && value.data && this.messageHandler) {
         this.messageHandler(value.data as Message);
@@ -159,11 +170,11 @@ export class FirebaseCommunicationManager implements CommunicationManager {
     
     // Store the callback to remove the listener later
     this.listeners.push(() => {
-      this.capabilitiesRef.off('child_added');
+      off(this.capabilitiesRef, 'child_added');
     });
     
     // Listen for commands messages
-    this.commandsRef.limitToLast(50).on('child_added', (snapshot) => {
+    onChildAdded(this.commandsRef, (snapshot) => {
       const value = snapshot.val();
       if (value && value.data && this.messageHandler) {
         this.messageHandler(value.data as Message);
@@ -174,11 +185,11 @@ export class FirebaseCommunicationManager implements CommunicationManager {
     
     // Store the callback to remove the listener later
     this.listeners.push(() => {
-      this.commandsRef.off('child_added');
+      off(this.commandsRef, 'child_added');
     });
     
     // Listen for responses messages
-    this.responsesRef.limitToLast(50).on('child_added', (snapshot) => {
+    onChildAdded(this.responsesRef, (snapshot) => {
       const value = snapshot.val();
       if (value && value.data && this.messageHandler) {
         this.messageHandler(value.data as Message);
@@ -189,7 +200,7 @@ export class FirebaseCommunicationManager implements CommunicationManager {
     
     // Store the callback to remove the listener later
     this.listeners.push(() => {
-      this.responsesRef.off('child_added');
+      off(this.responsesRef, 'child_added');
     });
   }
   
@@ -214,9 +225,9 @@ export class FirebaseCommunicationManager implements CommunicationManager {
     
     return new Promise((resolve, reject) => {
       // Check connection status
-      const connectedRef = this.database.ref('.info/connected');
+      const connectedRef = ref(this.database, '.info/connected');
       
-      connectedRef.on('value', (snap) => {
+      onChildAdded(connectedRef, (snap) => {
         if (snap.val() === true) {
           this.connected = true;
           
@@ -225,7 +236,7 @@ export class FirebaseCommunicationManager implements CommunicationManager {
           
           // Store callback to remove the listener
           this.listeners.push(() => {
-            connectedRef.off('value');
+            off(connectedRef, 'child_added');
           });
           
           resolve();

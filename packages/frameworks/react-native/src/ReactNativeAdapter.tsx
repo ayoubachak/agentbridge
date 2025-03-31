@@ -37,7 +37,7 @@ const AgentBridgeContext = createContext<AgentBridgeContextType>({
 export const useAgentBridge = () => useContext(AgentBridgeContext);
 
 /**
- * React Native adapter for AgentBridge framework
+ * Adapter for React Native
  */
 export class ReactNativeAdapter implements FrameworkAdapter {
   private bridge: AgentBridge | null = null;
@@ -55,9 +55,9 @@ export class ReactNativeAdapter implements FrameworkAdapter {
   initialize(bridge: AgentBridge): void {
     this.bridge = bridge;
     
-    // Register built-in functions for manipulating React Native components
+    // Register built-in functions
     this.registerBuiltInFunctions();
-
+    
     // Update context if available
     if (this.setContextValue) {
       this.setContextValue({
@@ -215,12 +215,47 @@ export class ReactNativeAdapter implements FrameworkAdapter {
   }
 
   /**
-   * Register a UI component that can be controlled by the AI agent
-   * @param componentId Unique identifier for the component
-   * @param componentType Type of the component (e.g., 'button', 'input', 'list')
-   * @param props Additional properties for the component
+   * Register a framework-specific UI component
+   * @param component The component object or reference
+   * @param definition Component definition
+   * @param handlers Component handlers
    */
-  registerComponent(componentId: string, componentType: string, props: Record<string, any> = {}): void {
+  registerComponent(
+    component: any, 
+    definition: ComponentDefinition, 
+    handlers: any
+  ): void {
+    const componentId = definition.id;
+    const componentType = definition.componentType;
+    const props = definition.properties ? {} : {};
+
+    if (this.components.has(componentId)) {
+      console.warn(`Component with ID '${componentId}' is already registered. It will be overwritten.`);
+    }
+
+    this.components.set(componentId, {
+      type: componentType,
+      props,
+      state: {}
+    });
+
+    // Update context if available
+    if (this.setContextValue && this.bridge) {
+      this.setContextValue({
+        bridge: this.bridge,
+        adapter: this,
+        isInitialized: true,
+        componentRegistry: this.components,
+        platform: {
+          os: Platform.OS,
+          version: Platform.Version.toString()
+        }
+      });
+    }
+  }
+
+  // Keep the original implementation for backwards compatibility
+  registerComponentByDetails(componentId: string, componentType: string, props: Record<string, any> = {}): void {
     if (this.components.has(componentId)) {
       console.warn(`Component with ID '${componentId}' is already registered. It will be overwritten.`);
     }
@@ -317,6 +352,8 @@ export class ReactNativeAdapter implements FrameworkAdapter {
     if (!this.bridge) {
       return {
         success: false,
+        function: functionName,
+        params: params,
         error: {
           code: 'NOT_INITIALIZED',
           message: 'AgentBridge is not initialized'
@@ -329,7 +366,8 @@ export class ReactNativeAdapter implements FrameworkAdapter {
       };
     }
 
-    return this.bridge.callFunction(functionName, params, {
+    // Call the function and add the required properties
+    const result = await this.bridge.callFunction(functionName, params, {
       agent: {
         id: context.agentId || 'unknown',
         name: context.agentName
@@ -342,6 +380,13 @@ export class ReactNativeAdapter implements FrameworkAdapter {
       },
       ip: context.ip
     });
+
+    // Add function and params to the result to make it a FunctionCallResult
+    return {
+      ...result,
+      function: functionName,
+      params: params
+    } as FunctionCallResult;
   }
 
   /**
@@ -362,6 +407,78 @@ export class ReactNativeAdapter implements FrameworkAdapter {
     // This is a placeholder for future implementation
     console.warn(`Conversion to ${targetFramework} is not implemented yet`);
     return null;
+  }
+
+  /**
+   * Render a component based on its properties
+   * @param component Component to render
+   * @param props Component properties
+   */
+  renderComponent(component: any, props: any): any {
+    // React Native doesn't need this explicit call since rendering is handled by React Native's rendering system
+    console.log('React Native components are rendered by React Native, not manually.');
+    return null;
+  }
+
+  /**
+   * Update a UI component based on properties received from an AI agent
+   * @param componentId Component identifier
+   * @param properties New properties to apply to the component
+   * @param context Execution context
+   */
+  async updateComponent(
+    componentId: string, 
+    properties: any, 
+    context: ExecutionContext
+  ): Promise<void> {
+    this.updateComponentState(componentId, properties);
+  }
+
+  /**
+   * Execute a component action triggered by an AI agent
+   * @param componentId Component identifier
+   * @param action Action name
+   * @param params Action parameters
+   * @param context Execution context
+   */
+  async executeComponentAction(
+    componentId: string,
+    action: string,
+    params: any,
+    context: ExecutionContext
+  ): Promise<any> {
+    console.warn(`Component action execution not implemented for ${componentId}.${action}`);
+    return { success: false, error: { code: 'NOT_IMPLEMENTED', message: 'Action execution not implemented' } };
+  }
+
+  /**
+   * Get component definitions for all registered components
+   * @returns Array of component definitions
+   */
+  getComponentDefinitions(): ComponentDefinition[] {
+    return Array.from(this.components.entries()).map(([id, component]) => ({
+      id,
+      componentType: component.type,
+      description: `React Native component: ${component.type}`,
+      properties: undefined
+    }));
+  }
+
+  /**
+   * Disconnect from the framework
+   */
+  async disconnect(): Promise<void> {
+    // No special disconnection logic needed for React Native
+    return Promise.resolve();
+  }
+
+  /**
+   * Called when the adapter should clean up resources
+   */
+  dispose(): void {
+    this.components.clear();
+    this.bridge = null;
+    this.setContextValue = null;
   }
 }
 

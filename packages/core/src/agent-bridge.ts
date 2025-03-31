@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
+import { EventEmitter } from 'events';
 import { 
   AgentBridgeConfig, 
   CallResult, 
@@ -10,23 +11,29 @@ import {
   Message
 } from './types';
 import { InMemoryFunctionRegistry } from './registry';
-import { InMemoryComponentRegistry } from './registry';
+import { InMemoryComponentRegistry } from './component-registry';
+import { Adapter } from './adapter';
 
 /**
  * Main AgentBridge class that manages function and component registration and execution
  */
-export class AgentBridge {
+export class AgentBridge extends EventEmitter {
   private functionRegistry: InMemoryFunctionRegistry;
   private componentRegistry: InMemoryComponentRegistry;
   private config: AgentBridgeConfig;
   private communicationManager: CommunicationManager | null = null;
   private sessionId: string;
+  /** Components registered with this instance */
+  public components: any[] = [];
+  /** Framework adapter */
+  public adapter?: Adapter;
   
   /**
    * Create a new AgentBridge instance
    * @param config Configuration options
    */
   constructor(config: AgentBridgeConfig = {}) {
+    super(); // Initialize EventEmitter
     this.functionRegistry = new InMemoryFunctionRegistry();
     this.componentRegistry = new InMemoryComponentRegistry();
     this.config = config;
@@ -170,7 +177,7 @@ export class AgentBridge {
       application: {
         id: this.sessionId,
         name: 'Application',
-        environment: 'development'
+        environment: 'development' as 'development' | 'production'
       }
     };
     
@@ -237,7 +244,7 @@ export class AgentBridge {
         application: {
           id: this.sessionId,
           name: 'Application',
-          environment: 'development'
+          environment: 'development' as 'development' | 'production'
         },
         request: {
           id: uuidv4(),
@@ -333,7 +340,7 @@ export class AgentBridge {
         application: {
           id: this.sessionId,
           name: 'Application',
-          environment: 'development'
+          environment: 'development' as 'development' | 'production'
         },
         request: {
           id: uuidv4(),
@@ -898,7 +905,7 @@ export class AgentBridge {
     
     // Disconnect the adapter
     if (this.adapter) {
-      this.adapter.disconnect().catch(_error => {
+      this.adapter.disconnect().catch((_error: any) => {
         console.error('Error disconnecting adapter');
       });
     }

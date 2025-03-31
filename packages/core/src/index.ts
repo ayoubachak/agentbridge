@@ -6,7 +6,7 @@ export { InMemoryFunctionRegistry } from './registry';
 export { InMemoryComponentRegistry } from './component-registry';
 
 // Export adapter
-export { Adapter } from './adapter';
+export { Adapter, CommunicationAdapter, AgentBridge as AgentBridgeInterface } from './adapter';
 
 // Export types
 export {
@@ -29,7 +29,15 @@ export {
   ResultMessage,
   ErrorMessage,
   SessionMessage,
-  QueryCapabilitiesMessage
+  QueryCapabilitiesMessage,
+  FunctionCallResult,
+  MessageQueue,
+  FrameworkAdapter,
+  Command,
+  CommandType,
+  Response,
+  ResponseStatus,
+  CommunicationProvider
 } from './types';
 
 // Utility function to create a simple AgentBridge instance

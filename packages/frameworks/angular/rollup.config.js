@@ -1,34 +1,60 @@
-import typescript from 'rollup-plugin-typescript2';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
+const typescript = require('rollup-plugin-typescript2');
+const { nodeResolve } = require('@rollup/plugin-node-resolve');
+const commonjs = require('@rollup/plugin-commonjs');
+const { terser } = require('rollup-plugin-terser');
+const pkg = require('./package.json');
 
-export default {
-  input: 'src/index.ts',
-  output: [
-    {
-      file: 'dist/index.js',
+const input = 'src/index.ts';
+const external = [
+  ...Object.keys(pkg.dependencies || {}),
+  ...Object.keys(pkg.peerDependencies || {}),
+  'rxjs/operators'
+];
+
+module.exports = [
+  // CommonJS build
+  {
+    input,
+    output: {
+      file: pkg.main,
       format: 'cjs',
       sourcemap: true
     },
-    {
-      file: 'dist/index.esm.js',
+    external,
+    plugins: [
+      typescript({
+        typescript: require('typescript'),
+        tsconfigOverride: {
+          compilerOptions: {
+            module: 'ES2015'
+          }
+        }
+      }),
+      nodeResolve(),
+      commonjs(),
+      terser()
+    ]
+  },
+  // ESM build
+  {
+    input,
+    output: {
+      file: pkg.module,
       format: 'es',
       sourcemap: true
-    }
-  ],
-  external: [
-    '@angular/core',
-    '@angular/common',
-    '@agentbridge/core',
-    'rxjs',
-    'rxjs/operators'
-  ],
-  plugins: [
-    nodeResolve(),
-    commonjs(),
-    typescript({
-      typescript: require('typescript'),
-      useTsconfigDeclarationDir: true
-    })
-  ]
-}; 
+    },
+    external,
+    plugins: [
+      typescript({
+        typescript: require('typescript'),
+        tsconfigOverride: {
+          compilerOptions: {
+            module: 'ES2015'
+          }
+        }
+      }),
+      nodeResolve(),
+      commonjs()
+    ]
+  }
+]; 

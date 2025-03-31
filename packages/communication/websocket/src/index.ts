@@ -349,7 +349,7 @@ export class WebSocketCommunicationManager implements CommunicationManager {
       });
 
       // Handle incoming messages
-      this.ws.addEventListener('message', (message) => {
+      this.ws.addEventListener('message', (message: WebSocket.MessageEvent) => {
         this.handleIncomingMessage(message);
       });
 
@@ -379,12 +379,14 @@ export class WebSocketCommunicationManager implements CommunicationManager {
    * Handle an incoming message from the WebSocket
    * @param message The incoming message event
    */
-  private handleIncomingMessage(message: MessageEvent) {
+  private handleIncomingMessage(message: WebSocket.MessageEvent): void {
     try {
       // Parse the message content
       const parsedMessage = JSON.parse(message.data as string);
-      // Emit the message event
-      this.emit('message', parsedMessage);
+      // Call the message handler instead of using emit
+      if (this.messageHandler) {
+        this.messageHandler(parsedMessage);
+      }
     } catch (_event) {
       console.error('[AgentBridge WebSocket] Error parsing message');
     }
