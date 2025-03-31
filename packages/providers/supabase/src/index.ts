@@ -73,21 +73,9 @@ export class SupabaseCommunicationManager implements CommunicationManager {
       return;
     }
     
-    // Determine channel based on message type
-    let channel: string;
+    const channel = this.determineTargetChannel(message);
     
-    if (message.type.includes('CAPABILITIES')) {
-      channel = this.config.capabilitiesChannel || DEFAULT_CHANNELS.capabilities;
-    } else if (message.type.includes('FUNCTION_CALL') || 
-               message.type.includes('UPDATE_COMPONENT') || 
-               message.type.includes('CALL_COMPONENT_ACTION') ||
-               message.type.includes('QUERY_CAPABILITIES')) {
-      channel = this.config.commandsChannel || DEFAULT_CHANNELS.commands;
-    } else {
-      channel = this.config.responsesChannel || DEFAULT_CHANNELS.responses;
-    }
-    
-    // Insert the message into the database
+    // Insert message into the table
     this.client
       .from(this.tableName)
       .insert({
@@ -100,10 +88,27 @@ export class SupabaseCommunicationManager implements CommunicationManager {
         if (result.error) {
           console.error('[AgentBridge Supabase] Error sending message:', result.error);
         }
-      })
-      .catch((error: any) => {
+      }, (error: any) => {
         console.error('[AgentBridge Supabase] Error sending message:', error);
       });
+  }
+  
+  /**
+   * Determine which channel to use based on message type
+   * @param message The message to determine channel for
+   * @returns The target channel name
+   */
+  private determineTargetChannel(message: Message): string {
+    if (message.type.includes('CAPABILITIES')) {
+      return this.config.capabilitiesChannel || DEFAULT_CHANNELS.capabilities;
+    } else if (message.type.includes('FUNCTION_CALL') || 
+               message.type.includes('UPDATE_COMPONENT') || 
+               message.type.includes('CALL_COMPONENT_ACTION') ||
+               message.type.includes('QUERY_CAPABILITIES')) {
+      return this.config.commandsChannel || DEFAULT_CHANNELS.commands;
+    } else {
+      return this.config.responsesChannel || DEFAULT_CHANNELS.responses;
+    }
   }
   
   /**
@@ -279,7 +284,7 @@ export function initializeSupabaseProvider(
   bridge.setCommunicationManager(manager);
   
   // Connect to Supabase
-  manager.connect().catch((err) => {
+  manager.connect().then(undefined, (err) => {
     console.error('[AgentBridge Supabase] Failed to connect:', err);
   });
   

@@ -1,10 +1,5 @@
 import { AgentBridge, CommunicationManager, Message } from '@agentbridge/core';
-import Pusher from 'pusher-js';
-
-// Instead of using Pusher as a namespace, use it as a type
-type Pusher = Pusher;
-type PusherChannel = Pusher.Channel;
-type PusherOptions = Pusher.Options;
+import * as PusherTypes from 'pusher-js';
 
 /**
  * Configuration options for the Pusher communication provider
@@ -13,9 +8,9 @@ export interface PusherCommunicationConfig {
   /** Pusher API key */
   key: string;
   /** Pusher configuration options */
-  options?: Pusher.Options;
+  options?: PusherTypes.Options;
   /** Custom Pusher instance (optional, for testing or custom setups) */
-  pusherInstance?: Pusher;
+  pusherInstance?: PusherTypes.default;
   /** Channel name prefix (without trailing slash) */
   channelPrefix: string;
   /** Name of the capabilities channel */
@@ -39,10 +34,10 @@ const DEFAULT_CHANNELS = {
  * Implements the CommunicationManager interface using Pusher as the transport
  */
 export class PusherCommunicationManager implements CommunicationManager {
-  private client: Pusher | null = null;
-  private capabilitiesChannel: PusherChannel | null = null;
-  private commandsChannel: PusherChannel | null = null;
-  private responsesChannel: PusherChannel | null = null;
+  private client: PusherTypes.default | null = null;
+  private capabilitiesChannel: PusherTypes.Channel | null = null;
+  private commandsChannel: PusherTypes.Channel | null = null;
+  private responsesChannel: PusherTypes.Channel | null = null;
   private messageHandler: ((message: Message) => void) | null = null;
   private connected = false;
   private config: PusherCommunicationConfig;
@@ -165,7 +160,10 @@ export class PusherCommunicationManager implements CommunicationManager {
     const responsesChannel = this.config.responsesChannel || DEFAULT_CHANNELS.responses;
     
     // Initialize Pusher client
-    this.client = new Pusher(this.config.key, this.config.options || {});
+    this.client = new PusherTypes.default(this.config.key, {
+      cluster: 'us2', // Default cluster
+      ...this.config.options
+    });
     
     return new Promise((resolve, reject) => {
       // Set up event handler for connect
@@ -223,8 +221,8 @@ export class PusherCommunicationManager implements CommunicationManager {
   }
 
   /**
-   * Subscribe to a channel
-   * @param channel The channel name to subscribe to
+   * Subscribe to a Pusher channel
+   * @param channel Channel name
    */
   private subscribeToChannel(channel: string): void {
     if (!this.client) {
@@ -237,7 +235,6 @@ export class PusherCommunicationManager implements CommunicationManager {
     
     // Store it if needed for future reference
     console.log(`Subscribed to Pusher channel: ${channel}`);
-    return subscribedChannel;
   }
 }
 
