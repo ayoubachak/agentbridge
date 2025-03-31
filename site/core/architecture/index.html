@@ -18,6 +18,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/css/mermaid.css" rel="stylesheet"/>
 <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 </head>
 <body data-md-color-accent="blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
@@ -297,9 +298,9 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#system-overview">
+<a class="md-nav__link" href="#overview">
 <span class="md-ellipsis">
-      System Overview
+      Overview
     </span>
 </a>
 </li>
@@ -312,35 +313,42 @@
 <nav aria-label="Core Components" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#agent-bridge">
+<a class="md-nav__link" href="#component-registry">
 <span class="md-ellipsis">
-      Agent Bridge
+      Component Registry
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#framework-adapters">
+<a class="md-nav__link" href="#function-registry">
 <span class="md-ellipsis">
-      Framework Adapters
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#communication-providers">
-<span class="md-ellipsis">
-      Communication Providers
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#registries">
-<span class="md-ellipsis">
-      Registries
+      Function Registry
     </span>
 </a>
 </li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#communication-flow">
+<span class="md-ellipsis">
+      Communication Flow
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#initialization-process">
+<span class="md-ellipsis">
+      Initialization Process
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#system-overview">
+<span class="md-ellipsis">
+      System Overview
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#communication-modes">
@@ -935,6 +943,14 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/mermaid-test/">
+<span class="md-ellipsis">
+    Mermaid Test
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -946,7 +962,165 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">¶</a></h1>
-<p>This document provides an overview of the AgentBridge architecture, including its components, communication modes, and integration strategies.</p>
+<p>This document outlines the architecture of the AgentBridge framework.</p>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
+<p>AgentBridge is designed with a modular, pluggable architecture that enables AI agents to interact with applications across different platforms and frameworks.</p>
+<pre class="mermaid"><code>graph TB
+    subgraph "AI Agent"
+        A[LLM/AI Agent]
+    end
+
+    subgraph "Core"
+        B[AgentBridge Core]
+        C[Component Registry]
+        D[Function Registry]
+        E[Type System]
+        B --- C
+        B --- D
+        B --- E
+    end
+
+    subgraph "Communication"
+        F[Communication Interface]
+        G[PubSub Provider]
+        H[WebSocket Provider]
+        I[Custom Provider]
+        F --- G
+        F --- H
+        F --- I
+    end
+
+    subgraph "Framework Adapters"
+        J[React Adapter]
+        K[Angular Adapter]
+        L[React Native Adapter]
+        M[Flutter Adapter]
+    end
+
+    subgraph "Application"
+        N[UI Components]
+        O[Application Functions]
+    end
+
+    A &lt;--&gt; B
+    B &lt;--&gt; F
+    F &lt;--&gt; J &amp; K &amp; L &amp; M
+    J &amp; K &amp; L &amp; M &lt;--&gt; N
+    J &amp; K &amp; L &amp; M &lt;--&gt; O</code></pre>
+<h2 id="core-components">Core Components<a class="headerlink" href="#core-components" title="Permanent link">¶</a></h2>
+<p>The core of AgentBridge consists of several key components that work together to provide a cohesive framework.</p>
+<h3 id="component-registry">Component Registry<a class="headerlink" href="#component-registry" title="Permanent link">¶</a></h3>
+<p>The Component Registry maintains a list of UI components that are available to AI agents. Each component is registered with:</p>
+<ul>
+<li>A unique identifier</li>
+<li>Component type</li>
+<li>Properties and their current values</li>
+<li>Available actions</li>
+</ul>
+<pre class="mermaid"><code>classDiagram
+    class ComponentRegistry {
+        +Map&lt;string, ComponentDefinition&gt; components
+        +registerComponent(component)
+        +unregisterComponent(id)
+        +getComponent(id)
+        +getComponentsByType(type)
+        +updateComponentState(id, state)
+    }
+
+    class ComponentDefinition {
+        +string id
+        +string type
+        +string name
+        +string description
+        +Map&lt;string, any&gt; properties
+        +Map&lt;string, Action&gt; actions
+    }
+
+    class Action {
+        +string name
+        +string description
+        +Function handler
+        +execute(params)
+    }
+
+    ComponentRegistry "1" --&gt; "*" ComponentDefinition
+    ComponentDefinition "1" --&gt; "*" Action</code></pre>
+<h3 id="function-registry">Function Registry<a class="headerlink" href="#function-registry" title="Permanent link">¶</a></h3>
+<p>The Function Registry maintains a list of functions that are exposed to AI agents:</p>
+<pre class="mermaid"><code>classDiagram
+    class FunctionRegistry {
+        +Map&lt;string, FunctionDefinition&gt; functions
+        +registerFunction(function)
+        +unregisterFunction(name)
+        +getFunction(name)
+        +getFunctionsByTag(tag)
+        +executeFunction(name, params)
+    }
+
+    class FunctionDefinition {
+        +string name
+        +string description
+        +JSONSchema parameters
+        +Function handler
+        +string[] tags
+        +bool enabled
+        +execute(params)
+    }
+
+    FunctionRegistry "1" --&gt; "*" FunctionDefinition</code></pre>
+<h2 id="communication-flow">Communication Flow<a class="headerlink" href="#communication-flow" title="Permanent link">¶</a></h2>
+<p>The detailed flow of information through the AgentBridge system:</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant Agent as AI Agent
+    participant Bridge as AgentBridge Core
+    participant Provider as Communication Provider
+    participant Adapter as Framework Adapter
+    participant Component as UI Component
+
+    Agent-&gt;&gt;Bridge: Request component list
+    Bridge-&gt;&gt;Agent: Return available components
+
+    Agent-&gt;&gt;Bridge: Request component action
+    Bridge-&gt;&gt;Provider: Transmit action request
+    Provider-&gt;&gt;Adapter: Deliver action request
+    Adapter-&gt;&gt;Component: Execute action
+    Component-&gt;&gt;Adapter: Return action result
+    Adapter-&gt;&gt;Provider: Send action response
+    Provider-&gt;&gt;Bridge: Transmit action response
+    Bridge-&gt;&gt;Agent: Deliver action result
+
+    Component-&gt;&gt;Adapter: State change notification
+    Adapter-&gt;&gt;Provider: Send state update
+    Provider-&gt;&gt;Bridge: Transmit state update
+    Bridge-&gt;&gt;Agent: Notify of state change</code></pre>
+<h2 id="initialization-process">Initialization Process<a class="headerlink" href="#initialization-process" title="Permanent link">¶</a></h2>
+<p>The initialization process of AgentBridge within an application:</p>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; CreateBridge
+    CreateBridge --&gt; ConfigureBridge
+    ConfigureBridge --&gt; SetupProvider
+    SetupProvider --&gt; ConnectProvider
+    ConnectProvider --&gt; RegisterComponents
+    RegisterComponents --&gt; RegisterFunctions
+    RegisterFunctions --&gt; Ready
+    Ready --&gt; [*]
+
+    ConnectProvider --&gt; ConnectionError
+    ConnectionError --&gt; RetryConnection
+    RetryConnection --&gt; ConnectProvider
+
+    state ConnectionError {
+        [*] --&gt; LogError
+        LogError --&gt; NotifyApplication
+        NotifyApplication --&gt; [*]
+    }
+
+    state RegisterComponents {
+        [*] --&gt; ScanForComponents
+        ScanForComponents --&gt; CreateComponentDefinitions
+        CreateComponentDefinitions --&gt; AddToRegistry
+        AddToRegistry --&gt; [*]
+    }</code></pre>
 <h2 id="system-overview">System Overview<a class="headerlink" href="#system-overview" title="Permanent link">¶</a></h2>
 <p>AgentBridge is designed to bridge the gap between AI agents and applications, providing a standardized way for agents to interact with UI components and application functionality.</p>
 <pre class="mermaid"><code>graph TD
@@ -967,27 +1141,6 @@
     F --&gt;|Connects to| M[Pusher]
     F --&gt;|Connects to| N[Supabase]
     F --&gt;|Connects to| O[WebSocket]</code></pre>
-<h2 id="core-components">Core Components<a class="headerlink" href="#core-components" title="Permanent link">¶</a></h2>
-<p>The AgentBridge framework consists of several core components:</p>
-<h3 id="agent-bridge">Agent Bridge<a class="headerlink" href="#agent-bridge" title="Permanent link">¶</a></h3>
-<p>The main coordinator responsible for:
-- Managing component and function registries
-- Handling communication between application and AI agents
-- Coordinating operations between different parts of the system</p>
-<h3 id="framework-adapters">Framework Adapters<a class="headerlink" href="#framework-adapters" title="Permanent link">¶</a></h3>
-<p>Adapters for different UI frameworks, responsible for:
-- Translating framework-specific component operations to AgentBridge operations
-- Handling framework-specific lifecycle events
-- Providing framework-specific APIs (hooks, components, etc.)</p>
-<h3 id="communication-providers">Communication Providers<a class="headerlink" href="#communication-providers" title="Permanent link">¶</a></h3>
-<p>Providers for different communication methods, responsible for:
-- Establishing connections between applications and AI agents
-- Serializing and deserializing messages
-- Handling connection lifecycle (connect, disconnect, reconnect)</p>
-<h3 id="registries">Registries<a class="headerlink" href="#registries" title="Permanent link">¶</a></h3>
-<p>Manage registered functions and components:
-- <strong>Function Registry</strong>: Stores function definitions and handlers
-- <strong>Component Registry</strong>: Stores component definitions and handlers</p>
 <h2 id="communication-modes">Communication Modes<a class="headerlink" href="#communication-modes" title="Permanent link">¶</a></h2>
 <p>AgentBridge supports two primary communication modes:</p>
 <h3 id="pubsub-mode">Pub/Sub Mode<a class="headerlink" href="#pubsub-mode" title="Permanent link">¶</a></h3>
@@ -1141,6 +1294,7 @@
 </div>
 <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
 <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
-<script src="https://unpkg.com/mermaid@9.1.7/dist/mermaid.min.js"></script>
+<script src="../../assets/js/mermaid-fixes.js"></script>
+<script src="../../assets/js/mermaid-direct.js"></script>
 </body>
 </html>

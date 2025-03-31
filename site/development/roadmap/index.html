@@ -9,6 +9,7 @@
 <meta content="AgentBridge Team" name="author"/>
 <link href="https://agentbridge.ai/development/roadmap/" rel="canonical"/>
 <link href="../release-notes/" rel="prev"/>
+<link href="../mermaid-test/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.6.9" name="generator"/>
 <title>Roadmap - AgentBridge Documentation</title>
@@ -17,6 +18,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/css/mermaid.css" rel="stylesheet"/>
 <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 </head>
 <body data-md-color-accent="blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
@@ -24,7 +26,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#agentbridge-roadmap">
+<a class="md-skip" href="#roadmap">
           Skip to content
         </a>
 </div>
@@ -808,6 +810,34 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
+<a class="md-nav__link" href="#current-milestones">
+<span class="md-ellipsis">
+      Current Milestones
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#short-term-goals-q4-2023">
+<span class="md-ellipsis">
+      Short-term Goals (Q4 2023)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mid-term-goals-q1-q2-2024">
+<span class="md-ellipsis">
+      Mid-term Goals (Q1-Q2 2024)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#long-term-vision-2024-and-beyond">
+<span class="md-ellipsis">
+      Long-term Vision (2024 and beyond)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#current-version-alpha">
 <span class="md-ellipsis">
       Current Version (Alpha)
@@ -916,6 +946,14 @@
 </ul>
 </nav>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mermaid-test/">
+<span class="md-ellipsis">
+    Mermaid Test
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -926,8 +964,73 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="agentbridge-roadmap">AgentBridge Roadmap<a class="headerlink" href="#agentbridge-roadmap" title="Permanent link">¶</a></h1>
-<p>This document outlines the development roadmap for AgentBridge, highlighting what has been accomplished and what's planned for future releases.</p>
+<h1 id="roadmap">Roadmap<a class="headerlink" href="#roadmap" title="Permanent link">¶</a></h1>
+<p>This document outlines the development roadmap for AgentBridge.</p>
+<h2 id="current-milestones">Current Milestones<a class="headerlink" href="#current-milestones" title="Permanent link">¶</a></h2>
+<p>The following Gantt chart shows the major development milestones for AgentBridge:</p>
+<pre class="mermaid"><code>gantt
+    title AgentBridge Development Roadmap
+    dateFormat YYYY-MM-DD
+
+    section Core Framework
+    Core Architecture Design     :done, core1, 2023-06-01, 2023-07-15
+    Component Registry Implementation :done, core2, 2023-07-15, 2023-08-15
+    Function Registry Implementation :done, core3, 2023-07-15, 2023-08-15
+    Communication Protocol Design :done, core4, 2023-08-01, 2023-09-01
+    Core Stability &amp; Testing      :done, core5, 2023-09-01, 2023-10-15
+    Performance Optimization      :active, core6, 2023-10-15, 2023-12-15
+
+    section Web SDKs
+    React SDK Alpha              :done, web1, 2023-07-01, 2023-08-15
+    React SDK Beta               :done, web2, 2023-08-15, 2023-10-01
+    React SDK 1.0                :active, web3, 2023-10-01, 2023-11-15
+    Angular SDK Alpha            :done, web4, 2023-09-01, 2023-10-15
+    Angular SDK Beta             :active, web5, 2023-10-15, 2023-12-01
+
+    section Mobile SDKs
+    React Native SDK Alpha       :done, mobile1, 2023-08-01, 2023-09-15
+    React Native SDK Beta        :active, mobile2, 2023-09-15, 2023-11-15
+    Flutter SDK Planning         :active, mobile3, 2023-10-01, 2023-11-15
+    Flutter SDK Alpha            :mobile4, 2023-11-15, 2024-01-15
+
+    section Communication Providers
+    Ably Provider                :done, comm1, 2023-07-01, 2023-08-15
+    Firebase Provider            :done, comm2, 2023-08-01, 2023-09-15
+    Pusher Provider              :active, comm3, 2023-09-15, 2023-11-01
+    Supabase Provider            :active, comm4, 2023-10-01, 2023-11-15
+    WebSocket Provider           :done, comm5, 2023-07-15, 2023-09-01
+
+    section Documentation &amp; Examples
+    Core Documentation           :done, docs1, 2023-07-01, 2023-09-15
+    React Examples               :done, docs2, 2023-08-15, 2023-10-01
+    Angular Examples             :active, docs3, 2023-10-01, 2023-11-15
+    React Native Examples        :active, docs4, 2023-10-15, 2023-12-01
+    Advanced Guides              :active, docs5, 2023-10-01, 2023-12-15</code></pre>
+<h2 id="short-term-goals-q4-2023">Short-term Goals (Q4 2023)<a class="headerlink" href="#short-term-goals-q4-2023" title="Permanent link">¶</a></h2>
+<ul>
+<li>Complete React SDK 1.0 release</li>
+<li>Finalize Angular SDK Beta</li>
+<li>Release Pusher and Supabase providers</li>
+<li>Expand documentation and examples</li>
+<li>Improve TypeScript support</li>
+</ul>
+<h2 id="mid-term-goals-q1-q2-2024">Mid-term Goals (Q1-Q2 2024)<a class="headerlink" href="#mid-term-goals-q1-q2-2024" title="Permanent link">¶</a></h2>
+<ul>
+<li>Release Angular SDK 1.0</li>
+<li>Release React Native SDK 1.0</li>
+<li>Launch Flutter SDK Alpha</li>
+<li>Add authentication and access control features</li>
+<li>Develop additional communication providers</li>
+</ul>
+<h2 id="long-term-vision-2024-and-beyond">Long-term Vision (2024 and beyond)<a class="headerlink" href="#long-term-vision-2024-and-beyond" title="Permanent link">¶</a></h2>
+<ul>
+<li>Support for additional UI frameworks</li>
+<li>Advanced AI agent integration capabilities</li>
+<li>Server-side component for enterprise deployments</li>
+<li>Real-time collaboration features</li>
+<li>Performance optimizations for large-scale applications</li>
+<li>Community extension ecosystem</li>
+</ul>
 <h2 id="current-version-alpha">Current Version (Alpha)<a class="headerlink" href="#current-version-alpha" title="Permanent link">¶</a></h2>
 <p>The current version of AgentBridge includes the following core functionality:</p>
 <ul>
@@ -1077,6 +1180,7 @@
 </div>
 <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
 <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
-<script src="https://unpkg.com/mermaid@9.1.7/dist/mermaid.min.js"></script>
+<script src="../../assets/js/mermaid-fixes.js"></script>
+<script src="../../assets/js/mermaid-direct.js"></script>
 </body>
 </html>

@@ -1,6 +1,76 @@
-# AgentBridge Roadmap
+# Roadmap
 
-This document outlines the development roadmap for AgentBridge, highlighting what has been accomplished and what's planned for future releases.
+This document outlines the development roadmap for AgentBridge.
+
+## Current Milestones
+
+The following Gantt chart shows the major development milestones for AgentBridge:
+
+```mermaid
+gantt
+    title AgentBridge Development Roadmap
+    dateFormat YYYY-MM-DD
+    
+    section Core Framework
+    Core Architecture Design     :done, core1, 2023-06-01, 2023-07-15
+    Component Registry Implementation :done, core2, 2023-07-15, 2023-08-15
+    Function Registry Implementation :done, core3, 2023-07-15, 2023-08-15
+    Communication Protocol Design :done, core4, 2023-08-01, 2023-09-01
+    Core Stability & Testing      :done, core5, 2023-09-01, 2023-10-15
+    Performance Optimization      :active, core6, 2023-10-15, 2023-12-15
+    
+    section Web SDKs
+    React SDK Alpha              :done, web1, 2023-07-01, 2023-08-15
+    React SDK Beta               :done, web2, 2023-08-15, 2023-10-01
+    React SDK 1.0                :active, web3, 2023-10-01, 2023-11-15
+    Angular SDK Alpha            :done, web4, 2023-09-01, 2023-10-15
+    Angular SDK Beta             :active, web5, 2023-10-15, 2023-12-01
+    
+    section Mobile SDKs
+    React Native SDK Alpha       :done, mobile1, 2023-08-01, 2023-09-15
+    React Native SDK Beta        :active, mobile2, 2023-09-15, 2023-11-15
+    Flutter SDK Planning         :active, mobile3, 2023-10-01, 2023-11-15
+    Flutter SDK Alpha            :mobile4, 2023-11-15, 2024-01-15
+    
+    section Communication Providers
+    Ably Provider                :done, comm1, 2023-07-01, 2023-08-15
+    Firebase Provider            :done, comm2, 2023-08-01, 2023-09-15
+    Pusher Provider              :active, comm3, 2023-09-15, 2023-11-01
+    Supabase Provider            :active, comm4, 2023-10-01, 2023-11-15
+    WebSocket Provider           :done, comm5, 2023-07-15, 2023-09-01
+    
+    section Documentation & Examples
+    Core Documentation           :done, docs1, 2023-07-01, 2023-09-15
+    React Examples               :done, docs2, 2023-08-15, 2023-10-01
+    Angular Examples             :active, docs3, 2023-10-01, 2023-11-15
+    React Native Examples        :active, docs4, 2023-10-15, 2023-12-01
+    Advanced Guides              :active, docs5, 2023-10-01, 2023-12-15
+```
+
+## Short-term Goals (Q4 2023)
+
+- Complete React SDK 1.0 release
+- Finalize Angular SDK Beta
+- Release Pusher and Supabase providers
+- Expand documentation and examples
+- Improve TypeScript support
+
+## Mid-term Goals (Q1-Q2 2024)
+
+- Release Angular SDK 1.0
+- Release React Native SDK 1.0
+- Launch Flutter SDK Alpha
+- Add authentication and access control features
+- Develop additional communication providers
+
+## Long-term Vision (2024 and beyond)
+
+- Support for additional UI frameworks
+- Advanced AI agent integration capabilities
+- Server-side component for enterprise deployments
+- Real-time collaboration features
+- Performance optimizations for large-scale applications
+- Community extension ecosystem
 
 ## Current Version (Alpha)
 

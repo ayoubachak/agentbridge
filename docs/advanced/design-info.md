@@ -330,4 +330,84 @@ designCollector.visualizeComponents(context);
 
 For more information about component registration and advanced MCP usage, see:
 - [Component Registration](component-registration.md)
-- [Advanced MCP Usage](mcp-advanced.md) 
+- [Advanced MCP Usage](mcp-advanced.md)
+
+# Design Information
+
+This page contains detailed design information about the AgentBridge architecture, including component relationships and communication flows.
+
+## Component Architecture
+
+The following diagram illustrates the high-level architecture of AgentBridge:
+
+```mermaid
+graph TD
+    A[AI Agent] --> B[AgentBridge Core]
+    B --> C[Communication Provider]
+    C --> D[Web/Mobile Application]
+    D --> E[Component Registry]
+    D --> F[Function Registry]
+    E --> B
+    F --> B
+    B --> A
+```
+
+## Communication Flow
+
+The sequence of events when an AI agent interacts with an application component:
+
+```mermaid
+sequenceDiagram
+    participant Agent as AI Agent
+    participant Core as AgentBridge Core
+    participant Provider as Communication Provider
+    participant App as Application
+    participant Component as UI Component
+
+    Agent->>Core: Send action request
+    Core->>Provider: Transmit request
+    Provider->>App: Deliver request
+    App->>Component: Execute action
+    Component->>App: Return result
+    App->>Provider: Send response
+    Provider->>Core: Transmit response
+    Core->>Agent: Deliver result
+```
+
+## Component Registration Process
+
+```mermaid
+flowchart LR
+    A[Component Created] --> B[Register with AgentBridge]
+    B --> C{Has Framework Adapter?}
+    C -->|Yes| D[Use Framework Adapter]
+    C -->|No| E[Use Generic Adapter]
+    D --> F[Add to Component Registry]
+    E --> F
+    F --> G[Available to AI Agents]
+```
+
+## Data Model
+
+```mermaid
+erDiagram
+    AGENT ||--o{ ACTION : requests
+    COMPONENT ||--o{ ACTION : handles
+    COMPONENT ||--o{ PROPERTY : has
+    ACTION {
+        string id
+        string type
+        object parameters
+    }
+    COMPONENT {
+        string id
+        string type
+        string name
+        string description
+    }
+    PROPERTY {
+        string name
+        string type
+        string value
+    }
+``` 

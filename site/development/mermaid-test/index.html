@@ -7,12 +7,11 @@
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="Documentation for the AgentBridge framework" name="description"/>
 <meta content="AgentBridge Team" name="author"/>
-<link href="https://agentbridge.ai/core/overview/" rel="canonical"/>
-<link href="../../getting-started/migration-guide/" rel="prev"/>
-<link href="../architecture/" rel="next"/>
+<link href="https://agentbridge.ai/development/mermaid-test/" rel="canonical"/>
+<link href="../roadmap/" rel="prev"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.6.9" name="generator"/>
-<title>Overview - AgentBridge Documentation</title>
+<title>Mermaid Test - AgentBridge Documentation</title>
 <link href="../../assets/stylesheets/main.4af4bdda.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -26,7 +25,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#core-overview">
+<a class="md-skip" href="#mermaid-test-page">
           Skip to content
         </a>
 </div>
@@ -50,7 +49,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Overview
+              Mermaid Test
             
           </span>
 </div>
@@ -121,8 +120,8 @@
 
         </a>
 </li>
-<li class="md-tabs__item md-tabs__item--active">
-<a class="md-tabs__link" href="./">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../core/overview/">
           
   
   Core
@@ -153,8 +152,8 @@
 
         </a>
 </li>
-<li class="md-tabs__item">
-<a class="md-tabs__link" href="../../development/contributing/">
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../contributing/">
           
   
   Development
@@ -253,171 +252,31 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
 <span class="md-ellipsis">
     Core
     
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="true" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_3">
 <span class="md-nav__icon md-icon"></span>
             Core
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-<span class="md-ellipsis">
-    Overview
-    
-  </span>
-<span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../core/overview/">
 <span class="md-ellipsis">
     Overview
     
   </span>
 </a>
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#architecture">
-<span class="md-ellipsis">
-      Architecture
-    </span>
-</a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#main-components">
-<span class="md-ellipsis">
-      Main Components
-    </span>
-</a>
-<nav aria-label="Main Components" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#agentbridge-class">
-<span class="md-ellipsis">
-      AgentBridge Class
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#framework-adapters">
-<span class="md-ellipsis">
-      Framework Adapters
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#function-registry">
-<span class="md-ellipsis">
-      Function Registry
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#component-registry">
-<span class="md-ellipsis">
-      Component Registry
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#communication-architecture">
-<span class="md-ellipsis">
-      Communication Architecture
-    </span>
-</a>
-<nav aria-label="Communication Architecture" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#1-pubsub-mode">
-<span class="md-ellipsis">
-      1. Pub/Sub Mode
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#2-self-hosted-mode">
-<span class="md-ellipsis">
-      2. Self-Hosted Mode
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#message-protocol">
-<span class="md-ellipsis">
-      Message Protocol
-    </span>
-</a>
-<nav aria-label="Message Protocol" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#capability-messages">
-<span class="md-ellipsis">
-      Capability Messages
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#command-messages">
-<span class="md-ellipsis">
-      Command Messages
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#response-messages">
-<span class="md-ellipsis">
-      Response Messages
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#type-system">
-<span class="md-ellipsis">
-      Type System
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#context-management">
-<span class="md-ellipsis">
-      Context Management
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#next-steps">
-<span class="md-ellipsis">
-      Next Steps
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../architecture/">
+<a class="md-nav__link" href="../../core/architecture/">
 <span class="md-ellipsis">
     Architecture
     
@@ -425,7 +284,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../api-reference/">
+<a class="md-nav__link" href="../../core/api-reference/">
 <span class="md-ellipsis">
     API Reference
     
@@ -433,7 +292,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../component-registry/">
+<a class="md-nav__link" href="../../core/component-registry/">
 <span class="md-ellipsis">
     Component Registry
     
@@ -441,7 +300,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../function-registry/">
+<a class="md-nav__link" href="../../core/function-registry/">
 <span class="md-ellipsis">
     Function Registry
     
@@ -449,7 +308,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../type-system/">
+<a class="md-nav__link" href="../../core/type-system/">
 <span class="md-ellipsis">
     Type System
     
@@ -457,7 +316,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../communication-protocol/">
+<a class="md-nav__link" href="../../core/communication-protocol/">
 <span class="md-ellipsis">
     Communication Protocol
     
@@ -465,7 +324,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../pubsub-config/">
+<a class="md-nav__link" href="../../core/pubsub-config/">
 <span class="md-ellipsis">
     Pub/Sub Configuration
     
@@ -473,7 +332,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../websocket-config/">
+<a class="md-nav__link" href="../../core/websocket-config/">
 <span class="md-ellipsis">
     WebSocket Configuration
     
@@ -873,23 +732,23 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_7" type="checkbox"/>
-<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
 <span class="md-ellipsis">
     Development
     
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<nav aria-expanded="true" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_7">
 <span class="md-nav__icon md-icon"></span>
             Development
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../development/contributing/">
+<a class="md-nav__link" href="../contributing/">
 <span class="md-ellipsis">
     Contributing
     
@@ -897,7 +756,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../development/architecture/">
+<a class="md-nav__link" href="../architecture/">
 <span class="md-ellipsis">
     Architecture
     
@@ -905,7 +764,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../development/deployment/">
+<a class="md-nav__link" href="../deployment/">
 <span class="md-ellipsis">
     Package Deployment
     
@@ -913,7 +772,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../development/mcp-evaluation/">
+<a class="md-nav__link" href="../mcp-evaluation/">
 <span class="md-ellipsis">
     MCP Evaluation
     
@@ -921,7 +780,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../development/release-notes/">
+<a class="md-nav__link" href="../release-notes/">
 <span class="md-ellipsis">
     Release Notes
     
@@ -929,20 +788,78 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../development/roadmap/">
+<a class="md-nav__link" href="../roadmap/">
 <span class="md-ellipsis">
     Roadmap
     
   </span>
 </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../development/mermaid-test/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    Mermaid Test
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
 <span class="md-ellipsis">
     Mermaid Test
     
   </span>
 </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#simple-flowchart">
+<span class="md-ellipsis">
+      Simple Flowchart
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#simple-sequence-diagram">
+<span class="md-ellipsis">
+      Simple Sequence Diagram
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#simple-class-diagram">
+<span class="md-ellipsis">
+      Simple Class Diagram
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#simple-state-diagram">
+<span class="md-ellipsis">
+      Simple State Diagram
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#simple-gantt-chart">
+<span class="md-ellipsis">
+      Simple Gantt Chart
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#simple-er-diagram">
+<span class="md-ellipsis">
+      Simple ER Diagram
+    </span>
+</a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -954,127 +871,44 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="core-overview">Core Overview<a class="headerlink" href="#core-overview" title="Permanent link">¶</a></h1>
-<p>The AgentBridge Core package provides the foundation for all AgentBridge functionality. It contains the primary interfaces, classes, and utilities that power the framework across all supported platforms.</p>
-<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">¶</a></h2>
-<p>The core package is platform-agnostic and consists of several key components:</p>
-<div class="highlight"><pre><span></span><code>@agentbridge/core/
-├── agent-bridge.ts      # Main AgentBridge class
-├── adapter.ts           # Framework adapter interface
-├── registry.ts          # Function registry implementation
-├── component-registry.ts # Component registry implementation
-├── types.ts             # TypeScript definitions and interfaces
-└── utils/               # Utility functions and helpers
-</code></pre></div>
-<h2 id="main-components">Main Components<a class="headerlink" href="#main-components" title="Permanent link">¶</a></h2>
-<h3 id="agentbridge-class">AgentBridge Class<a class="headerlink" href="#agentbridge-class" title="Permanent link">¶</a></h3>
-<p>The <code>AgentBridge</code> class is the central coordinator of the framework. It:</p>
-<ul>
-<li>Manages communication between application and AI agents</li>
-<li>Registers and tracks UI components</li>
-<li>Registers and executes functions</li>
-<li>Handles context and state management</li>
-</ul>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AgentBridge</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/core'</span><span class="p">;</span>
-
-<span class="c1">// Create an instance</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">bridge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">AgentBridge</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">applicationId</span><span class="o">:</span><span class="w"> </span><span class="s1">'my-app-123'</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">environmentId</span><span class="o">:</span><span class="w"> </span><span class="s1">'development'</span>
-<span class="p">});</span>
-
-<span class="c1">// Initialize with a communication provider</span>
-<span class="nx">bridge</span><span class="p">.</span><span class="nx">initialize</span><span class="p">(</span><span class="nx">communicationProvider</span><span class="p">);</span>
-</code></pre></div>
-<h3 id="framework-adapters">Framework Adapters<a class="headerlink" href="#framework-adapters" title="Permanent link">¶</a></h3>
-<p>Framework adapters serve as bridges between the core functionality and specific UI frameworks (React, Angular, etc.). They implement the <code>FrameworkAdapter</code> interface:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">interface</span><span class="w"> </span><span class="nx">FrameworkAdapter</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">initialize</span><span class="p">(</span><span class="nx">bridge</span><span class="o">:</span><span class="w"> </span><span class="kt">AgentBridge</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="p">;</span>
-<span class="w">  </span><span class="nx">registerComponent</span><span class="p">(</span><span class="nx">componentId</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">definition</span><span class="o">:</span><span class="w"> </span><span class="kt">ComponentDefinition</span><span class="p">,</span><span class="w"> </span><span class="nx">handlers</span><span class="o">:</span><span class="w"> </span><span class="kt">ComponentHandlers</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="p">;</span>
-<span class="w">  </span><span class="nx">unregisterComponent</span><span class="p">(</span><span class="nx">componentId</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="p">;</span>
-<span class="w">  </span><span class="nx">disconnect</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="ow">void</span><span class="o">&gt;</span><span class="p">;</span>
-<span class="w">  </span><span class="nx">getComponentDefinitions</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="nx">ComponentDefinition</span><span class="p">[];</span>
-<span class="p">}</span>
-</code></pre></div>
-<h3 id="function-registry">Function Registry<a class="headerlink" href="#function-registry" title="Permanent link">¶</a></h3>
-<p>The function registry manages functions that can be called by AI agents:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// Register a function</span>
-<span class="nx">bridge</span><span class="p">.</span><span class="nx">registerFunction</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">'getWeather'</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">'Get weather information for a location'</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">parameters</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s1">'object'</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">properties</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">location</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s1">'string'</span><span class="w"> </span><span class="p">},</span>
-<span class="w">      </span><span class="nx">units</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s1">'string'</span><span class="p">,</span><span class="w"> </span><span class="kd">enum</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">'metric'</span><span class="p">,</span><span class="w"> </span><span class="s1">'imperial'</span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nx">required</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">'location'</span><span class="p">]</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">handler</span><span class="o">:</span><span class="w"> </span><span class="kt">async</span><span class="w"> </span><span class="p">(</span><span class="nx">params</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Implementation</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">temperature</span><span class="o">:</span><span class="w"> </span><span class="kt">22</span><span class="p">,</span><span class="w"> </span><span class="nx">conditions</span><span class="o">:</span><span class="w"> </span><span class="s1">'sunny'</span><span class="w"> </span><span class="p">};</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-<h3 id="component-registry">Component Registry<a class="headerlink" href="#component-registry" title="Permanent link">¶</a></h3>
-<p>The component registry tracks UI components that can be controlled by AI agents:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// Component definition example</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">buttonDefinition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s1">'button'</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">properties</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s1">'string'</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="nx">disabled</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s1">'boolean'</span><span class="w"> </span><span class="p">}</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">actions</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">'click'</span><span class="p">]</span>
-<span class="p">};</span>
-</code></pre></div>
-<h2 id="communication-architecture">Communication Architecture<a class="headerlink" href="#communication-architecture" title="Permanent link">¶</a></h2>
-<p>AgentBridge supports two primary communication modes:</p>
-<h3 id="1-pubsub-mode">1. Pub/Sub Mode<a class="headerlink" href="#1-pubsub-mode" title="Permanent link">¶</a></h3>
-<p>Uses third-party messaging services to relay messages between AI agents and applications:</p>
-<div class="highlight"><pre><span></span><code>+-------------+        +---------------+        +------------+
-|             |        |               |        |            |
-| Application +&lt;------&gt;+ Pub/Sub Service +&lt;------&gt;+ AI Agent   |
-|             |        |               |        |            |
-+-------------+        +---------------+        +------------+
-</code></pre></div>
-<h3 id="2-self-hosted-mode">2. Self-Hosted Mode<a class="headerlink" href="#2-self-hosted-mode" title="Permanent link">¶</a></h3>
-<p>Uses a direct WebSocket connection via your backend:</p>
-<div class="highlight"><pre><span></span><code>+-------------+        +---------------+        +------------+
-|             |        |               |        |            |
-| Application +&lt;------&gt;+ Your Backend  +&lt;------&gt;+ AI Agent   |
-|             |        |               |        |            |
-+-------------+        +---------------+        +------------+
-</code></pre></div>
-<h2 id="message-protocol">Message Protocol<a class="headerlink" href="#message-protocol" title="Permanent link">¶</a></h2>
-<p>AgentBridge uses a standardized message protocol for communication:</p>
-<h3 id="capability-messages">Capability Messages<a class="headerlink" href="#capability-messages" title="Permanent link">¶</a></h3>
-<p>Sent from the application to the agent to describe available functions and components.</p>
-<h3 id="command-messages">Command Messages<a class="headerlink" href="#command-messages" title="Permanent link">¶</a></h3>
-<p>Sent from the agent to the application to call functions or control components.</p>
-<h3 id="response-messages">Response Messages<a class="headerlink" href="#response-messages" title="Permanent link">¶</a></h3>
-<p>Sent from the application to the agent in response to command messages.</p>
-<h2 id="type-system">Type System<a class="headerlink" href="#type-system" title="Permanent link">¶</a></h2>
-<p>AgentBridge uses a JSON Schema-compatible type system to define and validate:</p>
-<ul>
-<li>Function parameters and return values</li>
-<li>Component properties and action parameters</li>
-<li>Message structures</li>
-</ul>
-<h2 id="context-management">Context Management<a class="headerlink" href="#context-management" title="Permanent link">¶</a></h2>
-<p>The context system provides AI agents with information about:</p>
-<ul>
-<li>The current application state</li>
-<li>User information</li>
-<li>Environment details</li>
-<li>Execution context for functions</li>
-</ul>
-<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
-<ul>
-<li>See the <a href="../api-reference/">API Reference</a> for detailed documentation of all classes and interfaces</li>
-<li>Learn about the <a href="../function-registry/">Function Registry</a> for registering functions</li>
-<li>Explore the <a href="../type-system/">Type System</a> for defining schemas</li>
-</ul>
+<h1 id="mermaid-test-page">Mermaid Test Page<a class="headerlink" href="#mermaid-test-page" title="Permanent link">¶</a></h1>
+<p>This page contains test diagrams to verify Mermaid functionality.</p>
+<h2 id="simple-flowchart">Simple Flowchart<a class="headerlink" href="#simple-flowchart" title="Permanent link">¶</a></h2>
+<pre class="mermaid"><code>graph TD
+    A[Start] --&gt; B[Process]
+    B --&gt; C[End]</code></pre>
+<h2 id="simple-sequence-diagram">Simple Sequence Diagram<a class="headerlink" href="#simple-sequence-diagram" title="Permanent link">¶</a></h2>
+<pre class="mermaid"><code>sequenceDiagram
+    Alice-&gt;&gt;John: Hello John, how are you?
+    John--&gt;&gt;Alice: Great!</code></pre>
+<h2 id="simple-class-diagram">Simple Class Diagram<a class="headerlink" href="#simple-class-diagram" title="Permanent link">¶</a></h2>
+<pre class="mermaid"><code>classDiagram
+    class Animal {
+        +name: string
+        +move(): void
+    }
+    class Dog {
+        +bark(): void
+    }
+    Animal &lt;|-- Dog</code></pre>
+<h2 id="simple-state-diagram">Simple State Diagram<a class="headerlink" href="#simple-state-diagram" title="Permanent link">¶</a></h2>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; Still
+    Still --&gt; Moving
+    Moving --&gt; Still
+    Moving --&gt; Crash
+    Crash --&gt; [*]</code></pre>
+<h2 id="simple-gantt-chart">Simple Gantt Chart<a class="headerlink" href="#simple-gantt-chart" title="Permanent link">¶</a></h2>
+<pre class="mermaid"><code>gantt
+    title A Gantt Diagram
+    dateFormat  YYYY-MM-DD
+    section Section
+    A task           :a1, 2023-01-01, 30d
+    Another task     :after a1, 20d</code></pre>
+<h2 id="simple-er-diagram">Simple ER Diagram<a class="headerlink" href="#simple-er-diagram" title="Permanent link">¶</a></h2>
+<pre class="mermaid"><code>erDiagram
+    CUSTOMER ||--o{ ORDER : places
+    ORDER ||--|{ LINE-ITEM : contains</code></pre>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>

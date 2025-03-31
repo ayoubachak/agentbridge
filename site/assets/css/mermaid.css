@@ -1,0 +1,106 @@
+/* Mermaid diagram styling */
+.mermaid {
+  margin: 2em auto;
+  overflow: auto;
+  text-align: center;
+  max-width: 100%;
+  background: rgba(240, 240, 245, 0.7);
+  border-radius: 8px;
+  padding: 1em;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  display: block !important;
+}
+
+/* Ensure diagrams can be loaded */
+.mermaid[data-processed="true"] {
+  min-height: 100px;
+}
+
+/* Dark mode support */
+[data-md-color-scheme="slate"] .mermaid {
+  background: rgba(30, 30, 40, 0.6);
+}
+
+/* Better error messages */
+.mermaid .error-icon {
+  fill: #ff6e6e !important;
+}
+
+.mermaid .error-text {
+  fill: #ff6e6e !important;
+  stroke: none !important;
+  font-weight: bold;
+}
+
+/* Flowchart styling */
+.mermaid .flowchart-link {
+  stroke-width: 2px !important;
+}
+
+/* Class diagrams */
+.mermaid .classTitle {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+/* Sequence diagrams */
+.mermaid .actor {
+  stroke-width: 1px;
+  stroke: #cccccc;
+}
+
+.mermaid .messageLine0, .mermaid .messageLine1 {
+  stroke-width: 1.5px;
+}
+
+/* State diagrams */
+.mermaid .statediagram-state rect {
+  rx: 5px;
+  ry: 5px;
+}
+
+/* Entity Relationship diagrams */
+.mermaid .er.relationshipLabelBox {
+  fill: #f8f8f8;
+}
+
+/* Improve the appearance of boxes */
+.mermaid .node rect,
+.mermaid .node circle,
+.mermaid .node ellipse,
+.mermaid .node polygon,
+.mermaid .node path {
+  stroke-width: 2px;
+  stroke: #666;
+  fill: #fff;
+}
+
+/* Subgraphs */
+.mermaid .cluster rect {
+  rx: 5px;
+  ry: 5px;
+  stroke-width: 1px;
+  stroke: #888;
+  stroke-dasharray: none;
+}
+
+/* Gantt charts */
+.mermaid .taskText {
+  font-size: 11px;
+  fill: #333;
+}
+
+.mermaid .taskTextOutsideRight {
+  font-size: 11px;
+  fill: #333;
+}
+
+.mermaid .task {
+  stroke-width: 1px;
+}
+
+/* Fix for common rendering issues */
+.mermaid svg {
+  height: auto;
+  max-width: 100%;
+} 

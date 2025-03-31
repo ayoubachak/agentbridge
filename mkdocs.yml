@@ -104,10 +104,35 @@ nav:
       - MCP Evaluation: development/mcp-evaluation.md
       - Release Notes: development/release-notes.md
       - Roadmap: development/roadmap.md
+      - Mermaid Test: development/mermaid-test.md
 
 plugins:
   - search
-  - mermaid2
+  - mermaid2:
+      version: 9.5.3
+      javascript: |
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: 'default',
+          securityLevel: 'loose',
+          logLevel: 'error',
+          flowchart: { 
+            useMaxWidth: true, 
+            htmlLabels: true,
+            curve: 'basis'
+          },
+          sequence: { 
+            useMaxWidth: true,
+            showSequenceNumbers: false 
+          },
+          gantt: {
+            useMaxWidth: true
+          }
+        });
 
 extra_javascript:
-  - https://unpkg.com/mermaid@9.1.7/dist/mermaid.min.js
+  - assets/js/mermaid-fixes.js
+  - assets/js/mermaid-direct.js
+
+extra_css:
+  - assets/css/mermaid.css

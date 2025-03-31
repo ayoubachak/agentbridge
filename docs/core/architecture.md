@@ -1,6 +1,190 @@
 # Architecture
 
-This document provides an overview of the AgentBridge architecture, including its components, communication modes, and integration strategies.
+This document outlines the architecture of the AgentBridge framework.
+
+## Overview
+
+AgentBridge is designed with a modular, pluggable architecture that enables AI agents to interact with applications across different platforms and frameworks.
+
+```mermaid
+graph TB
+    subgraph "AI Agent"
+        A[LLM/AI Agent]
+    end
+    
+    subgraph "Core"
+        B[AgentBridge Core]
+        C[Component Registry]
+        D[Function Registry]
+        E[Type System]
+        B --- C
+        B --- D
+        B --- E
+    end
+    
+    subgraph "Communication"
+        F[Communication Interface]
+        G[PubSub Provider]
+        H[WebSocket Provider]
+        I[Custom Provider]
+        F --- G
+        F --- H
+        F --- I
+    end
+    
+    subgraph "Framework Adapters"
+        J[React Adapter]
+        K[Angular Adapter]
+        L[React Native Adapter]
+        M[Flutter Adapter]
+    end
+    
+    subgraph "Application"
+        N[UI Components]
+        O[Application Functions]
+    end
+    
+    A <--> B
+    B <--> F
+    F <--> J & K & L & M
+    J & K & L & M <--> N
+    J & K & L & M <--> O
+```
+
+## Core Components
+
+The core of AgentBridge consists of several key components that work together to provide a cohesive framework.
+
+### Component Registry
+
+The Component Registry maintains a list of UI components that are available to AI agents. Each component is registered with:
+
+- A unique identifier
+- Component type
+- Properties and their current values
+- Available actions
+
+```mermaid
+classDiagram
+    class ComponentRegistry {
+        +Map<string, ComponentDefinition> components
+        +registerComponent(component)
+        +unregisterComponent(id)
+        +getComponent(id)
+        +getComponentsByType(type)
+        +updateComponentState(id, state)
+    }
+    
+    class ComponentDefinition {
+        +string id
+        +string type
+        +string name
+        +string description
+        +Map<string, any> properties
+        +Map<string, Action> actions
+    }
+    
+    class Action {
+        +string name
+        +string description
+        +Function handler
+        +execute(params)
+    }
+    
+    ComponentRegistry "1" --> "*" ComponentDefinition
+    ComponentDefinition "1" --> "*" Action
+```
+
+### Function Registry
+
+The Function Registry maintains a list of functions that are exposed to AI agents:
+
+```mermaid
+classDiagram
+    class FunctionRegistry {
+        +Map<string, FunctionDefinition> functions
+        +registerFunction(function)
+        +unregisterFunction(name)
+        +getFunction(name)
+        +getFunctionsByTag(tag)
+        +executeFunction(name, params)
+    }
+    
+    class FunctionDefinition {
+        +string name
+        +string description
+        +JSONSchema parameters
+        +Function handler
+        +string[] tags
+        +bool enabled
+        +execute(params)
+    }
+    
+    FunctionRegistry "1" --> "*" FunctionDefinition
+```
+
+## Communication Flow
+
+The detailed flow of information through the AgentBridge system:
+
+```mermaid
+sequenceDiagram
+    participant Agent as AI Agent
+    participant Bridge as AgentBridge Core
+    participant Provider as Communication Provider
+    participant Adapter as Framework Adapter
+    participant Component as UI Component
+    
+    Agent->>Bridge: Request component list
+    Bridge->>Agent: Return available components
+    
+    Agent->>Bridge: Request component action
+    Bridge->>Provider: Transmit action request
+    Provider->>Adapter: Deliver action request
+    Adapter->>Component: Execute action
+    Component->>Adapter: Return action result
+    Adapter->>Provider: Send action response
+    Provider->>Bridge: Transmit action response
+    Bridge->>Agent: Deliver action result
+    
+    Component->>Adapter: State change notification
+    Adapter->>Provider: Send state update
+    Provider->>Bridge: Transmit state update
+    Bridge->>Agent: Notify of state change
+```
+
+## Initialization Process
+
+The initialization process of AgentBridge within an application:
+
+```mermaid
+stateDiagram-v2
+    [*] --> CreateBridge
+    CreateBridge --> ConfigureBridge
+    ConfigureBridge --> SetupProvider
+    SetupProvider --> ConnectProvider
+    ConnectProvider --> RegisterComponents
+    RegisterComponents --> RegisterFunctions
+    RegisterFunctions --> Ready
+    Ready --> [*]
+    
+    ConnectProvider --> ConnectionError
+    ConnectionError --> RetryConnection
+    RetryConnection --> ConnectProvider
+    
+    state ConnectionError {
+        [*] --> LogError
+        LogError --> NotifyApplication
+        NotifyApplication --> [*]
+    }
+    
+    state RegisterComponents {
+        [*] --> ScanForComponents
+        ScanForComponents --> CreateComponentDefinitions
+        CreateComponentDefinitions --> AddToRegistry
+        AddToRegistry --> [*]
+    }
+```
 
 ## System Overview
 
@@ -26,37 +210,6 @@ graph TD
     F -->|Connects to| N[Supabase]
     F -->|Connects to| O[WebSocket]
 ```
-
-## Core Components
-
-The AgentBridge framework consists of several core components:
-
-### Agent Bridge
-
-The main coordinator responsible for:
-- Managing component and function registries
-- Handling communication between application and AI agents
-- Coordinating operations between different parts of the system
-
-### Framework Adapters
-
-Adapters for different UI frameworks, responsible for:
-- Translating framework-specific component operations to AgentBridge operations
-- Handling framework-specific lifecycle events
-- Providing framework-specific APIs (hooks, components, etc.)
-
-### Communication Providers
-
-Providers for different communication methods, responsible for:
-- Establishing connections between applications and AI agents
-- Serializing and deserializing messages
-- Handling connection lifecycle (connect, disconnect, reconnect)
-
-### Registries
-
-Manage registered functions and components:
-- **Function Registry**: Stores function definitions and handlers
-- **Component Registry**: Stores component definitions and handlers
 
 ## Communication Modes
 
