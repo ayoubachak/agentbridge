@@ -45,6 +45,7 @@ nav:
       - Installation: getting-started/installation.md
       - Quick Start: getting-started/quick-start.md
       - Communication Modes: getting-started/communication-modes.md
+      - Examples: getting-started/examples.md
       - Migration Guide: getting-started/migration-guide.md
   - Core:
       - Overview: core/overview.md
@@ -60,13 +61,17 @@ nav:
       - Features: web/web-features.md
       - React:
           - Overview: web/react/overview.md
+          - Getting Started: web/react/getting-started.md
           - Components: web/react/components.md
           - Hooks: web/react/hooks.md
+          - Guide: web/react/README.md
+          - Change Log: web/react/changes.md
           - Examples: examples/react-examples.md
       - Angular:
           - Overview: web/angular/overview.md
           - Components: web/angular/components.md
           - Services: web/angular/services.md
+          - Directives: web/angular/directives.md
           - Examples: examples/angular-examples.md
   - Mobile SDKs:
       - Features: mobile/mobile-features.md
@@ -81,6 +86,7 @@ nav:
           - API Reference: mobile/flutter-api.md
           - Examples: examples/flutter-examples.md
   - Advanced:
+      - Overview: advanced/index.md
       - Authentication: advanced/authentication.md
       - Component Registration: advanced/component-registration.md
       - Error Handling: advanced/error-handling.md

@@ -145,7 +145,7 @@
         </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../advanced/authentication/">
+<a class="md-tabs__link" href="../../../advanced/">
           
   
   Advanced
@@ -229,6 +229,14 @@
 <a class="md-nav__link" href="../../../getting-started/communication-modes/">
 <span class="md-ellipsis">
     Communication Modes
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../getting-started/examples/">
+<span class="md-ellipsis">
+    Examples
     
   </span>
 </a>
@@ -381,6 +389,14 @@
 </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="../../../web/react/getting-started/">
+<span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="../../../web/react/components/">
 <span class="md-ellipsis">
     Components
@@ -392,6 +408,22 @@
 <a class="md-nav__link" href="../../../web/react/hooks/">
 <span class="md-ellipsis">
     Hooks
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../web/react/">
+<span class="md-ellipsis">
+    Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../web/react/changes/">
+<span class="md-ellipsis">
+    Change Log
     
   </span>
 </a>
@@ -442,6 +474,14 @@
 <a class="md-nav__link" href="../../../web/angular/services/">
 <span class="md-ellipsis">
     Services
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../web/angular/directives/">
+<span class="md-ellipsis">
+    Directives
     
   </span>
 </a>
@@ -528,12 +568,37 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#core-components">
+<a class="md-nav__link" href="#higher-order-component-hoc">
 <span class="md-ellipsis">
-      Core Components
+      Higher-Order Component (HOC)
     </span>
 </a>
-<nav aria-label="Core Components" class="md-nav">
+<nav aria-label="Higher-Order Component (HOC)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#withagentbridge">
+<span class="md-ellipsis">
+      withAgentBridge
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hoc-configuration-options">
+<span class="md-ellipsis">
+      HOC Configuration Options
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pre-built-components">
+<span class="md-ellipsis">
+      Pre-built Components
+    </span>
+</a>
+<nav aria-label="Pre-built Components" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#agentbutton">
@@ -541,12 +606,11 @@
       AgentButton
     </span>
 </a>
-<nav aria-label="AgentButton" class="md-nav">
-<ul class="md-nav__list">
+</li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#props">
+<a class="md-nav__link" href="#agenttextinput">
 <span class="md-ellipsis">
-      Props
+      AgentTextInput
     </span>
 </a>
 </li>
@@ -554,203 +618,17 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#agenttextfield">
+<a class="md-nav__link" href="#creating-custom-components">
 <span class="md-ellipsis">
-      AgentTextField
+      Creating Custom Components
     </span>
 </a>
-<nav aria-label="AgentTextField" class="md-nav">
+<nav aria-label="Creating Custom Components" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#props_1">
+<a class="md-nav__link" href="#function-component-with-useregistercomponent">
 <span class="md-ellipsis">
-      Props
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#agentswitch">
-<span class="md-ellipsis">
-      AgentSwitch
-    </span>
-</a>
-<nav aria-label="AgentSwitch" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#props_2">
-<span class="md-ellipsis">
-      Props
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#agentdropdown">
-<span class="md-ellipsis">
-      AgentDropdown
-    </span>
-</a>
-<nav aria-label="AgentDropdown" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#props_3">
-<span class="md-ellipsis">
-      Props
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#agentcheckbox">
-<span class="md-ellipsis">
-      AgentCheckbox
-    </span>
-</a>
-<nav aria-label="AgentCheckbox" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#props_4">
-<span class="md-ellipsis">
-      Props
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#agentslider">
-<span class="md-ellipsis">
-      AgentSlider
-    </span>
-</a>
-<nav aria-label="AgentSlider" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#props_5">
-<span class="md-ellipsis">
-      Props
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#mobile-specific-components">
-<span class="md-ellipsis">
-      Mobile-Specific Components
-    </span>
-</a>
-<nav aria-label="Mobile-Specific Components" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#agenttouchable">
-<span class="md-ellipsis">
-      AgentTouchable
-    </span>
-</a>
-<nav aria-label="AgentTouchable" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#props_6">
-<span class="md-ellipsis">
-      Props
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#agentflatlist">
-<span class="md-ellipsis">
-      AgentFlatList
-    </span>
-</a>
-<nav aria-label="AgentFlatList" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#props_7">
-<span class="md-ellipsis">
-      Props
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#building-custom-components">
-<span class="md-ellipsis">
-      Building Custom Components
-    </span>
-</a>
-<nav aria-label="Building Custom Components" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#using-the-hoc">
-<span class="md-ellipsis">
-      Using the HOC
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#using-the-hook">
-<span class="md-ellipsis">
-      Using the Hook
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#using-the-custom-component">
-<span class="md-ellipsis">
-      Using the Custom Component
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#component-provider">
-<span class="md-ellipsis">
-      Component Provider
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#mobile-specific-features">
-<span class="md-ellipsis">
-      Mobile-Specific Features
-    </span>
-</a>
-<nav aria-label="Mobile-Specific Features" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#device-vibration">
-<span class="md-ellipsis">
-      Device Vibration
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#accessing-device-information">
-<span class="md-ellipsis">
-      Accessing Device Information
+      Function Component with useRegisterComponent
     </span>
 </a>
 </li>
@@ -861,6 +739,14 @@
             Advanced
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../advanced/">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../../advanced/authentication/">
 <span class="md-ellipsis">
@@ -1018,1030 +904,362 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="react-native-components">React Native Components<a class="headerlink" href="#react-native-components" title="Permanent link">¶</a></h1>
-<p>This page documents all the UI components available in the AgentBridge React Native SDK. These components are designed to be easily controlled by AI agents while providing a native mobile experience.</p>
-<h2 id="core-components">Core Components<a class="headerlink" href="#core-components" title="Permanent link">¶</a></h2>
-<p>The AgentBridge React Native SDK provides several ready-to-use components that can be controlled by AI agents:</p>
+<p>The AgentBridge React Native SDK provides components and utilities for integrating AI agent control into your mobile applications.</p>
+<h2 id="higher-order-component-hoc">Higher-Order Component (HOC)<a class="headerlink" href="#higher-order-component-hoc" title="Permanent link">¶</a></h2>
+<h3 id="withagentbridge">withAgentBridge<a class="headerlink" href="#withagentbridge" title="Permanent link">¶</a></h3>
+<p>The <code>withAgentBridge</code> higher-order component (HOC) makes it easy to register class components with AgentBridge, making them controllable by AI agents.</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Component</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react'</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">View</span><span class="p">,</span><span class="w"> </span><span class="nx">Text</span><span class="p">,</span><span class="w"> </span><span class="nx">Button</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react-native'</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">withAgentBridge</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/react-native'</span><span class="p">;</span>
+
+<span class="kd">class</span><span class="w"> </span><span class="nx">Counter</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Component</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">count</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="nx">increment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">(</span><span class="nx">prevState</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">({</span>
+<span class="w">      </span><span class="nx">count</span><span class="o">:</span><span class="w"> </span><span class="nx">prevState</span><span class="p">.</span><span class="nx">count</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span>
+<span class="w">    </span><span class="p">}));</span>
+<span class="w">  </span><span class="p">};</span>
+
+<span class="w">  </span><span class="nx">decrement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">(</span><span class="nx">prevState</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">({</span>
+<span class="w">      </span><span class="nx">count</span><span class="o">:</span><span class="w"> </span><span class="nx">prevState</span><span class="p">.</span><span class="nx">count</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1</span>
+<span class="w">    </span><span class="p">}));</span>
+<span class="w">  </span><span class="p">};</span>
+
+<span class="w">  </span><span class="nx">reset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span><span class="w"> </span><span class="nx">count</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="p">});</span>
+<span class="w">  </span><span class="p">};</span>
+
+<span class="w">  </span><span class="nx">render</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">View</span><span class="w"> </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">padding</span><span class="o">:</span><span class="w"> </span><span class="mf">20</span><span class="w"> </span><span class="p">}}&gt;</span>
+<span class="w">        </span><span class="p">&lt;</span><span class="nt">Text</span><span class="w"> </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">fontSize</span><span class="o">:</span><span class="w"> </span><span class="mf">24</span><span class="p">,</span><span class="w"> </span><span class="nx">marginBottom</span><span class="o">:</span><span class="w"> </span><span class="mf">20</span><span class="w"> </span><span class="p">}}&gt;</span>
+<span class="w">          </span><span class="nx">Count</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">count</span><span class="p">}</span>
+<span class="w">        </span><span class="p">&lt;/</span><span class="nt">Text</span><span class="p">&gt;</span>
+<span class="w">        </span><span class="p">&lt;</span><span class="nt">View</span><span class="w"> </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">flexDirection</span><span class="o">:</span><span class="w"> </span><span class="s1">'row'</span><span class="p">,</span><span class="w"> </span><span class="nx">justifyContent</span><span class="o">:</span><span class="w"> </span><span class="s1">'space-between'</span><span class="w"> </span><span class="p">}}&gt;</span>
+<span class="w">          </span><span class="p">&lt;</span><span class="nt">Button</span><span class="w"> </span><span class="na">title</span><span class="o">=</span><span class="s">"Increment"</span><span class="w"> </span><span class="na">onPress</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">increment</span><span class="p">}</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="w">          </span><span class="p">&lt;</span><span class="nt">Button</span><span class="w"> </span><span class="na">title</span><span class="o">=</span><span class="s">"Decrement"</span><span class="w"> </span><span class="na">onPress</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">decrement</span><span class="p">}</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="w">          </span><span class="p">&lt;</span><span class="nt">Button</span><span class="w"> </span><span class="na">title</span><span class="o">=</span><span class="s">"Reset"</span><span class="w"> </span><span class="na">onPress</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">reset</span><span class="p">}</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="w">        </span><span class="p">&lt;/</span><span class="nt">View</span><span class="p">&gt;</span>
+<span class="w">      </span><span class="p">&lt;/</span><span class="nt">View</span><span class="p">&gt;</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Wrap the component with withAgentBridge</span>
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">withAgentBridge</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s1">'counter-component'</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">componentType</span><span class="o">:</span><span class="w"> </span><span class="s1">'counter'</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">'Counter Component'</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">'A counter that can be incremented, decremented, or reset'</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">properties</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">props</span><span class="p">,</span><span class="w"> </span><span class="nx">state</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">({</span>
+<span class="w">    </span><span class="nx">count</span><span class="o">:</span><span class="w"> </span><span class="nx">state</span><span class="p">.</span><span class="nx">count</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">isEven</span><span class="o">:</span><span class="w"> </span><span class="nx">state</span><span class="p">.</span><span class="nx">count</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">isPositive</span><span class="o">:</span><span class="w"> </span><span class="nx">state</span><span class="p">.</span><span class="nx">count</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">  </span><span class="p">}),</span>
+<span class="w">  </span><span class="nx">actions</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">increment</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">'Increase the counter by 1'</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">handler</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">component</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">component</span><span class="p">.</span><span class="nx">increment</span><span class="p">();</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+<span class="w">          </span><span class="nx">success</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span>
+<span class="w">          </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">'Counter incremented'</span><span class="p">,</span>
+<span class="w">          </span><span class="nx">newValue</span><span class="o">:</span><span class="w"> </span><span class="nx">component</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">count</span>
+<span class="w">        </span><span class="p">};</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nx">decrement</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">'Decrease the counter by 1'</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">handler</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">component</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">component</span><span class="p">.</span><span class="nx">decrement</span><span class="p">();</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+<span class="w">          </span><span class="nx">success</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span>
+<span class="w">          </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">'Counter decremented'</span><span class="p">,</span>
+<span class="w">          </span><span class="nx">newValue</span><span class="o">:</span><span class="w"> </span><span class="nx">component</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">count</span>
+<span class="w">        </span><span class="p">};</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nx">reset</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">'Reset the counter to 0'</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">handler</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">component</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">component</span><span class="p">.</span><span class="nx">reset</span><span class="p">();</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+<span class="w">          </span><span class="nx">success</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span>
+<span class="w">          </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">'Counter reset'</span><span class="p">,</span>
+<span class="w">          </span><span class="nx">newValue</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span>
+<span class="w">        </span><span class="p">};</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">})(</span><span class="nx">Counter</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="hoc-configuration-options">HOC Configuration Options<a class="headerlink" href="#hoc-configuration-options" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>string</td>
+<td>Unique identifier for the component</td>
+</tr>
+<tr>
+<td><code>componentType</code></td>
+<td>string</td>
+<td>Type of component (e.g., 'counter', 'input', etc.)</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>string</td>
+<td>Display name for the component</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>string</td>
+<td>Description of what the component does</td>
+</tr>
+<tr>
+<td><code>properties</code></td>
+<td>function</td>
+<td>Function that returns component properties from props and state</td>
+</tr>
+<tr>
+<td><code>actions</code></td>
+<td>object</td>
+<td>Object mapping action names to action handlers</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>string[]</td>
+<td>Optional tags for categorizing the component</td>
+</tr>
+</tbody>
+</table>
+<h2 id="pre-built-components">Pre-built Components<a class="headerlink" href="#pre-built-components" title="Permanent link">¶</a></h2>
 <h3 id="agentbutton">AgentButton<a class="headerlink" href="#agentbutton" title="Permanent link">¶</a></h3>
 <p>A button component that can be controlled by AI agents.</p>
 <div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AgentButton</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/react-native'</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useRegisterComponent</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/react-native'</span><span class="p">;</span>
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">MyComponent</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">AgentButton</span>
-<span class="w">      </span><span class="na">id</span><span class="o">=</span><span class="s">"submit-button"</span>
-<span class="w">      </span><span class="na">label</span><span class="o">=</span><span class="s">"Submit"</span>
-<span class="w">      </span><span class="na">onPress</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Your action here</span>
-<span class="w">      </span><span class="p">}}</span>
-<span class="w">      </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span>
-<span class="w">        </span><span class="nx">backgroundColor</span><span class="o">:</span><span class="w"> </span><span class="s1">'#4285F4'</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">borderRadius</span><span class="o">:</span><span class="w"> </span><span class="mf">8</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">padding</span><span class="o">:</span><span class="w"> </span><span class="mf">12</span><span class="p">,</span>
-<span class="w">      </span><span class="p">}}</span>
-<span class="w">      </span><span class="na">textStyle</span><span class="o">=</span><span class="p">{{</span>
-<span class="w">        </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="s1">'white'</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">fontSize</span><span class="o">:</span><span class="w"> </span><span class="mf">16</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">fontWeight</span><span class="o">:</span><span class="w"> </span><span class="s1">'bold'</span><span class="p">,</span>
-<span class="w">      </span><span class="p">}}</span>
-<span class="w">      </span><span class="na">disabled</span><span class="o">=</span><span class="p">{</span><span class="kc">false</span><span class="p">}</span>
-<span class="w">      </span><span class="na">loading</span><span class="o">=</span><span class="p">{</span><span class="kc">false</span><span class="p">}</span>
-<span class="w">      </span><span class="na">icon</span><span class="o">=</span><span class="s">"arrow-right"</span>
-<span class="w">      </span><span class="na">iconPosition</span><span class="o">=</span><span class="s">"right"</span>
-<span class="w">    </span><span class="p">/&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-<h4 id="props">Props<a class="headerlink" href="#props" title="Permanent link">¶</a></h4>
-<table>
-<thead>
-<tr>
-<th>Prop</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>id</code></td>
-<td>string</td>
-<td>Unique identifier for the button</td>
-</tr>
-<tr>
-<td><code>label</code></td>
-<td>string</td>
-<td>Text to display on the button</td>
-</tr>
-<tr>
-<td><code>onPress</code></td>
-<td>function</td>
-<td>Callback function when button is pressed</td>
-</tr>
-<tr>
-<td><code>style</code></td>
-<td>object</td>
-<td>Style object for the button container</td>
-</tr>
-<tr>
-<td><code>textStyle</code></td>
-<td>object</td>
-<td>Style object for the button text</td>
-</tr>
-<tr>
-<td><code>disabled</code></td>
-<td>boolean</td>
-<td>Whether the button is disabled</td>
-</tr>
-<tr>
-<td><code>loading</code></td>
-<td>boolean</td>
-<td>Whether to show a loading indicator</td>
-</tr>
-<tr>
-<td><code>icon</code></td>
-<td>string | ReactNode</td>
-<td>Icon to display with the button</td>
-</tr>
-<tr>
-<td><code>iconPosition</code></td>
-<td>'left' | 'right'</td>
-<td>Position of the icon</td>
-</tr>
-</tbody>
-</table>
-<h3 id="agenttextfield">AgentTextField<a class="headerlink" href="#agenttextfield" title="Permanent link">¶</a></h3>
-<p>A text field component that can be controlled by AI agents.</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AgentTextField</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/react-native'</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react'</span><span class="p">;</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">MyScreen</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">handlePress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Button pressed'</span><span class="p">);</span>
+<span class="w">  </span><span class="p">};</span>
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">MyComponent</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">value</span><span class="p">,</span><span class="w"> </span><span class="nx">setValue</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="s1">''</span><span class="p">);</span>
-
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">AgentTextField</span>
-<span class="w">      </span><span class="na">id</span><span class="o">=</span><span class="s">"email-input"</span>
-<span class="w">      </span><span class="na">label</span><span class="o">=</span><span class="s">"Email Address"</span>
-<span class="w">      </span><span class="na">placeholder</span><span class="o">=</span><span class="s">"Enter your email"</span>
-<span class="w">      </span><span class="na">value</span><span class="o">=</span><span class="p">{</span><span class="nx">value</span><span class="p">}</span>
-<span class="w">      </span><span class="na">onChangeText</span><span class="o">=</span><span class="p">{</span><span class="nx">setValue</span><span class="p">}</span>
-<span class="w">      </span><span class="na">onSubmitEditing</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Handle submission</span>
-<span class="w">      </span><span class="p">}}</span>
-<span class="w">      </span><span class="na">keyboardType</span><span class="o">=</span><span class="s">"email-address"</span>
-<span class="w">      </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span>
-<span class="w">        </span><span class="nx">borderColor</span><span class="o">:</span><span class="w"> </span><span class="s1">'#ddd'</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">borderWidth</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">borderRadius</span><span class="o">:</span><span class="w"> </span><span class="mf">8</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">padding</span><span class="o">:</span><span class="w"> </span><span class="mf">10</span><span class="p">,</span>
-<span class="w">      </span><span class="p">}}</span>
-<span class="w">      </span><span class="na">labelStyle</span><span class="o">=</span><span class="p">{{</span>
-<span class="w">        </span><span class="nx">fontSize</span><span class="o">:</span><span class="w"> </span><span class="mf">16</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="s1">'#333'</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">marginBottom</span><span class="o">:</span><span class="w"> </span><span class="mf">8</span><span class="p">,</span>
-<span class="w">      </span><span class="p">}}</span>
-<span class="w">    </span><span class="p">/&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-<h4 id="props_1">Props<a class="headerlink" href="#props_1" title="Permanent link">¶</a></h4>
-<table>
-<thead>
-<tr>
-<th>Prop</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>id</code></td>
-<td>string</td>
-<td>Unique identifier for the text field</td>
-</tr>
-<tr>
-<td><code>label</code></td>
-<td>string</td>
-<td>Label text for the field</td>
-</tr>
-<tr>
-<td><code>placeholder</code></td>
-<td>string</td>
-<td>Placeholder text when empty</td>
-</tr>
-<tr>
-<td><code>value</code></td>
-<td>string</td>
-<td>Current value of the text field</td>
-</tr>
-<tr>
-<td><code>onChangeText</code></td>
-<td>function</td>
-<td>Callback when text changes</td>
-</tr>
-<tr>
-<td><code>onSubmitEditing</code></td>
-<td>function</td>
-<td>Callback when the return key is pressed</td>
-</tr>
-<tr>
-<td><code>keyboardType</code></td>
-<td>string</td>
-<td>Type of keyboard to display</td>
-</tr>
-<tr>
-<td><code>secureTextEntry</code></td>
-<td>boolean</td>
-<td>Whether to hide the text (for passwords)</td>
-</tr>
-<tr>
-<td><code>style</code></td>
-<td>object</td>
-<td>Style object for the text input</td>
-</tr>
-<tr>
-<td><code>labelStyle</code></td>
-<td>object</td>
-<td>Style object for the label</td>
-</tr>
-<tr>
-<td><code>disabled</code></td>
-<td>boolean</td>
-<td>Whether the text field is disabled</td>
-</tr>
-<tr>
-<td><code>error</code></td>
-<td>string</td>
-<td>Error message to display</td>
-</tr>
-<tr>
-<td><code>maxLength</code></td>
-<td>number</td>
-<td>Maximum length of the text</td>
-</tr>
-<tr>
-<td><code>multiline</code></td>
-<td>boolean</td>
-<td>Whether to allow multiple lines of text</td>
-</tr>
-<tr>
-<td><code>numberOfLines</code></td>
-<td>number</td>
-<td>Number of lines to display (for multiline)</td>
-</tr>
-<tr>
-<td><code>autoFocus</code></td>
-<td>boolean</td>
-<td>Whether to auto-focus the input</td>
-</tr>
-</tbody>
-</table>
-<h3 id="agentswitch">AgentSwitch<a class="headerlink" href="#agentswitch" title="Permanent link">¶</a></h3>
-<p>A switch component that can be toggled on or off by AI agents.</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AgentSwitch</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/react-native'</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react'</span><span class="p">;</span>
-
-<span class="kd">function</span><span class="w"> </span><span class="nx">MyComponent</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">isEnabled</span><span class="p">,</span><span class="w"> </span><span class="nx">setIsEnabled</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
-
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">AgentSwitch</span>
-<span class="w">      </span><span class="na">id</span><span class="o">=</span><span class="s">"notifications-switch"</span>
-<span class="w">      </span><span class="na">label</span><span class="o">=</span><span class="s">"Enable Notifications"</span>
-<span class="w">      </span><span class="na">value</span><span class="o">=</span><span class="p">{</span><span class="nx">isEnabled</span><span class="p">}</span>
-<span class="w">      </span><span class="na">onValueChange</span><span class="o">=</span><span class="p">{</span><span class="nx">setIsEnabled</span><span class="p">}</span>
-<span class="w">      </span><span class="na">disabled</span><span class="o">=</span><span class="p">{</span><span class="kc">false</span><span class="p">}</span>
-<span class="w">      </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span>
-<span class="w">        </span><span class="nx">marginVertical</span><span class="o">:</span><span class="w"> </span><span class="mf">10</span><span class="p">,</span>
-<span class="w">      </span><span class="p">}}</span>
-<span class="w">      </span><span class="na">trackColor</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="kc">false</span><span class="o">:</span><span class="w"> </span><span class="s1">'#767577'</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="o">:</span><span class="w"> </span><span class="s1">'#81b0ff'</span><span class="w"> </span><span class="p">}}</span>
-<span class="w">      </span><span class="na">thumbColor</span><span class="o">=</span><span class="p">{</span><span class="nx">isEnabled</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s1">'#f5dd4b'</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s1">'#f4f3f4'</span><span class="p">}</span>
-<span class="w">    </span><span class="p">/&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-<h4 id="props_2">Props<a class="headerlink" href="#props_2" title="Permanent link">¶</a></h4>
-<table>
-<thead>
-<tr>
-<th>Prop</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>id</code></td>
-<td>string</td>
-<td>Unique identifier for the switch</td>
-</tr>
-<tr>
-<td><code>label</code></td>
-<td>string</td>
-<td>Label text for the switch</td>
-</tr>
-<tr>
-<td><code>value</code></td>
-<td>boolean</td>
-<td>Current state of the switch</td>
-</tr>
-<tr>
-<td><code>onValueChange</code></td>
-<td>function</td>
-<td>Callback when switch value changes</td>
-</tr>
-<tr>
-<td><code>disabled</code></td>
-<td>boolean</td>
-<td>Whether the switch is disabled</td>
-</tr>
-<tr>
-<td><code>style</code></td>
-<td>object</td>
-<td>Style object for the container</td>
-</tr>
-<tr>
-<td><code>labelStyle</code></td>
-<td>object</td>
-<td>Style object for the label</td>
-</tr>
-<tr>
-<td><code>trackColor</code></td>
-<td>object</td>
-<td>Colors for the track ({ false: string, true: string })</td>
-</tr>
-<tr>
-<td><code>thumbColor</code></td>
-<td>string</td>
-<td>Color of the foreground switch grip</td>
-</tr>
-<tr>
-<td><code>labelPosition</code></td>
-<td>'left' | 'right'</td>
-<td>Position of the label</td>
-</tr>
-</tbody>
-</table>
-<h3 id="agentdropdown">AgentDropdown<a class="headerlink" href="#agentdropdown" title="Permanent link">¶</a></h3>
-<p>A dropdown component that allows selection from a list of options.</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AgentDropdown</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/react-native'</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react'</span><span class="p">;</span>
-
-<span class="kd">function</span><span class="w"> </span><span class="nx">MyComponent</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">selected</span><span class="p">,</span><span class="w"> </span><span class="nx">setSelected</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="s1">''</span><span class="p">);</span>
-
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">items</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="s1">'us'</span><span class="p">,</span><span class="w"> </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s1">'United States'</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="s1">'ca'</span><span class="p">,</span><span class="w"> </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s1">'Canada'</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="s1">'mx'</span><span class="p">,</span><span class="w"> </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s1">'Mexico'</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="p">];</span>
-
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">AgentDropdown</span>
-<span class="w">      </span><span class="na">id</span><span class="o">=</span><span class="s">"country-dropdown"</span>
-<span class="w">      </span><span class="na">label</span><span class="o">=</span><span class="s">"Select Country"</span>
-<span class="w">      </span><span class="na">value</span><span class="o">=</span><span class="p">{</span><span class="nx">selected</span><span class="p">}</span>
-<span class="w">      </span><span class="na">items</span><span class="o">=</span><span class="p">{</span><span class="nx">items</span><span class="p">}</span>
-<span class="w">      </span><span class="na">onValueChange</span><span class="o">=</span><span class="p">{(</span><span class="nx">value</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setSelected</span><span class="p">(</span><span class="nx">value</span><span class="p">)}</span>
-<span class="w">      </span><span class="na">placeholder</span><span class="o">=</span><span class="s">"Choose a country"</span>
-<span class="w">      </span><span class="na">disabled</span><span class="o">=</span><span class="p">{</span><span class="kc">false</span><span class="p">}</span>
-<span class="w">      </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span>
-<span class="w">        </span><span class="nx">borderColor</span><span class="o">:</span><span class="w"> </span><span class="s1">'#ddd'</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">borderWidth</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">borderRadius</span><span class="o">:</span><span class="w"> </span><span class="mf">8</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">padding</span><span class="o">:</span><span class="w"> </span><span class="mf">10</span><span class="p">,</span>
-<span class="w">      </span><span class="p">}}</span>
-<span class="w">      </span><span class="na">labelStyle</span><span class="o">=</span><span class="p">{{</span>
-<span class="w">        </span><span class="nx">fontSize</span><span class="o">:</span><span class="w"> </span><span class="mf">16</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="s1">'#333'</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">marginBottom</span><span class="o">:</span><span class="w"> </span><span class="mf">8</span><span class="p">,</span>
-<span class="w">      </span><span class="p">}}</span>
-<span class="w">    </span><span class="p">/&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-<h4 id="props_3">Props<a class="headerlink" href="#props_3" title="Permanent link">¶</a></h4>
-<table>
-<thead>
-<tr>
-<th>Prop</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>id</code></td>
-<td>string</td>
-<td>Unique identifier for the dropdown</td>
-</tr>
-<tr>
-<td><code>label</code></td>
-<td>string</td>
-<td>Label text for the dropdown</td>
-</tr>
-<tr>
-<td><code>value</code></td>
-<td>any</td>
-<td>Currently selected value</td>
-</tr>
-<tr>
-<td><code>items</code></td>
-<td>array</td>
-<td>Array of items (objects with value and label)</td>
-</tr>
-<tr>
-<td><code>onValueChange</code></td>
-<td>function</td>
-<td>Callback when selection changes</td>
-</tr>
-<tr>
-<td><code>placeholder</code></td>
-<td>string</td>
-<td>Placeholder text when no item is selected</td>
-</tr>
-<tr>
-<td><code>disabled</code></td>
-<td>boolean</td>
-<td>Whether the dropdown is disabled</td>
-</tr>
-<tr>
-<td><code>style</code></td>
-<td>object</td>
-<td>Style object for the dropdown</td>
-</tr>
-<tr>
-<td><code>labelStyle</code></td>
-<td>object</td>
-<td>Style object for the label</td>
-</tr>
-<tr>
-<td><code>dropdownStyle</code></td>
-<td>object</td>
-<td>Style object for the dropdown menu</td>
-</tr>
-<tr>
-<td><code>error</code></td>
-<td>string</td>
-<td>Error message to display</td>
-</tr>
-</tbody>
-</table>
-<h3 id="agentcheckbox">AgentCheckbox<a class="headerlink" href="#agentcheckbox" title="Permanent link">¶</a></h3>
-<p>A checkbox component that can be checked or unchecked by AI agents.</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AgentCheckbox</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/react-native'</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react'</span><span class="p">;</span>
-
-<span class="kd">function</span><span class="w"> </span><span class="nx">MyComponent</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">checked</span><span class="p">,</span><span class="w"> </span><span class="nx">setChecked</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
-
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">AgentCheckbox</span>
-<span class="w">      </span><span class="na">id</span><span class="o">=</span><span class="s">"terms-checkbox"</span>
-<span class="w">      </span><span class="na">label</span><span class="o">=</span><span class="s">"I agree to the terms and conditions"</span>
-<span class="w">      </span><span class="na">value</span><span class="o">=</span><span class="p">{</span><span class="nx">checked</span><span class="p">}</span>
-<span class="w">      </span><span class="na">onValueChange</span><span class="o">=</span><span class="p">{</span><span class="nx">setChecked</span><span class="p">}</span>
-<span class="w">      </span><span class="na">disabled</span><span class="o">=</span><span class="p">{</span><span class="kc">false</span><span class="p">}</span>
-<span class="w">      </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span>
-<span class="w">        </span><span class="nx">marginVertical</span><span class="o">:</span><span class="w"> </span><span class="mf">10</span><span class="p">,</span>
-<span class="w">      </span><span class="p">}}</span>
-<span class="w">      </span><span class="na">checkboxColor</span><span class="o">=</span><span class="s">"#4285F4"</span>
-<span class="w">    </span><span class="p">/&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-<h4 id="props_4">Props<a class="headerlink" href="#props_4" title="Permanent link">¶</a></h4>
-<table>
-<thead>
-<tr>
-<th>Prop</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>id</code></td>
-<td>string</td>
-<td>Unique identifier for the checkbox</td>
-</tr>
-<tr>
-<td><code>label</code></td>
-<td>string</td>
-<td>Label text for the checkbox</td>
-</tr>
-<tr>
-<td><code>value</code></td>
-<td>boolean</td>
-<td>Current state of the checkbox</td>
-</tr>
-<tr>
-<td><code>onValueChange</code></td>
-<td>function</td>
-<td>Callback when checkbox value changes</td>
-</tr>
-<tr>
-<td><code>disabled</code></td>
-<td>boolean</td>
-<td>Whether the checkbox is disabled</td>
-</tr>
-<tr>
-<td><code>style</code></td>
-<td>object</td>
-<td>Style object for the container</td>
-</tr>
-<tr>
-<td><code>labelStyle</code></td>
-<td>object</td>
-<td>Style object for the label</td>
-</tr>
-<tr>
-<td><code>checkboxColor</code></td>
-<td>string</td>
-<td>Color of the checkbox when checked</td>
-</tr>
-</tbody>
-</table>
-<h3 id="agentslider">AgentSlider<a class="headerlink" href="#agentslider" title="Permanent link">¶</a></h3>
-<p>A slider component that can be adjusted by AI agents.</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AgentSlider</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/react-native'</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react'</span><span class="p">;</span>
-
-<span class="kd">function</span><span class="w"> </span><span class="nx">MyComponent</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">value</span><span class="p">,</span><span class="w"> </span><span class="nx">setValue</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="mf">50</span><span class="p">);</span>
-
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">AgentSlider</span>
-<span class="w">      </span><span class="na">id</span><span class="o">=</span><span class="s">"volume-slider"</span>
-<span class="w">      </span><span class="na">label</span><span class="o">=</span><span class="s">"Volume"</span>
-<span class="w">      </span><span class="na">value</span><span class="o">=</span><span class="p">{</span><span class="nx">value</span><span class="p">}</span>
-<span class="w">      </span><span class="na">onValueChange</span><span class="o">=</span><span class="p">{</span><span class="nx">setValue</span><span class="p">}</span>
-<span class="w">      </span><span class="na">minimumValue</span><span class="o">=</span><span class="p">{</span><span class="mf">0</span><span class="p">}</span>
-<span class="w">      </span><span class="na">maximumValue</span><span class="o">=</span><span class="p">{</span><span class="mf">100</span><span class="p">}</span>
-<span class="w">      </span><span class="na">step</span><span class="o">=</span><span class="p">{</span><span class="mf">1</span><span class="p">}</span>
-<span class="w">      </span><span class="na">disabled</span><span class="o">=</span><span class="p">{</span><span class="kc">false</span><span class="p">}</span>
-<span class="w">      </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span>
-<span class="w">        </span><span class="nx">marginVertical</span><span class="o">:</span><span class="w"> </span><span class="mf">15</span><span class="p">,</span>
-<span class="w">      </span><span class="p">}}</span>
-<span class="w">      </span><span class="na">labelStyle</span><span class="o">=</span><span class="p">{{</span>
-<span class="w">        </span><span class="nx">fontSize</span><span class="o">:</span><span class="w"> </span><span class="mf">16</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="s1">'#333'</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">marginBottom</span><span class="o">:</span><span class="w"> </span><span class="mf">8</span><span class="p">,</span>
-<span class="w">      </span><span class="p">}}</span>
-<span class="w">      </span><span class="na">minimumTrackTintColor</span><span class="o">=</span><span class="s">"#4285F4"</span>
-<span class="w">      </span><span class="na">maximumTrackTintColor</span><span class="o">=</span><span class="s">"#ddd"</span>
-<span class="w">      </span><span class="na">thumbTintColor</span><span class="o">=</span><span class="s">"white"</span>
-<span class="w">    </span><span class="p">/&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-<h4 id="props_5">Props<a class="headerlink" href="#props_5" title="Permanent link">¶</a></h4>
-<table>
-<thead>
-<tr>
-<th>Prop</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>id</code></td>
-<td>string</td>
-<td>Unique identifier for the slider</td>
-</tr>
-<tr>
-<td><code>label</code></td>
-<td>string</td>
-<td>Label text for the slider</td>
-</tr>
-<tr>
-<td><code>value</code></td>
-<td>number</td>
-<td>Current value of the slider</td>
-</tr>
-<tr>
-<td><code>onValueChange</code></td>
-<td>function</td>
-<td>Callback when slider value changes</td>
-</tr>
-<tr>
-<td><code>minimumValue</code></td>
-<td>number</td>
-<td>Minimum value of the slider</td>
-</tr>
-<tr>
-<td><code>maximumValue</code></td>
-<td>number</td>
-<td>Maximum value of the slider</td>
-</tr>
-<tr>
-<td><code>step</code></td>
-<td>number</td>
-<td>Step increment value</td>
-</tr>
-<tr>
-<td><code>disabled</code></td>
-<td>boolean</td>
-<td>Whether the slider is disabled</td>
-</tr>
-<tr>
-<td><code>style</code></td>
-<td>object</td>
-<td>Style object for the container</td>
-</tr>
-<tr>
-<td><code>labelStyle</code></td>
-<td>object</td>
-<td>Style object for the label</td>
-</tr>
-<tr>
-<td><code>minimumTrackTintColor</code></td>
-<td>string</td>
-<td>Color of the track to the left of the thumb</td>
-</tr>
-<tr>
-<td><code>maximumTrackTintColor</code></td>
-<td>string</td>
-<td>Color of the track to the right of the thumb</td>
-</tr>
-<tr>
-<td><code>thumbTintColor</code></td>
-<td>string</td>
-<td>Color of the thumb</td>
-</tr>
-<tr>
-<td><code>showValue</code></td>
-<td>boolean</td>
-<td>Whether to show the current value</td>
-</tr>
-</tbody>
-</table>
-<h2 id="mobile-specific-components">Mobile-Specific Components<a class="headerlink" href="#mobile-specific-components" title="Permanent link">¶</a></h2>
-<p>AgentBridge provides additional components specific to mobile applications:</p>
-<h3 id="agenttouchable">AgentTouchable<a class="headerlink" href="#agenttouchable" title="Permanent link">¶</a></h3>
-<p>A touchable component that can be tapped by AI agents.</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AgentTouchable</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/react-native'</span><span class="p">;</span>
-
-<span class="kd">function</span><span class="w"> </span><span class="nx">MyComponent</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">AgentTouchable</span>
-<span class="w">      </span><span class="na">id</span><span class="o">=</span><span class="s">"card-touchable"</span>
-<span class="w">      </span><span class="na">onPress</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Handle press</span>
-<span class="w">      </span><span class="p">}}</span>
-<span class="w">      </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span>
-<span class="w">        </span><span class="nx">backgroundColor</span><span class="o">:</span><span class="w"> </span><span class="s1">'white'</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">borderRadius</span><span class="o">:</span><span class="w"> </span><span class="mf">8</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">padding</span><span class="o">:</span><span class="w"> </span><span class="mf">16</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">shadowColor</span><span class="o">:</span><span class="w"> </span><span class="s1">'#000'</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">shadowOffset</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="p">},</span>
-<span class="w">        </span><span class="nx">shadowOpacity</span><span class="o">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">shadowRadius</span><span class="o">:</span><span class="w"> </span><span class="mf">4</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">elevation</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span>
-<span class="w">      </span><span class="p">}}</span>
-<span class="w">    </span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">Text</span><span class="w"> </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">fontSize</span><span class="o">:</span><span class="w"> </span><span class="mf">18</span><span class="p">,</span><span class="w"> </span><span class="nx">fontWeight</span><span class="o">:</span><span class="w"> </span><span class="s1">'bold'</span><span class="w"> </span><span class="p">}}&gt;</span><span class="nx">Card</span><span class="w"> </span><span class="nx">Title</span><span class="p">&lt;/</span><span class="nt">Text</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">Text</span><span class="w"> </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">marginTop</span><span class="o">:</span><span class="w"> </span><span class="mf">8</span><span class="w"> </span><span class="p">}}&gt;</span><span class="nx">Card</span><span class="w"> </span><span class="nx">description</span><span class="w"> </span><span class="nx">text</span><span class="w"> </span><span class="nx">goes</span><span class="w"> </span><span class="nx">here</span><span class="p">&lt;/</span><span class="nt">Text</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">AgentTouchable</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-<h4 id="props_6">Props<a class="headerlink" href="#props_6" title="Permanent link">¶</a></h4>
-<table>
-<thead>
-<tr>
-<th>Prop</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>id</code></td>
-<td>string</td>
-<td>Unique identifier for the touchable area</td>
-</tr>
-<tr>
-<td><code>onPress</code></td>
-<td>function</td>
-<td>Callback when pressed</td>
-</tr>
-<tr>
-<td><code>onLongPress</code></td>
-<td>function</td>
-<td>Callback when long pressed</td>
-</tr>
-<tr>
-<td><code>style</code></td>
-<td>object</td>
-<td>Style object for the touchable area</td>
-</tr>
-<tr>
-<td><code>disabled</code></td>
-<td>boolean</td>
-<td>Whether the touchable is disabled</td>
-</tr>
-<tr>
-<td><code>activeOpacity</code></td>
-<td>number</td>
-<td>Opacity when pressed (0-1)</td>
-</tr>
-<tr>
-<td><code>pressEffect</code></td>
-<td>'opacity' | 'highlight' | 'none'</td>
-<td>Type of press effect</td>
-</tr>
-</tbody>
-</table>
-<h3 id="agentflatlist">AgentFlatList<a class="headerlink" href="#agentflatlist" title="Permanent link">¶</a></h3>
-<p>A list component that can be scrolled and controlled by AI agents.</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AgentFlatList</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/react-native'</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react'</span><span class="p">;</span>
-
-<span class="kd">function</span><span class="w"> </span><span class="nx">MyComponent</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">items</span><span class="p">,</span><span class="w"> </span><span class="nx">setItems</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">([</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s1">'1'</span><span class="p">,</span><span class="w"> </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s1">'Item 1'</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s1">'2'</span><span class="p">,</span><span class="w"> </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s1">'Item 2'</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s1">'3'</span><span class="p">,</span><span class="w"> </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s1">'Item 3'</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="p">]);</span>
-
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">renderItem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">item</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">AgentTouchable</span>
-<span class="w">      </span><span class="na">id</span><span class="o">=</span><span class="p">{</span><span class="sb">`item-</span><span class="si">${</span><span class="nx">item</span><span class="p">.</span><span class="nx">id</span><span class="si">}</span><span class="sb">`</span><span class="p">}</span>
-<span class="w">      </span><span class="na">onPress</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Pressed item </span><span class="si">${</span><span class="nx">item</span><span class="p">.</span><span class="nx">id</span><span class="si">}</span><span class="sb">`</span><span class="p">)}</span>
-<span class="w">      </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">padding</span><span class="o">:</span><span class="w"> </span><span class="mf">16</span><span class="p">,</span><span class="w"> </span><span class="nx">borderBottomWidth</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">borderBottomColor</span><span class="o">:</span><span class="w"> </span><span class="s1">'#eee'</span><span class="w"> </span><span class="p">}}</span>
-<span class="w">    </span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">Text</span><span class="p">&gt;{</span><span class="nx">item</span><span class="p">.</span><span class="nx">title</span><span class="p">}&lt;/</span><span class="nt">Text</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">AgentTouchable</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">AgentFlatList</span>
-<span class="w">      </span><span class="na">id</span><span class="o">=</span><span class="s">"my-list"</span>
-<span class="w">      </span><span class="na">data</span><span class="o">=</span><span class="p">{</span><span class="nx">items</span><span class="p">}</span>
-<span class="w">      </span><span class="na">renderItem</span><span class="o">=</span><span class="p">{</span><span class="nx">renderItem</span><span class="p">}</span>
-<span class="w">      </span><span class="na">keyExtractor</span><span class="o">=</span><span class="p">{(</span><span class="nx">item</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span>
-<span class="w">      </span><span class="na">style</span><span class="o">=</span><span class="p">{{</span><span class="w"> </span><span class="nx">flex</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="p">}}</span>
-<span class="w">      </span><span class="na">onRefresh</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Handle refresh</span>
-<span class="w">      </span><span class="p">}}</span>
-<span class="w">      </span><span class="na">refreshing</span><span class="o">=</span><span class="p">{</span><span class="kc">false</span><span class="p">}</span>
-<span class="w">    </span><span class="p">/&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-<h4 id="props_7">Props<a class="headerlink" href="#props_7" title="Permanent link">¶</a></h4>
-<table>
-<thead>
-<tr>
-<th>Prop</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>id</code></td>
-<td>string</td>
-<td>Unique identifier for the list</td>
-</tr>
-<tr>
-<td><code>data</code></td>
-<td>array</td>
-<td>Array of data items to render</td>
-</tr>
-<tr>
-<td><code>renderItem</code></td>
-<td>function</td>
-<td>Function to render each item</td>
-</tr>
-<tr>
-<td><code>keyExtractor</code></td>
-<td>function</td>
-<td>Function to extract a key for each item</td>
-</tr>
-<tr>
-<td><code>style</code></td>
-<td>object</td>
-<td>Style object for the list</td>
-</tr>
-<tr>
-<td><code>onRefresh</code></td>
-<td>function</td>
-<td>Callback when pull-to-refresh is triggered</td>
-</tr>
-<tr>
-<td><code>refreshing</code></td>
-<td>boolean</td>
-<td>Whether the list is currently refreshing</td>
-</tr>
-<tr>
-<td><code>onEndReached</code></td>
-<td>function</td>
-<td>Callback when end of list is reached</td>
-</tr>
-<tr>
-<td><code>onEndReachedThreshold</code></td>
-<td>number</td>
-<td>How far from the end to trigger onEndReached</td>
-</tr>
-<tr>
-<td><code>horizontal</code></td>
-<td>boolean</td>
-<td>Whether the list should render horizontally</td>
-</tr>
-</tbody>
-</table>
-<h2 id="building-custom-components">Building Custom Components<a class="headerlink" href="#building-custom-components" title="Permanent link">¶</a></h2>
-<p>You can create custom components that can be controlled by AI agents by using the <code>withAgentComponent</code> higher-order component (HOC) or the <code>useAgentComponent</code> hook.</p>
-<h3 id="using-the-hoc">Using the HOC<a class="headerlink" href="#using-the-hoc" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">withAgentComponent</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/react-native'</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react'</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">View</span><span class="p">,</span><span class="w"> </span><span class="nx">Text</span><span class="p">,</span><span class="w"> </span><span class="nx">StyleSheet</span><span class="p">,</span><span class="w"> </span><span class="nx">TouchableOpacity</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react-native'</span><span class="p">;</span>
-
-<span class="kd">function</span><span class="w"> </span><span class="nx">CustomCard</span><span class="p">({</span><span class="w"> </span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="nx">title</span><span class="p">,</span><span class="w"> </span><span class="nx">description</span><span class="p">,</span><span class="w"> </span><span class="nx">onTap</span><span class="p">,</span><span class="w"> </span><span class="nx">isAgentControlled</span><span class="p">,</span><span class="w"> </span><span class="nx">registerAgentAction</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">isPressed</span><span class="p">,</span><span class="w"> </span><span class="nx">setIsPressed</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
-
-<span class="w">  </span><span class="c1">// Register actions for the AI agent</span>
-<span class="w">  </span><span class="nx">useState</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">isAgentControlled</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">registerAgentAction</span><span class="p">(</span><span class="s1">'tap'</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">onTap</span><span class="p">)</span><span class="w"> </span><span class="nx">onTap</span><span class="p">();</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
-<span class="w">      </span><span class="p">});</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">},</span><span class="w"> </span><span class="p">[</span><span class="nx">isAgentControlled</span><span class="p">,</span><span class="w"> </span><span class="nx">registerAgentAction</span><span class="p">,</span><span class="w"> </span><span class="nx">onTap</span><span class="p">]);</span>
-
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">TouchableOpacity</span>
-<span class="w">      </span><span class="na">activeOpacity</span><span class="o">=</span><span class="p">{</span><span class="mf">0.7</span><span class="p">}</span>
-<span class="w">      </span><span class="na">onPress</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">setIsPressed</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
-<span class="w">        </span><span class="nx">setTimeout</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setIsPressed</span><span class="p">(</span><span class="kc">false</span><span class="p">),</span><span class="w"> </span><span class="mf">200</span><span class="p">);</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">onTap</span><span class="p">)</span><span class="w"> </span><span class="nx">onTap</span><span class="p">();</span>
-<span class="w">      </span><span class="p">}}</span>
-<span class="w">      </span><span class="na">style</span><span class="o">=</span><span class="p">{[</span>
-<span class="w">        </span><span class="nx">styles</span><span class="p">.</span><span class="nx">card</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">isPressed</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">styles</span><span class="p">.</span><span class="nx">cardPressed</span>
-<span class="w">      </span><span class="p">]}</span>
-<span class="w">    </span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">Text</span><span class="w"> </span><span class="na">style</span><span class="o">=</span><span class="p">{</span><span class="nx">styles</span><span class="p">.</span><span class="nx">title</span><span class="p">}&gt;{</span><span class="nx">title</span><span class="p">}&lt;/</span><span class="nt">Text</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">{</span><span class="nx">description</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="p">&lt;</span><span class="nt">Text</span><span class="w"> </span><span class="na">style</span><span class="o">=</span><span class="p">{</span><span class="nx">styles</span><span class="p">.</span><span class="nx">description</span><span class="p">}&gt;{</span><span class="nx">description</span><span class="p">}&lt;/</span><span class="nt">Text</span><span class="p">&gt;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">}</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">TouchableOpacity</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kd">const</span><span class="w"> </span><span class="nx">styles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">StyleSheet</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">card</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">backgroundColor</span><span class="o">:</span><span class="w"> </span><span class="s1">'white'</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">borderRadius</span><span class="o">:</span><span class="w"> </span><span class="mf">8</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">padding</span><span class="o">:</span><span class="w"> </span><span class="mf">16</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">marginVertical</span><span class="o">:</span><span class="w"> </span><span class="mf">8</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">shadowColor</span><span class="o">:</span><span class="w"> </span><span class="s1">'#000'</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">shadowOffset</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="nx">shadowOpacity</span><span class="o">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">shadowRadius</span><span class="o">:</span><span class="w"> </span><span class="mf">4</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">elevation</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">cardPressed</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">backgroundColor</span><span class="o">:</span><span class="w"> </span><span class="s1">'#f8f8f8'</span><span class="p">,</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">fontSize</span><span class="o">:</span><span class="w"> </span><span class="mf">18</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">fontWeight</span><span class="o">:</span><span class="w"> </span><span class="s1">'bold'</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">marginBottom</span><span class="o">:</span><span class="w"> </span><span class="mf">8</span><span class="p">,</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">fontSize</span><span class="o">:</span><span class="w"> </span><span class="mf">14</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="s1">'#666'</span><span class="p">,</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="p">});</span>
-
-<span class="c1">// Wrap the component with the agent HOC</span>
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">withAgentComponent</span><span class="p">(</span><span class="nx">CustomCard</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Properties exposed to the AI agent</span>
-<span class="w">  </span><span class="nx">getAgentProperties</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">props</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">({</span>
-<span class="w">    </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="nx">props</span><span class="p">.</span><span class="nx">title</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="nx">props</span><span class="p">.</span><span class="nx">description</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">canTap</span><span class="o">:</span><span class="w"> </span><span class="o">!!</span><span class="nx">props</span><span class="p">.</span><span class="nx">onTap</span><span class="p">,</span>
-<span class="w">  </span><span class="p">}),</span>
-<span class="w">  </span><span class="c1">// Actions that can be performed by the AI agent</span>
-<span class="w">  </span><span class="nx">agentActions</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">'tap'</span><span class="p">],</span>
-<span class="p">});</span>
-</code></pre></div>
-<h3 id="using-the-hook">Using the Hook<a class="headerlink" href="#using-the-hook" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useAgentComponent</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/react-native'</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react'</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">View</span><span class="p">,</span><span class="w"> </span><span class="nx">Text</span><span class="p">,</span><span class="w"> </span><span class="nx">StyleSheet</span><span class="p">,</span><span class="w"> </span><span class="nx">TouchableOpacity</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react-native'</span><span class="p">;</span>
-
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">CustomCard</span><span class="p">({</span><span class="w"> </span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="nx">title</span><span class="p">,</span><span class="w"> </span><span class="nx">description</span><span class="p">,</span><span class="w"> </span><span class="nx">onTap</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">isPressed</span><span class="p">,</span><span class="w"> </span><span class="nx">setIsPressed</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
-
-<span class="w">  </span><span class="c1">// Use the hook to make the component controllable by AI agents</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">registerAgentAction</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useAgentComponent</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Properties exposed to the AI agent</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">updateState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useRegisterComponent</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s1">'submit-button'</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">componentType</span><span class="o">:</span><span class="w"> </span><span class="s1">'button'</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">'Submit Button'</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">'A button for submitting the form'</span><span class="p">,</span>
 <span class="w">    </span><span class="nx">properties</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">title</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">description</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">canTap</span><span class="o">:</span><span class="w"> </span><span class="o">!!</span><span class="nx">onTap</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s1">'Submit'</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">disabled</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span>
 <span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="c1">// Actions that can be performed by the AI agent</span>
 <span class="w">    </span><span class="nx">actions</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">tap</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">onTap</span><span class="p">)</span><span class="w"> </span><span class="nx">onTap</span><span class="p">();</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
-<span class="w">      </span><span class="p">},</span>
-<span class="w">    </span><span class="p">},</span>
+<span class="w">      </span><span class="nx">press</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">'Press the button'</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">handler</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nx">handlePress</span><span class="p">();</span>
+<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">success</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">'Button pressed'</span><span class="w"> </span><span class="p">};</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">});</span>
 
 <span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">TouchableOpacity</span>
-<span class="w">      </span><span class="na">activeOpacity</span><span class="o">=</span><span class="p">{</span><span class="mf">0.7</span><span class="p">}</span>
-<span class="w">      </span><span class="na">onPress</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">setIsPressed</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
-<span class="w">        </span><span class="nx">setTimeout</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setIsPressed</span><span class="p">(</span><span class="kc">false</span><span class="p">),</span><span class="w"> </span><span class="mf">200</span><span class="p">);</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">onTap</span><span class="p">)</span><span class="w"> </span><span class="nx">onTap</span><span class="p">();</span>
-<span class="w">      </span><span class="p">}}</span>
-<span class="w">      </span><span class="na">style</span><span class="o">=</span><span class="p">{[</span>
-<span class="w">        </span><span class="nx">styles</span><span class="p">.</span><span class="nx">card</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">isPressed</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">styles</span><span class="p">.</span><span class="nx">cardPressed</span>
-<span class="w">      </span><span class="p">]}</span>
+<span class="w">    </span><span class="p">&lt;</span><span class="nt">AgentButton</span>
+<span class="w">      </span><span class="na">title</span><span class="o">=</span><span class="s">"Submit"</span>
+<span class="w">      </span><span class="na">onPress</span><span class="o">=</span><span class="p">{</span><span class="nx">handlePress</span><span class="p">}</span>
+<span class="w">      </span><span class="na">disabled</span><span class="o">=</span><span class="p">{</span><span class="kc">false</span><span class="p">}</span>
+<span class="w">    </span><span class="p">/&gt;</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="agenttextinput">AgentTextInput<a class="headerlink" href="#agenttextinput" title="Permanent link">¶</a></h3>
+<p>A text input component that can be controlled by AI agents.</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react'</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AgentTextInput</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/react-native'</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useRegisterComponent</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/react-native'</span><span class="p">;</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">FormField</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">text</span><span class="p">,</span><span class="w"> </span><span class="nx">setText</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="s1">''</span><span class="p">);</span>
+
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">updateState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useRegisterComponent</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s1">'username-input'</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">componentType</span><span class="o">:</span><span class="w"> </span><span class="s1">'text-input'</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">'Username Input'</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">'An input field for entering a username'</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">properties</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="nx">text</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">placeholder</span><span class="o">:</span><span class="w"> </span><span class="s1">'Enter username'</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">isValid</span><span class="o">:</span><span class="w"> </span><span class="nx">text</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">isEmpty</span><span class="o">:</span><span class="w"> </span><span class="nx">text</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">0</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nx">actions</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">'Type text into the input'</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">handler</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">value</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nx">setText</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+<span class="w">            </span><span class="nx">success</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span>
+<span class="w">            </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">'Text entered'</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">newValue</span><span class="o">:</span><span class="w"> </span><span class="nx">value</span>
+<span class="w">          </span><span class="p">};</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nx">clear</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">'Clear the input field'</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">handler</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nx">setText</span><span class="p">(</span><span class="s1">''</span><span class="p">);</span>
+<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+<span class="w">            </span><span class="nx">success</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span>
+<span class="w">            </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">'Input cleared'</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">newValue</span><span class="o">:</span><span class="w"> </span><span class="s1">''</span>
+<span class="w">          </span><span class="p">};</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">});</span>
+
+<span class="w">  </span><span class="c1">// Update state when text changes</span>
+<span class="w">  </span><span class="nx">useEffect</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">updateState</span><span class="p">({</span>
+<span class="w">      </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="nx">text</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">isValid</span><span class="o">:</span><span class="w"> </span><span class="nx">text</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">isEmpty</span><span class="o">:</span><span class="w"> </span><span class="nx">text</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">0</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="w">  </span><span class="p">},</span><span class="w"> </span><span class="p">[</span><span class="nx">text</span><span class="p">,</span><span class="w"> </span><span class="nx">updateState</span><span class="p">]);</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="p">&lt;</span><span class="nt">AgentTextInput</span>
+<span class="w">      </span><span class="na">value</span><span class="o">=</span><span class="p">{</span><span class="nx">text</span><span class="p">}</span>
+<span class="w">      </span><span class="na">onChangeText</span><span class="o">=</span><span class="p">{</span><span class="nx">setText</span><span class="p">}</span>
+<span class="w">      </span><span class="na">placeholder</span><span class="o">=</span><span class="s">"Enter username"</span>
+<span class="w">    </span><span class="p">/&gt;</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="creating-custom-components">Creating Custom Components<a class="headerlink" href="#creating-custom-components" title="Permanent link">¶</a></h2>
+<p>You can create your own custom AgentBridge-aware components using the hooks or HOCs provided by the SDK.</p>
+<h3 id="function-component-with-useregistercomponent">Function Component with useRegisterComponent<a class="headerlink" href="#function-component-with-useregistercomponent" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useState</span><span class="p">,</span><span class="w"> </span><span class="nx">useEffect</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react'</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">View</span><span class="p">,</span><span class="w"> </span><span class="nx">Text</span><span class="p">,</span><span class="w"> </span><span class="nx">TouchableOpacity</span><span class="p">,</span><span class="w"> </span><span class="nx">StyleSheet</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react-native'</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useRegisterComponent</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/react-native'</span><span class="p">;</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">CustomToggle</span><span class="p">({</span><span class="w"> </span><span class="nx">id</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">isOn</span><span class="p">,</span><span class="w"> </span><span class="nx">setIsOn</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">updateState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useRegisterComponent</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">id</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">componentType</span><span class="o">:</span><span class="w"> </span><span class="s1">'toggle'</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">'Custom Toggle'</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">'A custom toggle component'</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">properties</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">isOn</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="nx">isOn</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s1">'ON'</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s1">'OFF'</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nx">actions</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">toggle</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">'Toggle the switch'</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">handler</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nx">setIsOn</span><span class="p">(</span><span class="nx">prev</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="o">!</span><span class="nx">prev</span><span class="p">);</span>
+<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+<span class="w">            </span><span class="nx">success</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span>
+<span class="w">            </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="sb">`Toggled to </span><span class="si">${</span><span class="o">!</span><span class="nx">isOn</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s1">'ON'</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s1">'OFF'</span><span class="si">}</span><span class="sb">`</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">newValue</span><span class="o">:</span><span class="w"> </span><span class="o">!</span><span class="nx">isOn</span>
+<span class="w">          </span><span class="p">};</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nx">turnOn</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">'Turn the switch on'</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">handler</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nx">setIsOn</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+<span class="w">            </span><span class="nx">success</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span>
+<span class="w">            </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">'Turned ON'</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">newValue</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">          </span><span class="p">};</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nx">turnOff</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">'Turn the switch off'</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">handler</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nx">setIsOn</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+<span class="w">            </span><span class="nx">success</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span>
+<span class="w">            </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">'Turned OFF'</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">newValue</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">          </span><span class="p">};</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">});</span>
+
+<span class="w">  </span><span class="c1">// Update state when isOn changes</span>
+<span class="w">  </span><span class="nx">useEffect</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">updateState</span><span class="p">({</span>
+<span class="w">      </span><span class="nx">isOn</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="nx">isOn</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s1">'ON'</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s1">'OFF'</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="w">  </span><span class="p">},</span><span class="w"> </span><span class="p">[</span><span class="nx">isOn</span><span class="p">,</span><span class="w"> </span><span class="nx">updateState</span><span class="p">]);</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="p">&lt;</span><span class="nt">TouchableOpacity</span><span class="w"> </span>
+<span class="w">      </span><span class="na">style</span><span class="o">=</span><span class="p">{[</span><span class="nx">styles</span><span class="p">.</span><span class="nx">toggle</span><span class="p">,</span><span class="w"> </span><span class="nx">isOn</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">styles</span><span class="p">.</span><span class="nx">toggleOn</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nx">styles</span><span class="p">.</span><span class="nx">toggleOff</span><span class="p">]}</span><span class="w"> </span>
+<span class="w">      </span><span class="na">onPress</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setIsOn</span><span class="p">(</span><span class="nx">prev</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="o">!</span><span class="nx">prev</span><span class="p">)}</span>
 <span class="w">    </span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">Text</span><span class="w"> </span><span class="na">style</span><span class="o">=</span><span class="p">{</span><span class="nx">styles</span><span class="p">.</span><span class="nx">title</span><span class="p">}&gt;{</span><span class="nx">title</span><span class="p">}&lt;/</span><span class="nt">Text</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">{</span><span class="nx">description</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="p">&lt;</span><span class="nt">Text</span><span class="w"> </span><span class="na">style</span><span class="o">=</span><span class="p">{</span><span class="nx">styles</span><span class="p">.</span><span class="nx">description</span><span class="p">}&gt;{</span><span class="nx">description</span><span class="p">}&lt;/</span><span class="nt">Text</span><span class="p">&gt;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">}</span>
+<span class="w">      </span><span class="p">&lt;</span><span class="nt">Text</span><span class="w"> </span><span class="na">style</span><span class="o">=</span><span class="p">{</span><span class="nx">styles</span><span class="p">.</span><span class="nx">label</span><span class="p">}&gt;{</span><span class="nx">isOn</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s1">'ON'</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s1">'OFF'</span><span class="p">}&lt;/</span><span class="nt">Text</span><span class="p">&gt;</span>
 <span class="w">    </span><span class="p">&lt;/</span><span class="nt">TouchableOpacity</span><span class="p">&gt;</span>
 <span class="w">  </span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="kd">const</span><span class="w"> </span><span class="nx">styles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">StyleSheet</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">card</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">backgroundColor</span><span class="o">:</span><span class="w"> </span><span class="s1">'white'</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">borderRadius</span><span class="o">:</span><span class="w"> </span><span class="mf">8</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">padding</span><span class="o">:</span><span class="w"> </span><span class="mf">16</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">marginVertical</span><span class="o">:</span><span class="w"> </span><span class="mf">8</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">shadowColor</span><span class="o">:</span><span class="w"> </span><span class="s1">'#000'</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">shadowOffset</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="nx">shadowOpacity</span><span class="o">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">shadowRadius</span><span class="o">:</span><span class="w"> </span><span class="mf">4</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">elevation</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">toggle</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">padding</span><span class="o">:</span><span class="w"> </span><span class="mf">10</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">borderRadius</span><span class="o">:</span><span class="w"> </span><span class="mf">5</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">alignItems</span><span class="o">:</span><span class="w"> </span><span class="s1">'center'</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">justifyContent</span><span class="o">:</span><span class="w"> </span><span class="s1">'center'</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="mf">80</span><span class="p">,</span>
 <span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">cardPressed</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">backgroundColor</span><span class="o">:</span><span class="w"> </span><span class="s1">'#f8f8f8'</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">toggleOn</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">backgroundColor</span><span class="o">:</span><span class="w"> </span><span class="s1">'#4CD964'</span><span class="p">,</span>
 <span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">fontSize</span><span class="o">:</span><span class="w"> </span><span class="mf">18</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">toggleOff</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">backgroundColor</span><span class="o">:</span><span class="w"> </span><span class="s1">'#8E8E93'</span><span class="p">,</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="s1">'white'</span><span class="p">,</span>
 <span class="w">    </span><span class="nx">fontWeight</span><span class="o">:</span><span class="w"> </span><span class="s1">'bold'</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">marginBottom</span><span class="o">:</span><span class="w"> </span><span class="mf">8</span><span class="p">,</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">fontSize</span><span class="o">:</span><span class="w"> </span><span class="mf">14</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="s1">'#666'</span><span class="p">,</span>
 <span class="w">  </span><span class="p">},</span>
 <span class="p">});</span>
-</code></pre></div>
-<h3 id="using-the-custom-component">Using the Custom Component<a class="headerlink" href="#using-the-custom-component" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">CustomCard</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'./CustomCard'</span><span class="p">;</span>
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">MyComponent</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">CustomCard</span>
-<span class="w">      </span><span class="na">id</span><span class="o">=</span><span class="s">"feature-card"</span>
-<span class="w">      </span><span class="na">title</span><span class="o">=</span><span class="s">"Premium Feature"</span>
-<span class="w">      </span><span class="na">description</span><span class="o">=</span><span class="s">"Unlock this feature by upgrading your account"</span>
-<span class="w">      </span><span class="na">onTap</span><span class="o">=</span><span class="p">{()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Handle tap</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Card tapped'</span><span class="p">);</span>
-<span class="w">      </span><span class="p">}}</span>
-<span class="w">    </span><span class="p">/&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-<h2 id="component-provider">Component Provider<a class="headerlink" href="#component-provider" title="Permanent link">¶</a></h2>
-<p>Wrap your application with the <code>AgentBridgeProvider</code> to enable agent control:</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AgentBridgeProvider</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/react-native'</span><span class="p">;</span>
-
-<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">App</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="p">&lt;</span><span class="nt">AgentBridgeProvider</span><span class="w"> </span><span class="na">apiKey</span><span class="o">=</span><span class="s">"your-api-key"</span><span class="p">&gt;</span>
-<span class="w">      </span><span class="p">{</span><span class="cm">/* Your application components */</span><span class="p">}</span>
-<span class="w">      </span><span class="p">&lt;</span><span class="nt">YourComponent</span><span class="w"> </span><span class="p">/&gt;</span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="nt">AgentBridgeProvider</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-<h2 id="mobile-specific-features">Mobile-Specific Features<a class="headerlink" href="#mobile-specific-features" title="Permanent link">¶</a></h2>
-<p>AgentBridge for React Native provides access to device-specific features:</p>
-<h3 id="device-vibration">Device Vibration<a class="headerlink" href="#device-vibration" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useAgentBridge</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/react-native'</span><span class="p">;</span>
-
-<span class="kd">function</span><span class="w"> </span><span class="nx">MyComponent</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">registerFunction</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useAgentBridge</span><span class="p">();</span>
-
-<span class="w">  </span><span class="c1">// Register a function to trigger device vibration</span>
-<span class="w">  </span><span class="nx">useEffect</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">registerFunction</span><span class="p">(</span><span class="s1">'vibrate'</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">pattern</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'default'</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="nx">pattern</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="s1">'short'</span><span class="o">:</span>
-<span class="w">          </span><span class="nx">Vibration</span><span class="p">.</span><span class="nx">vibrate</span><span class="p">(</span><span class="mf">10</span><span class="p">);</span>
-<span class="w">          </span><span class="k">break</span><span class="p">;</span>
-<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="s1">'long'</span><span class="o">:</span>
-<span class="w">          </span><span class="nx">Vibration</span><span class="p">.</span><span class="nx">vibrate</span><span class="p">(</span><span class="mf">500</span><span class="p">);</span>
-<span class="w">          </span><span class="k">break</span><span class="p">;</span>
-<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="s1">'double'</span><span class="o">:</span>
-<span class="w">          </span><span class="nx">Vibration</span><span class="p">.</span><span class="nx">vibrate</span><span class="p">([</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">100</span><span class="p">,</span><span class="w"> </span><span class="mf">50</span><span class="p">,</span><span class="w"> </span><span class="mf">100</span><span class="p">]);</span>
-<span class="w">          </span><span class="k">break</span><span class="p">;</span>
-<span class="w">        </span><span class="k">default</span><span class="o">:</span>
-<span class="w">          </span><span class="nx">Vibration</span><span class="p">.</span><span class="nx">vibrate</span><span class="p">(</span><span class="mf">100</span><span class="p">);</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">  </span><span class="p">},</span><span class="w"> </span><span class="p">[</span><span class="nx">registerFunction</span><span class="p">]);</span>
-
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="c1">// Component content</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-<h3 id="accessing-device-information">Accessing Device Information<a class="headerlink" href="#accessing-device-information" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useAgentBridge</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/react-native'</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">DeviceInfo</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react-native-device-info'</span><span class="p">;</span>
-
-<span class="kd">function</span><span class="w"> </span><span class="nx">MyComponent</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">registerFunction</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useAgentBridge</span><span class="p">();</span>
-
-<span class="w">  </span><span class="c1">// Register a function to get device information</span>
-<span class="w">  </span><span class="nx">useEffect</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">registerFunction</span><span class="p">(</span><span class="s1">'getDeviceInfo'</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">model</span><span class="o">:</span><span class="w"> </span><span class="nx">DeviceInfo</span><span class="p">.</span><span class="nx">getModel</span><span class="p">(),</span>
-<span class="w">        </span><span class="nx">brand</span><span class="o">:</span><span class="w"> </span><span class="nx">DeviceInfo</span><span class="p">.</span><span class="nx">getBrand</span><span class="p">(),</span>
-<span class="w">        </span><span class="nx">systemVersion</span><span class="o">:</span><span class="w"> </span><span class="nx">DeviceInfo</span><span class="p">.</span><span class="nx">getSystemVersion</span><span class="p">(),</span>
-<span class="w">        </span><span class="nx">isTablet</span><span class="o">:</span><span class="w"> </span><span class="nx">DeviceInfo</span><span class="p">.</span><span class="nx">isTablet</span><span class="p">(),</span>
-<span class="w">        </span><span class="nx">batteryLevel</span><span class="o">:</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">DeviceInfo</span><span class="p">.</span><span class="nx">getBatteryLevel</span><span class="p">(),</span>
-<span class="w">      </span><span class="p">};</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">  </span><span class="p">},</span><span class="w"> </span><span class="p">[</span><span class="nx">registerFunction</span><span class="p">]);</span>
-
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="c1">// Component content</span>
-<span class="w">  </span><span class="p">);</span>
-<span class="p">}</span>
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">CustomToggle</span><span class="p">;</span>
 </code></pre></div>
 <h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">¶</a></h2>
 <ol>
-<li><strong>Unique IDs</strong>: Always provide unique IDs for your components</li>
-<li><strong>Descriptive Properties</strong>: Make your component properties descriptive for AI agents</li>
-<li><strong>Consistent Actions</strong>: Use consistent action names across similar components</li>
-<li><strong>Platform Considerations</strong>: Account for platform differences (iOS vs Android)</li>
-<li><strong>Performance</strong>: Optimize component rendering to ensure smooth performance</li>
-<li><strong>Accessibility</strong>: Ensure your components work with screen readers and other accessibility tools</li>
-<li><strong>Error Handling</strong>: Handle errors gracefully in action handlers</li>
-<li><strong>TypeScript</strong>: Use TypeScript for better type checking and developer experience</li>
+<li><strong>Unique IDs</strong>: Always use unique IDs for components</li>
+<li><strong>Clear Descriptions</strong>: Provide descriptive names and descriptions for components and actions</li>
+<li><strong>Meaningful Properties</strong>: Expose properties that are useful for AI agents</li>
+<li><strong>Error Handling</strong>: Include error handling in action handlers</li>
+<li><strong>Performance</strong>: Be mindful of performance in mobile environments</li>
 </ol>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
 <ul>
-<li>Learn about <a href="../hooks/">React Native Hooks</a> provided by AgentBridge</li>
-<li>Explore <a href="../../mobile-features/">Mobile SDK Features</a></li>
-<li>See <a href="../../../examples/react-native-examples/">Examples</a> of AgentBridge components in action </li>
+<li><a href="../hooks/">Learn about React Native hooks</a></li>
+<li><a href="../../../examples/react-native-examples/">View React Native examples</a></li>
+<li><a href="../../../advanced/component-registration/">Read about component registration</a> </li>
 </ul>
 </article>
 </div>

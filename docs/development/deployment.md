@@ -249,6 +249,199 @@ You can monitor the status of deployments in the "Actions" tab of your GitHub re
 - Keep credentials secure and never commit them to the repository
 - Follow pub.dev security best practices
 
+## Deploying Example Applications
+
+AgentBridge includes several example applications that demonstrate how to use the framework with different web and mobile frameworks. These examples can be deployed for demonstration or testing purposes.
+
+### Local React Example
+
+The local React example uses a WebSocket server for communication between the app and AI agents.
+
+#### Prerequisites
+- Node.js 14.x or higher
+- npm 6.x or higher
+
+#### Deployment Steps
+
+1. Clone the AgentBridge repository:
+   ```bash
+   git clone https://github.com/agentbridge/agentbridge.git
+   cd agentbridge
+   ```
+
+2. Install dependencies and build packages:
+   ```bash
+   npm install
+   npm run build
+   ```
+
+3. Navigate to the example directory:
+   ```bash
+   cd examples/local-react-example
+   ```
+
+4. Install example dependencies:
+   ```bash
+   npm install
+   ```
+
+5. Start the WebSocket server:
+   ```bash
+   node server.js
+   ```
+   By default, the server will listen on port 3001. You can modify this in the server.js file.
+
+6. In a separate terminal, start the React application:
+   ```bash
+   npm start
+   ```
+   The application will be accessible at http://localhost:3000.
+
+### Local Angular Example
+
+The local Angular example also uses a WebSocket server for communication.
+
+#### Prerequisites
+- Node.js 14.x or higher
+- npm 6.x or higher
+- Angular CLI 13.x or higher
+
+#### Deployment Steps
+
+1. Clone the repository and build packages as above.
+
+2. Navigate to the Angular example directory:
+   ```bash
+   cd examples/local-angular-example
+   ```
+
+3. Install example dependencies:
+   ```bash
+   npm install
+   ```
+
+4. Start the WebSocket server:
+   ```bash
+   node server.js
+   ```
+
+5. In a separate terminal, start the Angular application:
+   ```bash
+   ng serve
+   ```
+   The application will be accessible at http://localhost:4200.
+
+### Production Deployment
+
+For production deployment of the example applications, consider the following approaches:
+
+#### WebSocket Server Deployment
+
+The WebSocket server can be deployed on:
+- AWS EC2 instances
+- Heroku
+- DigitalOcean Droplets
+- Azure App Service
+
+Example deployment for a Node.js WebSocket server on Heroku:
+
+1. Create a new Heroku app:
+   ```bash
+   heroku create agentbridge-websocket-server
+   ```
+
+2. Add a Procfile to the root of the server directory with the following content:
+   ```
+   web: node server.js
+   ```
+
+3. Set environment variables if needed:
+   ```bash
+   heroku config:set NODE_ENV=production
+   ```
+
+4. Deploy the server:
+   ```bash
+   git subtree push --prefix examples/local-react-example heroku main
+   ```
+
+#### React App Deployment
+
+The React app can be deployed to:
+- Netlify
+- Vercel
+- GitHub Pages
+- AWS Amplify
+
+Example deployment to Netlify:
+
+1. Build the React application:
+   ```bash
+   cd examples/local-react-example
+   npm run build
+   ```
+
+2. Deploy using Netlify CLI:
+   ```bash
+   netlify deploy --prod --dir=build
+   ```
+
+#### Angular App Deployment
+
+The Angular app can be deployed to:
+- Firebase Hosting
+- Netlify
+- Vercel
+- GitHub Pages
+
+Example deployment to Firebase Hosting:
+
+1. Install Firebase CLI:
+   ```bash
+   npm install -g firebase-tools
+   ```
+
+2. Log in to Firebase:
+   ```bash
+   firebase login
+   ```
+
+3. Initialize Firebase (select Hosting):
+   ```bash
+   firebase init
+   ```
+
+4. Build the Angular application:
+   ```bash
+   ng build --prod
+   ```
+
+5. Deploy to Firebase:
+   ```bash
+   firebase deploy
+   ```
+
+### Configuration for Production
+
+When deploying the applications for production, make sure to update the WebSocket URL to point to your deployed WebSocket server. This can be done by:
+
+1. Setting an environment variable (e.g., `REACT_APP_WEBSOCKET_URL` for React apps)
+2. Updating the URL in the configuration file
+3. Implementing a configuration service that loads the URL from a server
+
+Example .env file for React:
+```
+REACT_APP_WEBSOCKET_URL=wss://your-websocket-server.herokuapp.com
+```
+
+Example environment.prod.ts file for Angular:
+```typescript
+export const environment = {
+  production: true,
+  websocketUrl: 'wss://your-websocket-server.herokuapp.com'
+};
+```
+
 ## Versioning and Changelogs
 
 Each package should maintain a `CHANGELOG.md` file that documents changes between versions. Here's a sample format:

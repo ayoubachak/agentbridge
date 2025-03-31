@@ -145,7 +145,7 @@
         </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../advanced/authentication/">
+<a class="md-tabs__link" href="../../advanced/">
           
   
   Advanced
@@ -229,6 +229,14 @@
 <a class="md-nav__link" href="../../getting-started/communication-modes/">
 <span class="md-ellipsis">
     Communication Modes
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started/examples/">
+<span class="md-ellipsis">
+    Examples
     
   </span>
 </a>
@@ -381,6 +389,14 @@
 </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="../../web/react/getting-started/">
+<span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="../../web/react/components/">
 <span class="md-ellipsis">
     Components
@@ -392,6 +408,22 @@
 <a class="md-nav__link" href="../../web/react/hooks/">
 <span class="md-ellipsis">
     Hooks
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../web/react/">
+<span class="md-ellipsis">
+    Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../web/react/changes/">
+<span class="md-ellipsis">
+    Change Log
     
   </span>
 </a>
@@ -442,6 +474,14 @@
 <a class="md-nav__link" href="../../web/angular/services/">
 <span class="md-ellipsis">
     Services
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../web/angular/directives/">
+<span class="md-ellipsis">
+    Directives
     
   </span>
 </a>
@@ -601,6 +641,14 @@
             Advanced
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../advanced/">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../advanced/authentication/">
 <span class="md-ellipsis">
@@ -879,6 +927,106 @@
 <a class="md-nav__link" href="#pubdev-package-security">
 <span class="md-ellipsis">
       pub.dev Package Security
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deploying-example-applications">
+<span class="md-ellipsis">
+      Deploying Example Applications
+    </span>
+</a>
+<nav aria-label="Deploying Example Applications" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#local-react-example">
+<span class="md-ellipsis">
+      Local React Example
+    </span>
+</a>
+<nav aria-label="Local React Example" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#prerequisites_1">
+<span class="md-ellipsis">
+      Prerequisites
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deployment-steps">
+<span class="md-ellipsis">
+      Deployment Steps
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#local-angular-example">
+<span class="md-ellipsis">
+      Local Angular Example
+    </span>
+</a>
+<nav aria-label="Local Angular Example" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#prerequisites_2">
+<span class="md-ellipsis">
+      Prerequisites
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deployment-steps_1">
+<span class="md-ellipsis">
+      Deployment Steps
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#production-deployment">
+<span class="md-ellipsis">
+      Production Deployment
+    </span>
+</a>
+<nav aria-label="Production Deployment" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#websocket-server-deployment">
+<span class="md-ellipsis">
+      WebSocket Server Deployment
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#react-app-deployment">
+<span class="md-ellipsis">
+      React App Deployment
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#angular-app-deployment">
+<span class="md-ellipsis">
+      Angular App Deployment
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration-for-production">
+<span class="md-ellipsis">
+      Configuration for Production
     </span>
 </a>
 </li>
@@ -1218,6 +1366,188 @@ git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </
 <li>Keep credentials secure and never commit them to the repository</li>
 <li>Follow pub.dev security best practices</li>
 </ul>
+<h2 id="deploying-example-applications">Deploying Example Applications<a class="headerlink" href="#deploying-example-applications" title="Permanent link">¶</a></h2>
+<p>AgentBridge includes several example applications that demonstrate how to use the framework with different web and mobile frameworks. These examples can be deployed for demonstration or testing purposes.</p>
+<h3 id="local-react-example">Local React Example<a class="headerlink" href="#local-react-example" title="Permanent link">¶</a></h3>
+<p>The local React example uses a WebSocket server for communication between the app and AI agents.</p>
+<h4 id="prerequisites_1">Prerequisites<a class="headerlink" href="#prerequisites_1" title="Permanent link">¶</a></h4>
+<ul>
+<li>Node.js 14.x or higher</li>
+<li>npm 6.x or higher</li>
+</ul>
+<h4 id="deployment-steps">Deployment Steps<a class="headerlink" href="#deployment-steps" title="Permanent link">¶</a></h4>
+<ol>
+<li>
+<p>Clone the AgentBridge repository:
+   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/agentbridge/agentbridge.git
+<span class="nb">cd</span><span class="w"> </span>agentbridge
+</code></pre></div></p>
+</li>
+<li>
+<p>Install dependencies and build packages:
+   <div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install
+npm<span class="w"> </span>run<span class="w"> </span>build
+</code></pre></div></p>
+</li>
+<li>
+<p>Navigate to the example directory:
+   <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>examples/local-react-example
+</code></pre></div></p>
+</li>
+<li>
+<p>Install example dependencies:
+   <div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install
+</code></pre></div></p>
+</li>
+<li>
+<p>Start the WebSocket server:
+   <div class="highlight"><pre><span></span><code>node<span class="w"> </span>server.js
+</code></pre></div>
+   By default, the server will listen on port 3001. You can modify this in the server.js file.</p>
+</li>
+<li>
+<p>In a separate terminal, start the React application:
+   <div class="highlight"><pre><span></span><code>npm<span class="w"> </span>start
+</code></pre></div>
+   The application will be accessible at http://localhost:3000.</p>
+</li>
+</ol>
+<h3 id="local-angular-example">Local Angular Example<a class="headerlink" href="#local-angular-example" title="Permanent link">¶</a></h3>
+<p>The local Angular example also uses a WebSocket server for communication.</p>
+<h4 id="prerequisites_2">Prerequisites<a class="headerlink" href="#prerequisites_2" title="Permanent link">¶</a></h4>
+<ul>
+<li>Node.js 14.x or higher</li>
+<li>npm 6.x or higher</li>
+<li>Angular CLI 13.x or higher</li>
+</ul>
+<h4 id="deployment-steps_1">Deployment Steps<a class="headerlink" href="#deployment-steps_1" title="Permanent link">¶</a></h4>
+<ol>
+<li>
+<p>Clone the repository and build packages as above.</p>
+</li>
+<li>
+<p>Navigate to the Angular example directory:
+   <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>examples/local-angular-example
+</code></pre></div></p>
+</li>
+<li>
+<p>Install example dependencies:
+   <div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install
+</code></pre></div></p>
+</li>
+<li>
+<p>Start the WebSocket server:
+   <div class="highlight"><pre><span></span><code>node<span class="w"> </span>server.js
+</code></pre></div></p>
+</li>
+<li>
+<p>In a separate terminal, start the Angular application:
+   <div class="highlight"><pre><span></span><code>ng<span class="w"> </span>serve
+</code></pre></div>
+   The application will be accessible at http://localhost:4200.</p>
+</li>
+</ol>
+<h3 id="production-deployment">Production Deployment<a class="headerlink" href="#production-deployment" title="Permanent link">¶</a></h3>
+<p>For production deployment of the example applications, consider the following approaches:</p>
+<h4 id="websocket-server-deployment">WebSocket Server Deployment<a class="headerlink" href="#websocket-server-deployment" title="Permanent link">¶</a></h4>
+<p>The WebSocket server can be deployed on:
+- AWS EC2 instances
+- Heroku
+- DigitalOcean Droplets
+- Azure App Service</p>
+<p>Example deployment for a Node.js WebSocket server on Heroku:</p>
+<ol>
+<li>
+<p>Create a new Heroku app:
+   <div class="highlight"><pre><span></span><code>heroku<span class="w"> </span>create<span class="w"> </span>agentbridge-websocket-server
+</code></pre></div></p>
+</li>
+<li>
+<p>Add a Procfile to the root of the server directory with the following content:
+   <div class="highlight"><pre><span></span><code>web: node server.js
+</code></pre></div></p>
+</li>
+<li>
+<p>Set environment variables if needed:
+   <div class="highlight"><pre><span></span><code>heroku<span class="w"> </span>config:set<span class="w"> </span><span class="nv">NODE_ENV</span><span class="o">=</span>production
+</code></pre></div></p>
+</li>
+<li>
+<p>Deploy the server:
+   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>subtree<span class="w"> </span>push<span class="w"> </span>--prefix<span class="w"> </span>examples/local-react-example<span class="w"> </span>heroku<span class="w"> </span>main
+</code></pre></div></p>
+</li>
+</ol>
+<h4 id="react-app-deployment">React App Deployment<a class="headerlink" href="#react-app-deployment" title="Permanent link">¶</a></h4>
+<p>The React app can be deployed to:
+- Netlify
+- Vercel
+- GitHub Pages
+- AWS Amplify</p>
+<p>Example deployment to Netlify:</p>
+<ol>
+<li>
+<p>Build the React application:
+   <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>examples/local-react-example
+npm<span class="w"> </span>run<span class="w"> </span>build
+</code></pre></div></p>
+</li>
+<li>
+<p>Deploy using Netlify CLI:
+   <div class="highlight"><pre><span></span><code>netlify<span class="w"> </span>deploy<span class="w"> </span>--prod<span class="w"> </span>--dir<span class="o">=</span>build
+</code></pre></div></p>
+</li>
+</ol>
+<h4 id="angular-app-deployment">Angular App Deployment<a class="headerlink" href="#angular-app-deployment" title="Permanent link">¶</a></h4>
+<p>The Angular app can be deployed to:
+- Firebase Hosting
+- Netlify
+- Vercel
+- GitHub Pages</p>
+<p>Example deployment to Firebase Hosting:</p>
+<ol>
+<li>
+<p>Install Firebase CLI:
+   <div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>firebase-tools
+</code></pre></div></p>
+</li>
+<li>
+<p>Log in to Firebase:
+   <div class="highlight"><pre><span></span><code>firebase<span class="w"> </span>login
+</code></pre></div></p>
+</li>
+<li>
+<p>Initialize Firebase (select Hosting):
+   <div class="highlight"><pre><span></span><code>firebase<span class="w"> </span>init
+</code></pre></div></p>
+</li>
+<li>
+<p>Build the Angular application:
+   <div class="highlight"><pre><span></span><code>ng<span class="w"> </span>build<span class="w"> </span>--prod
+</code></pre></div></p>
+</li>
+<li>
+<p>Deploy to Firebase:
+   <div class="highlight"><pre><span></span><code>firebase<span class="w"> </span>deploy
+</code></pre></div></p>
+</li>
+</ol>
+<h3 id="configuration-for-production">Configuration for Production<a class="headerlink" href="#configuration-for-production" title="Permanent link">¶</a></h3>
+<p>When deploying the applications for production, make sure to update the WebSocket URL to point to your deployed WebSocket server. This can be done by:</p>
+<ol>
+<li>Setting an environment variable (e.g., <code>REACT_APP_WEBSOCKET_URL</code> for React apps)</li>
+<li>Updating the URL in the configuration file</li>
+<li>Implementing a configuration service that loads the URL from a server</li>
+</ol>
+<p>Example .env file for React:
+<div class="highlight"><pre><span></span><code>REACT_APP_WEBSOCKET_URL=wss://your-websocket-server.herokuapp.com
+</code></pre></div></p>
+<p>Example environment.prod.ts file for Angular:
+<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">environment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">production</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">websocketUrl</span><span class="o">:</span><span class="w"> </span><span class="s1">'wss://your-websocket-server.herokuapp.com'</span>
+<span class="p">};</span>
+</code></pre></div></p>
 <h2 id="versioning-and-changelogs">Versioning and Changelogs<a class="headerlink" href="#versioning-and-changelogs" title="Permanent link">¶</a></h2>
 <p>Each package should maintain a <code>CHANGELOG.md</code> file that documents changes between versions. Here's a sample format:</p>
 <div class="highlight"><pre><span></span><code><span class="gh"># Changelog</span>

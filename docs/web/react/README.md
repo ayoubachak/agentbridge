@@ -200,4 +200,4 @@ For more detailed information, see:
 
 - [Hooks Reference](hooks.md)
 - [Components Reference](components.md)
-- [Getting Started Guide](getting-started.md) 
+- [Getting Started Guide](../../getting-started/quick-start.md) 

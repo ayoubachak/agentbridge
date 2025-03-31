@@ -7,12 +7,12 @@
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="Documentation for the AgentBridge framework" name="description"/>
 <meta content="AgentBridge Team" name="author"/>
-<link href="https://agentbridge.ai/web/angular/services/" rel="canonical"/>
-<link href="../components/" rel="prev"/>
-<link href="../directives/" rel="next"/>
+<link href="https://agentbridge.ai/web/angular/directives/" rel="canonical"/>
+<link href="../services/" rel="prev"/>
+<link href="../../../examples/angular-examples/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.6.9" name="generator"/>
-<title>Services - AgentBridge Documentation</title>
+<title>Directives - AgentBridge Documentation</title>
 <link href="../../../assets/stylesheets/main.4af4bdda.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -25,7 +25,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#services">
+<a class="md-skip" href="#directives">
           Skip to content
         </a>
 </div>
@@ -49,7 +49,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Services
+              Directives
             
           </span>
 </div>
@@ -470,18 +470,26 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../services/">
+<span class="md-ellipsis">
+    Services
+    
+  </span>
+</a>
+</li>
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
 <label class="md-nav__link md-nav__link--active" for="__toc">
 <span class="md-ellipsis">
-    Services
+    Directives
     
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
 <a class="md-nav__link md-nav__link--active" href="./">
 <span class="md-ellipsis">
-    Services
+    Directives
     
   </span>
 </a>
@@ -492,49 +500,31 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#coming-soon">
+<a class="md-nav__link" href="#agentbridgecomponentdirective">
 <span class="md-ellipsis">
-      Coming Soon
+      AgentBridgeComponentDirective
     </span>
 </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#agentbridgeservice">
-<span class="md-ellipsis">
-      AgentBridgeService
-    </span>
-</a>
-<nav aria-label="AgentBridgeService" class="md-nav">
+<nav aria-label="AgentBridgeComponentDirective" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#service-methods">
+<a class="md-nav__link" href="#usage">
 <span class="md-ellipsis">
-      Service Methods
-    </span>
-</a>
-<nav aria-label="Service Methods" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#component-management">
-<span class="md-ellipsis">
-      Component Management
+      Usage
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#function-management">
+<a class="md-nav__link" href="#directive-options">
 <span class="md-ellipsis">
-      Function Management
+      Directive Options
     </span>
 </a>
 </li>
-</ul>
-</nav>
-</li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#using-with-angularadapter">
+<a class="md-nav__link" href="#agentbridgeoptions-interface">
 <span class="md-ellipsis">
-      Using with AngularAdapter
+      AgentBridgeOptions Interface
     </span>
 </a>
 </li>
@@ -542,33 +532,14 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#other-services">
+<a class="md-nav__link" href="#agentbridgefunctiondirective">
 <span class="md-ellipsis">
-      Other Services
-    </span>
-</a>
-<nav aria-label="Other Services" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#agentauthservice">
-<span class="md-ellipsis">
-      AgentAuthService
+      AgentBridgeFunctionDirective
     </span>
 </a>
 </li>
 </ul>
 </nav>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../directives/">
-<span class="md-ellipsis">
-    Directives
-    
-  </span>
-</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../../examples/angular-examples/">
@@ -889,100 +860,161 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="services">Services<a class="headerlink" href="#services" title="Permanent link">¶</a></h1>
-<p>This page is under construction. It will contain documentation about Services in the Angular section.</p>
-<h2 id="coming-soon">Coming Soon<a class="headerlink" href="#coming-soon" title="Permanent link">¶</a></h2>
-<p>Check back soon for detailed documentation on this topic.</p>
-<p>The AgentBridge Angular SDK provides various services to integrate AI agent capabilities into your Angular applications.</p>
-<h2 id="agentbridgeservice">AgentBridgeService<a class="headerlink" href="#agentbridgeservice" title="Permanent link">¶</a></h2>
-<p>The <code>AgentBridgeService</code> is the main service that provides integration with the AgentBridge framework.</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Injectable</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@angular/core'</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AgentBridgeService</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/angular'</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ExecutionContext</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/core'</span><span class="p">;</span>
+<h1 id="directives">Directives<a class="headerlink" href="#directives" title="Permanent link">¶</a></h1>
+<p>The AgentBridge Angular SDK provides directives to easily integrate AI agent capabilities into your Angular applications.</p>
+<h2 id="agentbridgecomponentdirective">AgentBridgeComponentDirective<a class="headerlink" href="#agentbridgecomponentdirective" title="Permanent link">¶</a></h2>
+<p>The <code>AgentBridgeComponentDirective</code> allows you to mark any component as controllable by AI agents.</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Component</span><span class="p">,</span><span class="w"> </span><span class="nx">OnInit</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@angular/core'</span><span class="p">;</span>
 
-<span class="kd">@Injectable</span><span class="p">()</span>
-<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">MyComponent</span><span class="w"> </span><span class="k">implements</span><span class="w"> </span><span class="nx">OnInit</span><span class="p">,</span><span class="w"> </span><span class="nx">OnDestroy</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="k">private</span><span class="w"> </span><span class="nx">agentBridge</span><span class="o">:</span><span class="w"> </span><span class="kt">AgentBridgeService</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+<span class="kd">@Component</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">selector</span><span class="o">:</span><span class="w"> </span><span class="s1">'app-counter'</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="sb">`</span>
+<span class="sb">    &lt;div agentBridgeComponent="counter-1" [agentBridgeProperties]="counterProps"&gt;</span>
+<span class="sb">      &lt;h2&gt;Counter: {{ count }}&lt;/h2&gt;</span>
+<span class="sb">      &lt;button (click)="increment()"&gt;+&lt;/button&gt;</span>
+<span class="sb">      &lt;button (click)="decrement()"&gt;-&lt;/button&gt;</span>
+<span class="sb">      &lt;button (click)="reset()"&gt;Reset&lt;/button&gt;</span>
+<span class="sb">    &lt;/div&gt;</span>
+<span class="sb">  `</span>
+<span class="p">})</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">CounterComponent</span><span class="w"> </span><span class="k">implements</span><span class="w"> </span><span class="nx">OnInit</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
 
-<span class="w">  </span><span class="nx">ngOnInit</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Register a component</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">agentBridge</span><span class="p">.</span><span class="nx">registerComponent</span><span class="p">({</span>
-<span class="w">      </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s1">'my-component-1'</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">componentType</span><span class="o">:</span><span class="w"> </span><span class="s1">'button'</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">'Submit Button'</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">'A button that submits the form'</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">properties</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s1">'Submit'</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">disabled</span><span class="o">:</span><span class="w"> </span><span class="kt">false</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">},</span><span class="w"> </span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// handlers</span>
-<span class="w">      </span><span class="nx">click</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Handle click</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">success</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="w"> </span><span class="p">};</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">});</span>
+<span class="w">  </span><span class="c1">// Define properties for the agent bridge</span>
+<span class="w">  </span><span class="nx">counterProps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">count</span><span class="o">:</span><span class="w"> </span><span class="kt">this.count</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">isEven</span><span class="o">:</span><span class="w"> </span><span class="kt">this.count</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">isPositive</span><span class="o">:</span><span class="w"> </span><span class="kt">this.count</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span>
+<span class="w">  </span><span class="p">};</span>
 
-<span class="w">    </span><span class="c1">// Register a function</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">agentBridge</span><span class="p">.</span><span class="nx">registerFunction</span><span class="p">({</span>
-<span class="w">      </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">'getWeatherData'</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">'Get current weather data for a location'</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">parameters</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s1">'object'</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">properties</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">          </span><span class="nx">location</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
-<span class="w">            </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s1">'string'</span><span class="p">,</span>
-<span class="w">            </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">'City name or postal code'</span>
-<span class="w">          </span><span class="p">}</span>
-<span class="w">        </span><span class="p">},</span>
-<span class="w">        </span><span class="nx">required</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">'location'</span><span class="p">]</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">},</span><span class="w"> </span><span class="p">(</span><span class="nx">params</span><span class="o">:</span><span class="w"> </span><span class="kt">any</span><span class="p">,</span><span class="w"> </span><span class="nx">context</span><span class="o">:</span><span class="w"> </span><span class="kt">ExecutionContext</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="c1">// Function implementation</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">({</span><span class="w"> </span><span class="nx">temp</span><span class="o">:</span><span class="w"> </span><span class="kt">72</span><span class="p">,</span><span class="w"> </span><span class="nx">condition</span><span class="o">:</span><span class="w"> </span><span class="s1">'sunny'</span><span class="w"> </span><span class="p">});</span>
-<span class="w">    </span><span class="p">});</span>
+<span class="w">  </span><span class="c1">// Register handlers for actions</span>
+<span class="w">  </span><span class="kd">@AgentBridgeAction</span><span class="p">(</span><span class="s1">'increment'</span><span class="p">)</span>
+<span class="w">  </span><span class="nx">increment</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">count</span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">updateProps</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">success</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">'Incremented counter'</span><span class="w"> </span><span class="p">};</span>
 <span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="nx">ngOnDestroy</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Unregister the component when the Angular component is destroyed</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">agentBridge</span><span class="p">.</span><span class="nx">unregisterComponent</span><span class="p">(</span><span class="s1">'my-component-1'</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">@AgentBridgeAction</span><span class="p">(</span><span class="s1">'decrement'</span><span class="p">)</span>
+<span class="w">  </span><span class="nx">decrement</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">count</span><span class="o">--</span><span class="p">;</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">updateProps</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">success</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">'Decremented counter'</span><span class="w"> </span><span class="p">};</span>
 <span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="c1">// Update component state</span>
-<span class="w">  </span><span class="nx">updateButtonState</span><span class="p">(</span><span class="nx">disabled</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">agentBridge</span><span class="p">.</span><span class="nx">updateComponentState</span><span class="p">(</span><span class="s1">'my-component-1'</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">disabled</span>
-<span class="w">    </span><span class="p">});</span>
+<span class="w">  </span><span class="kd">@AgentBridgeAction</span><span class="p">(</span><span class="s1">'reset'</span><span class="p">)</span>
+<span class="w">  </span><span class="nx">reset</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">updateProps</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">success</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">'Reset counter'</span><span class="w"> </span><span class="p">};</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="c1">// Update the properties when the count changes</span>
+<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="nx">updateProps</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">counterProps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">count</span><span class="o">:</span><span class="w"> </span><span class="kt">this.count</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">isEven</span><span class="o">:</span><span class="w"> </span><span class="kt">this.count</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">isPositive</span><span class="o">:</span><span class="w"> </span><span class="kt">this.count</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span>
+<span class="w">    </span><span class="p">};</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<h3 id="service-methods">Service Methods<a class="headerlink" href="#service-methods" title="Permanent link">¶</a></h3>
-<p>The <code>AgentBridgeService</code> provides the following methods:</p>
-<h4 id="component-management">Component Management<a class="headerlink" href="#component-management" title="Permanent link">¶</a></h4>
-<ul>
-<li><code>registerComponent(componentDefinition, instance, handlers)</code>: Register a component with AgentBridge</li>
-<li><code>unregisterComponent(id)</code>: Unregister a component by ID</li>
-<li><code>updateComponentState(id, newState)</code>: Update component state</li>
-</ul>
-<h4 id="function-management">Function Management<a class="headerlink" href="#function-management" title="Permanent link">¶</a></h4>
-<ul>
-<li><code>registerFunction(definition, handler)</code>: Register a function with AgentBridge </li>
-<li><code>callFunction(name, params)</code>: Call a registered function</li>
-</ul>
-<h3 id="using-with-angularadapter">Using with AngularAdapter<a class="headerlink" href="#using-with-angularadapter" title="Permanent link">¶</a></h3>
-<p>The <code>AgentBridgeService</code> uses an <code>AngularAdapter</code> internally to manage the registration and state of components. The adapter handles Angular-specific concerns such as change detection and component lifecycle.</p>
-<h2 id="other-services">Other Services<a class="headerlink" href="#other-services" title="Permanent link">¶</a></h2>
-<h3 id="agentauthservice">AgentAuthService<a class="headerlink" href="#agentauthservice" title="Permanent link">¶</a></h3>
-<p>Handles authentication and authorization for AI agents.</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Injectable</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@angular/core'</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AgentAuthService</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@agentbridge/angular'</span><span class="p">;</span>
+<h3 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="cm">&lt;!-- Basic usage --&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">agentBridgeComponent</span><span class="o">=</span><span class="s">"my-component-id"</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 
-<span class="kd">@Injectable</span><span class="p">()</span>
-<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">MyAuthComponent</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="k">private</span><span class="w"> </span><span class="nx">authService</span><span class="o">:</span><span class="w"> </span><span class="kt">AgentAuthService</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+<span class="cm">&lt;!-- With properties and options --&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> 
+  <span class="na">agentBridgeComponent</span><span class="o">=</span><span class="s">"my-component-id"</span> 
+  <span class="err">[</span><span class="na">agentBridgeProperties</span><span class="err">]="</span><span class="na">componentProps</span><span class="err">"</span>
+  <span class="err">[</span><span class="na">agentBridgeOptions</span><span class="err">]="</span><span class="na">componentOptions</span><span class="err">"</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre></div>
+<h3 id="directive-options">Directive Options<a class="headerlink" href="#directive-options" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>agentBridgeComponent</code></td>
+<td>string</td>
+<td>Unique ID for the component</td>
+</tr>
+<tr>
+<td><code>agentBridgeProperties</code></td>
+<td>object</td>
+<td>Properties to expose to AI agents</td>
+</tr>
+<tr>
+<td><code>agentBridgeOptions</code></td>
+<td>object</td>
+<td>Additional options for registration</td>
+</tr>
+</tbody>
+</table>
+<h3 id="agentbridgeoptions-interface">AgentBridgeOptions Interface<a class="headerlink" href="#agentbridgeoptions-interface" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">interface</span><span class="w"> </span><span class="nx">AgentBridgeOptions</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">componentType?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="c1">// Type of component (e.g., 'button', 'counter')</span>
+<span class="w">  </span><span class="nx">name?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="c1">// Display name for the component</span>
+<span class="w">  </span><span class="nx">description?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="c1">// Description of the component's purpose</span>
+<span class="w">  </span><span class="nx">tags?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">[];</span><span class="w"> </span><span class="c1">// Tags for categorizing the component</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="agentbridgefunctiondirective">AgentBridgeFunctionDirective<a class="headerlink" href="#agentbridgefunctiondirective" title="Permanent link">¶</a></h2>
+<p>The <code>AgentBridgeFunctionDirective</code> allows you to mark a method as callable by AI agents.</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Component</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@angular/core'</span><span class="p">;</span>
 
-<span class="w">  </span><span class="nx">checkAccess</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">hasAccess</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">authService</span><span class="p">.</span><span class="nx">hasPermission</span><span class="p">(</span><span class="s1">'read:users'</span><span class="p">);</span>
-<span class="w">    </span><span class="c1">// Use the result</span>
+<span class="kd">@Component</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">selector</span><span class="o">:</span><span class="w"> </span><span class="s1">'app-weather'</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="sb">`</span>
+<span class="sb">    &lt;div&gt;</span>
+<span class="sb">      &lt;h2&gt;Weather Service&lt;/h2&gt;</span>
+<span class="sb">      &lt;button (click)="getWeather('New York')"&gt;Get Weather for New York&lt;/button&gt;</span>
+<span class="sb">      &lt;div *ngIf="weather"&gt;</span>
+<span class="sb">        &lt;h3&gt;{{ weather.location }}&lt;/h3&gt;</span>
+<span class="sb">        &lt;p&gt;Temperature: {{ weather.temperature }}°C&lt;/p&gt;</span>
+<span class="sb">        &lt;p&gt;Conditions: {{ weather.conditions }}&lt;/p&gt;</span>
+<span class="sb">      &lt;/div&gt;</span>
+<span class="sb">    &lt;/div&gt;</span>
+<span class="sb">  `</span>
+<span class="p">})</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">WeatherComponent</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">weather</span><span class="o">:</span><span class="w"> </span><span class="kt">any</span><span class="p">;</span>
+
+<span class="w">  </span><span class="kd">@AgentBridgeFunction</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">'getWeather'</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">'Get weather information for a location'</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">parameters</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s1">'object'</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">properties</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">location</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+<span class="w">          </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s1">'string'</span><span class="p">,</span>
+<span class="w">          </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">'City name'</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nx">units</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+<span class="w">          </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s1">'string'</span><span class="p">,</span>
+<span class="w">          </span><span class="kd">enum</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">'metric'</span><span class="p">,</span><span class="w"> </span><span class="s1">'imperial'</span><span class="p">],</span>
+<span class="w">          </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="s1">'metric'</span><span class="p">,</span>
+<span class="w">          </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">'Temperature units'</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nx">required</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">'location'</span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">})</span>
+<span class="w">  </span><span class="nx">getWeather</span><span class="p">(</span><span class="nx">location</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">units</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'metric'</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// In a real app, you would call a weather API</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">weather</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">location</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">temperature</span><span class="o">:</span><span class="w"> </span><span class="kt">22</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">conditions</span><span class="o">:</span><span class="w"> </span><span class="s1">'Sunny'</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">units</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">weather</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
