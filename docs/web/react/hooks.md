@@ -97,14 +97,14 @@ function WeatherFunction() {
 A hook for registering a component with AgentBridge. This hook makes it easy to register your component with the AgentBridge framework, making it accessible to AI agents.
 
 ```jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRegisterComponent } from '@agentbridge/react';
 
 function Counter() {
   const [count, setCount] = useState(0);
   
   // Register this component with AgentBridge
-  const updateState = useRegisterComponent({
+  const { updateState } = useRegisterComponent({
     id: 'main-counter',
     componentType: 'counter',
     name: 'Main Counter',
@@ -115,38 +115,38 @@ function Counter() {
       isPositive: count > 0
     },
     actions: {
-      increment: () => {
-        setCount(prev => prev + 1);
-        return true;
-      },
-      decrement: () => {
-        setCount(prev => prev - 1);
-        return true;
-      },
-      reset: () => {
-        setCount(0);
-        return true;
-      },
-      setTo: (value) => {
-        if (typeof value === 'number') {
-          setCount(value);
-          return true;
+      increment: {
+        description: 'Increase the counter by 1',
+        handler: () => {
+          setCount(prev => prev + 1);
+          return { success: true, message: 'Counter incremented', newValue: count + 1 };
         }
-        return false;
+      },
+      decrement: {
+        description: 'Decrease the counter by 1',
+        handler: () => {
+          setCount(prev => prev - 1);
+          return { success: true, message: 'Counter decremented', newValue: count - 1 };
+        }
+      },
+      reset: {
+        description: 'Reset the counter to 0',
+        handler: () => {
+          setCount(0);
+          return { success: true, message: 'Counter reset', newValue: 0 };
+        }
       }
     }
   });
   
-  // Manually update component state when needed
-  const handleCustomUpdate = () => {
-    const randomValue = Math.floor(Math.random() * 100);
-    setCount(randomValue);
+  // Update the component state whenever count changes
+  useEffect(() => {
     updateState({ 
-      count: randomValue,
-      isEven: randomValue % 2 === 0,
-      isPositive: randomValue > 0
+      count, 
+      isEven: count % 2 === 0,
+      isPositive: count > 0 
     });
-  };
+  }, [count, updateState]);
   
   return (
     <div className="counter">
@@ -155,7 +155,6 @@ function Counter() {
         <button onClick={() => setCount(prev => prev + 1)}>Increment</button>
         <button onClick={() => setCount(prev => prev - 1)}>Decrement</button>
         <button onClick={() => setCount(0)}>Reset</button>
-        <button onClick={handleCustomUpdate}>Random</button>
       </div>
       <div>
         <p>This counter is {count % 2 === 0 ? 'even' : 'odd'} and {count > 0 ? 'positive' : count < 0 ? 'negative' : 'zero'}.</p>

@@ -11,12 +11,13 @@ The React SDK provides several hooks for interacting with AgentBridge:
 A modern hook for registering a component with AgentBridge. This hook provides a clean, declarative way to expose your components to AI agents.
 
 ```jsx
+import React, { useState, useEffect } from 'react';
 import { useRegisterComponent } from '@agentbridge/react';
 
 function Counter() {
   const [count, setCount] = useState(0);
   
-  const updateState = useRegisterComponent({
+  const { updateState } = useRegisterComponent({
     id: 'counter-1',
     componentType: 'counter',
     name: 'Counter Component',
@@ -31,25 +32,34 @@ function Counter() {
         description: 'Increase the counter by 1',
         handler: () => {
           setCount(prev => prev + 1);
-          return true;
+          return { success: true, message: 'Counter incremented', newValue: count + 1 };
         }
       },
       decrement: {
         description: 'Decrease the counter by 1',
         handler: () => {
           setCount(prev => prev - 1);
-          return true;
+          return { success: true, message: 'Counter decremented', newValue: count - 1 };
         }
       },
       reset: {
         description: 'Reset the counter to 0',
         handler: () => {
           setCount(0);
-          return true;
+          return { success: true, message: 'Counter reset', newValue: 0 };
         }
       }
     }
   });
+  
+  // Update state when count changes
+  useEffect(() => {
+    updateState({
+      count,
+      isEven: count % 2 === 0,
+      isPositive: count > 0
+    });
+  }, [count, updateState]);
   
   // The component's UI
   return (
