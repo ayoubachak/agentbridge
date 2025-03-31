@@ -1,12 +1,14 @@
 {
   "name": "@agentbridge/angular",
-  "version": "0.2.0",
+  "version": "0.1.1",
   "description": "AgentBridge SDK for Angular applications",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "rollup -c",
@@ -22,19 +24,21 @@
     "agent",
     "bridge"
   ],
-  "author": "AgentBridge Team",
+  "author": {
+    "name": "Ayoub Achak",
+    "email": "ayoub.achak01@gmail.com"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-username/agentbridge.git",
-    "directory": "packages/frameworks/angular"
+    "url": "https://github.com/ayoubachak/agentbridge.git"
   },
   "bugs": {
-    "url": "https://github.com/your-username/agentbridge/issues"
+    "url": "https://github.com/ayoubachak/agentbridge/issues"
   },
-  "homepage": "https://github.com/your-username/agentbridge#readme",
+  "homepage": "https://github.com/ayoubachak/agentbridge",
   "dependencies": {
-    "@agentbridge/core": "file:../../core"
+    "@agentbridge/core": "0.1.1"
   },
   "peerDependencies": {
     "@angular/core": ">=13.0.0",

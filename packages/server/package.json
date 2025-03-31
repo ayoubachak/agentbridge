@@ -1,6 +1,6 @@
 {
   "name": "@agentbridge/server",
-  "version": "0.2.0",
+  "version": "0.1.1",
   "description": "Server components for AgentBridge framework",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -25,7 +25,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@agentbridge/core": "0.2.0",
+    "@agentbridge/core": "0.1.1",
     "express": "^4.18.2",
     "ws": "^8.14.2",
     "cors": "^2.8.5",
@@ -61,4 +61,4 @@
     "README.md",
     "LICENSE"
   ]
-} 
+}
