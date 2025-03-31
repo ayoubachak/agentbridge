@@ -34,16 +34,21 @@
   },
   "homepage": "https://github.com/your-username/agentbridge#readme",
   "dependencies": {
-    "@agentbridge/core": "^0.2.0"
+    "@agentbridge/core": "file:../../core"
   },
   "peerDependencies": {
     "@angular/core": ">=13.0.0",
     "@angular/common": ">=13.0.0",
+    "@angular/forms": ">=13.0.0",
     "rxjs": ">=7.0.0"
   },
   "devDependencies": {
     "@angular/core": "^13.3.0",
     "@angular/common": "^13.3.0",
+    "@angular/forms": "^13.3.0",
+    "@rollup/plugin-commonjs": "^24.1.0",
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "@rollup/plugin-terser": "^0.4.1",
     "@types/jest": "^29.5.0",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
     "@typescript-eslint/parser": "^5.57.1",

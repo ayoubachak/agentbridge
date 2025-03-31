@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, ElementRef, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AgentBridgeService } from '../agent-bridge.service';
+import { ComponentDefinition, ExecutionContext } from '@agentbridge/core';
 
 /**
  * Input component that can be controlled by AI agents
@@ -79,15 +80,33 @@ export class AgentInputComponent implements OnInit, OnDestroy, ControlValueAcces
       return;
     }
     
+    // Create component definition
+    const componentDefinition: ComponentDefinition = {
+      id: this.agentId,
+      description: 'Input component that can be controlled by AI agents',
+      componentType: this.agentType,
+      actions: {
+        input: {
+          description: 'Input value changes'
+        },
+        change: {
+          description: 'Value is committed'
+        },
+        focus: {
+          description: 'Input receives focus'
+        },
+        blur: {
+          description: 'Input loses focus'
+        }
+      },
+      authLevel: 'public'
+    };
+    
     // Register the input with AgentBridge
-    this.agentBridgeService.registerComponent(this.agentId, this.agentType, {
-      ...this.agentProps,
-      type: this.type,
-      disabled: this.disabled,
-      placeholder: this.placeholder,
-      elementRef: this.elementRef,
-      className: this.cssClass
-    });
+    this.agentBridgeService.registerComponent(
+      componentDefinition,
+      this.elementRef.nativeElement
+    );
   }
   
   /**
@@ -111,10 +130,21 @@ export class AgentInputComponent implements OnInit, OnDestroy, ControlValueAcces
     this.value = value;
     
     // Update state to reflect the new value
-    this.agentBridgeService.updateComponentState(this.agentId, {
-      value,
-      lastChanged: new Date().toISOString()
-    });
+    const context: Partial<ExecutionContext> = {
+      request: {
+        id: `input-${Date.now()}`,
+        timestamp: new Date()
+      }
+    };
+    
+    this.agentBridgeService.updateComponent(
+      this.agentId, 
+      {
+        value,
+        lastChanged: new Date().toISOString()
+      },
+      context as ExecutionContext
+    );
     
     // Call change callbacks
     this.onChange(value);
@@ -130,9 +160,18 @@ export class AgentInputComponent implements OnInit, OnDestroy, ControlValueAcces
     
     // Update state to reflect the new value
     if (this.agentId) {
-      this.agentBridgeService.updateComponentState(this.agentId, {
-        value: this.value
-      });
+      const context: Partial<ExecutionContext> = {
+        request: {
+          id: `write-${Date.now()}`,
+          timestamp: new Date()
+        }
+      };
+      
+      this.agentBridgeService.updateComponent(
+        this.agentId, 
+        { value: this.value },
+        context as ExecutionContext
+      );
     }
   }
   
@@ -161,9 +200,18 @@ export class AgentInputComponent implements OnInit, OnDestroy, ControlValueAcces
     
     // Update state to reflect disabled status
     if (this.agentId) {
-      this.agentBridgeService.updateComponentState(this.agentId, {
-        disabled: isDisabled
-      });
+      const context: Partial<ExecutionContext> = {
+        request: {
+          id: `disable-${Date.now()}`,
+          timestamp: new Date()
+        }
+      };
+      
+      this.agentBridgeService.updateComponent(
+        this.agentId, 
+        { disabled: isDisabled },
+        context as ExecutionContext
+      );
     }
   }
 } 

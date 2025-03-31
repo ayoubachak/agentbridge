@@ -2,7 +2,7 @@
 export { ReactAdapter, AgentBridgeProvider, useAgentBridge } from './ReactAdapter';
 
 // Hooks
-export { useAgentFunction, useAgentComponent, useAgentFunctionCall } from './hooks';
+export { useAgentFunction, useAgentComponent, useAgentFunctionCall, useRegisterComponent } from './hooks';
 
 // Components
 export {
@@ -19,5 +19,6 @@ export {
   FunctionImplementation,
   ExecutionContext,
   FunctionCallResult,
-  AgentBridgeConfig
+  AgentBridgeConfig,
+  ComponentDefinition
 } from '@agentbridge/core'; 

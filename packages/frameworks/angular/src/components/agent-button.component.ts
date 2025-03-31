@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { AgentBridgeService } from '../agent-bridge.service';
+import { ComponentDefinition, ExecutionContext } from '@agentbridge/core';
 
 /**
  * Button component that can be controlled by AI agents
@@ -59,14 +60,24 @@ export class AgentButtonComponent implements OnInit, OnDestroy {
       return;
     }
     
+    // Create component definition
+    const componentDefinition: ComponentDefinition = {
+      id: this.agentId,
+      description: 'Button component that can be controlled by AI agents',
+      componentType: this.agentType,
+      actions: {
+        click: {
+          description: 'Click the button'
+        }
+      },
+      authLevel: 'public'
+    };
+    
     // Register the button with AgentBridge
-    this.agentBridgeService.registerComponent(this.agentId, this.agentType, {
-      ...this.agentProps,
-      type: this.type,
-      disabled: this.disabled,
-      elementRef: this.elementRef,
-      className: this.cssClass
-    });
+    this.agentBridgeService.registerComponent(
+      componentDefinition,
+      this.elementRef.nativeElement
+    );
   }
   
   /**
@@ -84,9 +95,20 @@ export class AgentButtonComponent implements OnInit, OnDestroy {
    */
   handleClick(event: MouseEvent): void {
     // Update state to reflect the click
-    this.agentBridgeService.updateComponentState(this.agentId, {
-      lastClicked: new Date().toISOString()
-    });
+    const context: Partial<ExecutionContext> = {
+      request: {
+        id: `click-${Date.now()}`,
+        timestamp: new Date()
+      }
+    };
+    
+    this.agentBridgeService.updateComponent(
+      this.agentId, 
+      {
+        lastClicked: new Date().toISOString()
+      },
+      context as ExecutionContext
+    );
     
     // Emit the clicked event
     this.clicked.emit(event);

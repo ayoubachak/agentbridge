@@ -41,54 +41,74 @@ export default function App() {
 
 There are multiple ways to register components:
 
-#### 1. Using the HOC (Higher-Order Component)
-
-```jsx
-import React, { useState } from 'react';
-import { View, Text, Button } from 'react-native';
-import { withAgentBridge } from '@agentbridge/react-native';
-
-function Counter() {
-  const [count, setCount] = useState(0);
-  
-  return (
-    <View>
-      <Text>Count: {count}</Text>
-      <Button title="Increment" onPress={() => setCount(count + 1)} />
-    </View>
-  );
-}
-
-// Register with AgentBridge
-export default withAgentBridge(Counter, {
-  name: 'counter',
-  description: 'A simple counter component',
-  props: {
-    count: 0
-  }
-});
-```
-
-#### 2. Using the Hook
+#### 1. Using the `useRegisterComponent` Hook
 
 ```jsx
 import React, { useState } from 'react';
 import { View, Text, Button } from 'react-native';
 import { useRegisterComponent } from '@agentbridge/react-native';
 
-export default function MessageDisplay() {
-  const [message, setMessage] = useState('Hello World');
+function Counter() {
+  const [count, setCount] = useState(0);
   
   // Register with AgentBridge
-  useRegisterComponent({
-    name: 'message-display',
-    description: 'A component to display messages',
-    props: {
-      message,
-      setMessage
+  const updateState = useRegisterComponent({
+    id: 'main-counter',
+    componentType: 'counter',
+    name: 'Main Counter',
+    description: 'A counter component that can be incremented or decremented',
+    properties: {
+      count,
+      isEven: count % 2 === 0,
+      isPositive: count > 0
     },
-    component: MessageDisplay
+    actions: {
+      increment: {
+        description: 'Increase the counter by 1',
+        handler: () => {
+          setCount(prev => prev + 1);
+          return true;
+        }
+      },
+      decrement: {
+        description: 'Decrease the counter by 1',
+        handler: () => {
+          setCount(prev => prev - 1);
+          return true;
+        }
+      },
+      reset: {
+        description: 'Reset the counter to 0',
+        handler: () => {
+          setCount(0);
+          return true;
+        }
+      }
+    }
   });
+  
+  return (
+    <View>
+      <Text>Count: {count}</Text>
+      <Button title="Increment" onPress={() => setCount(count + 1)} />
+      <Button title="Decrement" onPress={() => setCount(count - 1)} />
+      <Button title="Reset" onPress={() => setCount(0)} />
+    </View>
+  );
+}
+
+export default Counter;
+```
+
+#### 2. Using the HOC (Higher-Order Component)
+
+```jsx
+import React, { useState } from 'react';
+import { View, Text, Button } from 'react-native';
+import { withAgentBridge } from '@agentbridge/react-native';
+
+function MessageDisplay() {
+  const [message, setMessage] = useState('Hello World');
   
   return (
     <View>
@@ -100,6 +120,17 @@ export default function MessageDisplay() {
     </View>
   );
 }
+
+// Register with AgentBridge
+export default withAgentBridge(MessageDisplay, {
+  id: 'message-display',
+  componentType: 'message',
+  name: 'Message Display',
+  description: 'A component to display messages',
+  properties: {
+    message: 'Hello World'
+  }
+});
 ```
 
 ### Registering Functions
@@ -160,6 +191,60 @@ export default function AuthScreen() {
 }
 ```
 
+### Calling Functions
+
+Use the `useAgentFunctionCall` hook to call functions registered with AgentBridge:
+
+```jsx
+import React, { useState } from 'react';
+import { View, Text, Button, TextInput, ActivityIndicator } from 'react-native';
+import { useAgentFunctionCall } from '@agentbridge/react-native';
+
+export default function WeatherWidget() {
+  const [location, setLocation] = useState('New York');
+  
+  // Set up the function call
+  const { 
+    callFunction: fetchWeather, 
+    isLoading, 
+    result: weatherData, 
+    error 
+  } = useAgentFunctionCall('getWeather');
+  
+  const handleGetWeather = () => {
+    fetchWeather({ location });
+  };
+  
+  return (
+    <View>
+      <Text>Weather Widget</Text>
+      <TextInput 
+        value={location} 
+        onChangeText={setLocation} 
+        placeholder="Enter location" 
+      />
+      <Button 
+        title={isLoading ? 'Loading...' : 'Get Weather'} 
+        onPress={handleGetWeather}
+        disabled={isLoading}
+      />
+      
+      {error && <Text style={{ color: 'red' }}>Error: {error.message}</Text>}
+      
+      {weatherData && (
+        <View>
+          <Text>{weatherData.location}</Text>
+          <Text>Temperature: {weatherData.temperature}°C</Text>
+          <Text>Conditions: {weatherData.conditions}</Text>
+        </View>
+      )}
+      
+      {isLoading && <ActivityIndicator size="large" />}
+    </View>
+  );
+}
+```
+
 ### Accessing the Bridge Directly
 
 Use the `useAgentBridge` hook to access the bridge instance:
@@ -201,6 +286,7 @@ export default function BridgeStatus() {
 - `useAgentBridge()` - Access the bridge instance and connection status
 - `useRegisterComponent(component)` - Register a component with AgentBridge
 - `useRegisterFunction(definition, implementation)` - Register a function with AgentBridge
+- `useAgentFunctionCall(functionName)` - Call a function registered with AgentBridge
 
 ### HOCs
 

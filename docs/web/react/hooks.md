@@ -92,6 +92,79 @@ function WeatherFunction() {
 }
 ```
 
+### useRegisterComponent
+
+A hook for registering a component with AgentBridge. This hook makes it easy to register your component with the AgentBridge framework, making it accessible to AI agents.
+
+```jsx
+import React, { useState } from 'react';
+import { useRegisterComponent } from '@agentbridge/react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+  
+  // Register this component with AgentBridge
+  const updateState = useRegisterComponent({
+    id: 'main-counter',
+    componentType: 'counter',
+    name: 'Main Counter',
+    description: 'A counter component that can be incremented or decremented',
+    properties: {
+      count,
+      isEven: count % 2 === 0,
+      isPositive: count > 0
+    },
+    actions: {
+      increment: () => {
+        setCount(prev => prev + 1);
+        return true;
+      },
+      decrement: () => {
+        setCount(prev => prev - 1);
+        return true;
+      },
+      reset: () => {
+        setCount(0);
+        return true;
+      },
+      setTo: (value) => {
+        if (typeof value === 'number') {
+          setCount(value);
+          return true;
+        }
+        return false;
+      }
+    }
+  });
+  
+  // Manually update component state when needed
+  const handleCustomUpdate = () => {
+    const randomValue = Math.floor(Math.random() * 100);
+    setCount(randomValue);
+    updateState({ 
+      count: randomValue,
+      isEven: randomValue % 2 === 0,
+      isPositive: randomValue > 0
+    });
+  };
+  
+  return (
+    <div className="counter">
+      <h2>Count: {count}</h2>
+      <div>
+        <button onClick={() => setCount(prev => prev + 1)}>Increment</button>
+        <button onClick={() => setCount(prev => prev - 1)}>Decrement</button>
+        <button onClick={() => setCount(0)}>Reset</button>
+        <button onClick={handleCustomUpdate}>Random</button>
+      </div>
+      <div>
+        <p>This counter is {count % 2 === 0 ? 'even' : 'odd'} and {count > 0 ? 'positive' : count < 0 ? 'negative' : 'zero'}.</p>
+      </div>
+    </div>
+  );
+}
+```
+
 ### useAgentComponent
 
 A hook for registering a custom component with AgentBridge.

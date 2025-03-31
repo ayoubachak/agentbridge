@@ -18,8 +18,17 @@ mixin AgentComponentMixin<T extends StatefulWidget> on State<T> {
   /// Component type
   String get agentType;
 
+  /// Component description
+  String get agentDescription => '';
+
   /// Additional properties to expose to the AI agent
   Map<String, dynamic> get agentProps => {};
+
+  /// Component actions
+  Map<String, Map<String, dynamic>> get agentActions => {};
+
+  /// Action handlers
+  Map<String, Function> get agentActionHandlers => {};
 
   /// Get the FlutterAdapter instance
   FlutterAdapter? _getAdapter() {
@@ -39,7 +48,16 @@ mixin AgentComponentMixin<T extends StatefulWidget> on State<T> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final adapter = _getAdapter();
       if (adapter != null) {
-        adapter.registerComponent(agentId, agentType, agentProps);
+        // Create component definition
+        final definition = ComponentDefinition(
+          id: agentId,
+          componentType: agentType,
+          description: agentDescription,
+          properties: agentProps,
+          actions: agentActions,
+        );
+        
+        adapter.registerComponentWithDefinition(definition, agentActionHandlers);
       }
     });
   }
@@ -72,11 +90,20 @@ abstract class AgentComponent {
   /// Component type
   String get agentType;
 
+  /// Component description
+  String get agentDescription;
+
   /// Additional properties to expose to the AI agent
   Map<String, dynamic> get agentProps;
+
+  /// Component actions
+  Map<String, Map<String, dynamic>> get agentActions;
+
+  /// Action handlers
+  Map<String, Function> get agentActionHandlers;
 }
 
-/// Debounce utility for limiting how often a function is called
+/// Debouncer utility for limiting how often a function is called
 class Debouncer {
   /// Duration to wait before calling the function
   final Duration delay;

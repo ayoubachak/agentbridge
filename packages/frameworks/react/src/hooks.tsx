@@ -1,6 +1,87 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { useAgentBridge } from './ReactAdapter';
-import { FunctionCallResult } from '@agentbridge/core';
+import { FunctionCallResult, ComponentDefinition, ExecutionContext } from '@agentbridge/core';
+
+/**
+ * Hook for registering a component with AgentBridge
+ * 
+ * @param component Component definition and properties
+ */
+export function useRegisterComponent(
+  component: Omit<ComponentDefinition, 'id' | 'properties'> & { 
+    id: string;
+    properties?: Record<string, any>;
+    actions?: Record<string, {
+      description: string;
+      handler: (params?: any) => any;
+      parameters?: any;
+    }>
+  }
+) {
+  const { adapter, isInitialized } = useAgentBridge();
+  const registered = useRef(false);
+
+  useEffect(() => {
+    if (!isInitialized || !adapter || registered.current) return;
+
+    // Create handlers from actions
+    const handlers: Record<string, any> = {};
+    
+    if (component.actions) {
+      Object.entries(component.actions).forEach(([actionName, actionConfig]) => {
+        if (actionConfig.handler) {
+          handlers[actionName] = actionConfig.handler;
+        }
+      });
+    }
+
+    // Remove handlers from definition since they should be passed separately
+    const { actions, properties, ...definition } = component;
+    
+    // Create a proper ComponentDefinition
+    // Note: ComponentDefinition expects a ZodType for properties, but we're using a simple object
+    // for ease of use. This is handled in the adapter implementation.
+    const componentDefinition: any = {
+      ...definition,
+      // We'll treat properties as any since we don't want to require Zod schemas
+      properties: properties || {},
+      actions: actions ? Object.entries(actions).reduce((acc, [name, config]) => {
+        acc[name] = {
+          description: config.description,
+          parameters: config.parameters
+        };
+        return acc;
+      }, {} as Record<string, { description: string; parameters?: any }>) : {}
+    };
+
+    // Register the component
+    adapter.registerComponent(null, componentDefinition, handlers);
+
+    registered.current = true;
+
+    // Cleanup on unmount
+    return () => {
+      if (adapter) {
+        adapter.unregisterComponent(component.id);
+      }
+    };
+  }, [isInitialized, adapter, component]);
+  
+  // Get current state and update function
+  const [state, setState] = useState<Record<string, any>>({});
+  
+  const updateState = useCallback((newState: Record<string, any>) => {
+    if (!isInitialized || !adapter) return;
+    
+    setState(prev => {
+      const merged = { ...prev, ...newState };
+      adapter.updateComponentState(component.id, merged);
+      return merged;
+    });
+  }, [isInitialized, adapter, component.id]);
+  
+  return { state, updateState };
+}
 
 /**
  * Hook for exposing a function to AI agents
@@ -50,13 +131,15 @@ export function useAgentFunction<T = any, R = any>(
  * Hook for making a component accessible to AI agents
  * 
  * @param componentId Unique identifier for the component
- * @param componentType Type of the component (e.g., 'button', 'input')
- * @param props Component properties
+ * @param options Component options
  */
 export function useAgentComponent(
   componentId: string,
-  componentType: string,
-  props: Record<string, any> = {}
+  options: {
+    type: string;
+    properties?: Record<string, any>;
+    actions?: Record<string, (params?: any) => any>;
+  }
 ) {
   const { adapter, isInitialized } = useAgentBridge();
   const [state, setState] = useState<Record<string, any>>({});
@@ -65,13 +148,31 @@ export function useAgentComponent(
   useEffect(() => {
     if (!isInitialized || !adapter) return;
     
-    adapter.registerComponent(componentId, componentType, props);
+    // Create a ComponentDefinition from the options
+    // Note: ComponentDefinition expects a ZodType for properties, but we're using a simple object
+    // for ease of use. This is handled in the adapter implementation.
+    const componentDefinition: any = {
+      id: componentId,
+      componentType: options.type,
+      name: componentId,
+      description: `Component: ${options.type}`,
+      properties: options.properties || {},
+      actions: options.actions ? Object.keys(options.actions).reduce((acc, key) => {
+        acc[key] = { description: `Action: ${key}` };
+        return acc;
+      }, {} as Record<string, { description: string }>) : {}
+    };
+    
+    // Create handlers object from actions
+    const handlers = options.actions || {};
+    
+    adapter.registerComponent(null, componentDefinition, handlers);
     
     // Cleanup: unregister the component when the component unmounts
     return () => {
       adapter.unregisterComponent(componentId);
     };
-  }, [isInitialized, adapter, componentId, componentType, props]);
+  }, [isInitialized, adapter, componentId, options]);
   
   // Update the component state
   const updateState = useCallback((newState: Record<string, any>) => {

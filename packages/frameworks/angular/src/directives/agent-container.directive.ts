@@ -1,5 +1,6 @@
 import { Directive, Input, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { AgentBridgeService } from '../agent-bridge.service';
+import { ComponentDefinition, ExecutionContext } from '@agentbridge/core';
 
 /**
  * Directive to make any element a container that can be controlled by AI agents
@@ -35,13 +36,29 @@ export class AgentContainerDirective implements OnInit, OnDestroy {
     const element = this.elementRef.nativeElement;
     const childCount = element.children ? element.children.length : 0;
     
+    // Create component definition
+    const componentDefinition: ComponentDefinition = {
+      id: this.agentId,
+      description: 'Container element that can be controlled by AI agents',
+      componentType: this.agentType,
+      actions: {
+        update: {
+          description: 'Update container properties'
+        }
+      },
+      authLevel: 'public'
+    };
+    
     // Register the container with AgentBridge
-    this.agentBridgeService.registerComponent(this.agentId, this.agentType, {
-      ...this.agentProps,
-      elementRef: this.elementRef,
-      tagName: element.tagName,
-      childCount
-    });
+    this.agentBridgeService.registerComponent(
+      componentDefinition,
+      this.elementRef.nativeElement,
+      {
+        ...this.agentProps,
+        tagName: element.tagName,
+        childCount
+      }
+    );
     
     // Add data attributes to the element
     element.setAttribute('data-agent-id', this.agentId);

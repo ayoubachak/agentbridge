@@ -1,5 +1,6 @@
 import { Directive, ElementRef, Input, OnInit, OnDestroy } from '@angular/core';
-import { AgentBridgeService } from './agent-bridge.service';
+import { AgentBridgeService } from '../agent-bridge.service';
+import { ComponentDefinition, ExecutionContext } from '@agentbridge/core';
 
 /**
  * Directive for marking components that should be registered with AgentBridge
@@ -29,19 +30,27 @@ export class AgentBridgeComponentDirective implements OnInit, OnDestroy {
 
     this.componentId = `directive-${this.agentBridgeComponent}-${Date.now()}`;
     
-    // Register the component
-    this.agentBridgeService.registerComponent({
+    // Create component definition
+    const componentDefinition: ComponentDefinition = {
       id: this.componentId,
-      name: this.agentBridgeComponent,
-      description: this.agentBridgeComponentDescription || '',
-      props: this.agentBridgeComponentProps || {},
-      component: this.el.nativeElement
-    });
+      description: this.agentBridgeComponentDescription || `${this.agentBridgeComponent} component`,
+      componentType: this.agentBridgeComponent,
+      authLevel: 'public'
+    };
+    
+    // Register the component
+    this.agentBridgeService.registerComponent(
+      componentDefinition,
+      this.el.nativeElement,
+      this.agentBridgeComponentProps || {}
+    );
 
     this.registered = true;
   }
 
   ngOnDestroy() {
-    // Implement if there's a way to unregister components
+    if (this.registered && this.componentId) {
+      this.agentBridgeService.unregisterComponent(this.componentId);
+    }
   }
 } 

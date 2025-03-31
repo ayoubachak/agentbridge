@@ -1,6 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AgentBridge } from '@agentbridge/core';
+import { AgentBridge, CommunicationManager } from '@agentbridge/core';
 import { AngularAdapter } from './angular-adapter';
 import { AgentBridgeService } from './agent-bridge.service';
 import { AgentButtonComponent } from './components/agent-button.component';
@@ -12,10 +12,14 @@ import { AgentContainerDirective } from './directives/agent-container.directive'
  * Configuration options for the AgentBridge Angular module
  */
 export interface AgentBridgeModuleConfig {
-  /** Provide a custom AgentBridge instance */
-  bridge?: AgentBridge;
-  /** Provide a custom adapter */
-  adapter?: AngularAdapter;
+  /** Communication manager instance */
+  communicationManager?: CommunicationManager;
+  
+  /** Provider initialization function */
+  providerInitFn?: (bridge: AgentBridge) => void;
+  
+  /** Enable debug mode */
+  debug?: boolean;
 }
 
 /**

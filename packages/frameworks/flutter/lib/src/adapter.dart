@@ -12,8 +12,17 @@ class ComponentInfo {
   /// Type of the component (e.g., 'button', 'textField')
   final String type;
 
+  /// Description of the component
+  final String description;
+
   /// Additional properties for the component
   final Map<String, dynamic> props;
+
+  /// Actions supported by the component
+  final Map<String, Map<String, dynamic>> actions;
+
+  /// Action handlers
+  final Map<String, Function> handlers;
 
   /// Current state of the component
   Map<String, dynamic> state;
@@ -22,7 +31,10 @@ class ComponentInfo {
   ComponentInfo({
     required this.id,
     required this.type,
+    this.description = '',
     this.props = const {},
+    this.actions = const {},
+    this.handlers = const {},
     this.state = const {},
   });
 
@@ -31,8 +43,48 @@ class ComponentInfo {
     return {
       'id': id,
       'type': type,
+      'description': description,
       'props': props,
+      'actions': actions,
       'state': state,
+    };
+  }
+}
+
+/// Component definition for registration
+class ComponentDefinition {
+  /// Unique identifier for the component
+  final String id;
+
+  /// Type of the component (e.g., 'button', 'textField')
+  final String componentType;
+
+  /// Description of the component
+  final String description;
+
+  /// Additional properties for the component
+  final Map<String, dynamic>? properties;
+
+  /// Actions supported by the component
+  final Map<String, Map<String, dynamic>>? actions;
+
+  /// Create a new ComponentDefinition
+  ComponentDefinition({
+    required this.id,
+    required this.componentType,
+    this.description = '',
+    this.properties,
+    this.actions,
+  });
+
+  /// Convert to a JSON representation
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'componentType': componentType,
+      'description': description,
+      if (properties != null) 'properties': properties,
+      if (actions != null) 'actions': actions,
     };
   }
 }
@@ -202,23 +254,36 @@ class FlutterAdapter extends ChangeNotifier {
           );
         }
 
-        // Trigger the event
-        final updatedState = {
-          ..._components[componentId]!.state,
-          'lastEvent': {
-            'type': event,
-            'payload': payload,
-            'timestamp': DateTime.now().toIso8601String(),
-          },
-        };
+        // Check if the component has the action handler
+        final component = _components[componentId]!;
+        final handlers = component.handlers;
 
-        updateComponentState(componentId, updatedState);
+        if (!handlers.containsKey(event)) {
+          return FunctionCallResult.error(
+            'EVENT_NOT_SUPPORTED',
+            'Event "$event" is not supported by this component',
+          );
+        }
 
-        return FunctionCallResult.success({
-          'success': true,
-          'componentId': componentId,
-          'event': event,
-        });
+        try {
+          // Update state to reflect the event
+          updateComponentState(componentId, {
+            'lastEvent': {
+              'type': event,
+              'payload': payload,
+              'timestamp': DateTime.now().toIso8601String(),
+            },
+          });
+
+          // Call the handler
+          final result = handlers[event]!(payload);
+          return FunctionCallResult.success(result);
+        } catch (e) {
+          return FunctionCallResult.error(
+            'EVENT_HANDLER_ERROR',
+            'Error executing event handler: ${e.toString()}',
+          );
+        }
       },
     );
 
@@ -238,7 +303,7 @@ class FlutterAdapter extends ChangeNotifier {
     );
   }
 
-  /// Register a component with AgentBridge
+  /// Register a component with AgentBridge (legacy method)
   void registerComponent(String id, String type,
       [Map<String, dynamic> props = const {}]) {
     if (_components.containsKey(id)) {
@@ -250,6 +315,29 @@ class FlutterAdapter extends ChangeNotifier {
       id: id,
       type: type,
       props: props,
+      state: {},
+    );
+
+    notifyListeners();
+  }
+
+  /// Register a component with AgentBridge using the new ComponentDefinition approach
+  void registerComponentWithDefinition(ComponentDefinition definition,
+      [Map<String, Function> handlers = const {}]) {
+    final id = definition.id;
+
+    if (_components.containsKey(id)) {
+      debugPrint(
+          'Component with ID "$id" is already registered. It will be overwritten.');
+    }
+
+    _components[id] = ComponentInfo(
+      id: id,
+      type: definition.componentType,
+      description: definition.description,
+      props: definition.properties ?? {},
+      actions: definition.actions ?? {},
+      handlers: handlers,
       state: {},
     );
 

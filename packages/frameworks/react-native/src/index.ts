@@ -10,7 +10,7 @@ export { AgentBridgeProvider, useAgentBridge } from './lib/AgentBridgeProvider';
 export { withAgentBridge } from './lib/withAgentBridge';
 
 // Hooks
-export { useRegisterComponent, useRegisterFunction } from './lib/hooks';
+export { useRegisterComponent, useRegisterFunction, useAgentFunctionCall } from './lib/hooks';
 
 // Re-export from core for convenience
 export {

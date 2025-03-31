@@ -1,10 +1,14 @@
 import { NgModule, ModuleWithProviders, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AgentBridgeService } from './agent-bridge.service';
-import { CommunicationProvider } from '@agentbridge/core';
+import { CommunicationManager, AgentBridge } from '@agentbridge/core';
 
 export interface AgentBridgeModuleConfig {
-  provider?: CommunicationProvider;
+  /** The communication manager instance */
+  communicationManager?: CommunicationManager;
+  /** Provider initialization function (alternative to communicationManager) */
+  providerInitFn?: (bridge: AgentBridge) => CommunicationManager;
+  /** Debug mode flag */
   debug?: boolean;
 }
 

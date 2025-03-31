@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, ElementRef, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AgentBridgeService } from '../agent-bridge.service';
+import { ComponentDefinition, ExecutionContext } from '@agentbridge/core';
 
 /**
  * Select component that can be controlled by AI agents
@@ -79,14 +80,30 @@ export class AgentSelectComponent implements OnInit, OnDestroy, ControlValueAcce
     // Extract options from the DOM
     this.extractOptions();
     
+    // Create component definition
+    const componentDefinition: ComponentDefinition = {
+      id: this.agentId,
+      description: 'Select component that can be controlled by AI agents',
+      componentType: this.agentType,
+      actions: {
+        change: {
+          description: 'Triggered when the select value changes'
+        },
+        focus: {
+          description: 'Triggered when the select receives focus'
+        },
+        blur: {
+          description: 'Triggered when the select loses focus'
+        }
+      },
+      authLevel: 'public'
+    };
+    
     // Register the select with AgentBridge
-    this.agentBridgeService.registerComponent(this.agentId, this.agentType, {
-      ...this.agentProps,
-      disabled: this.disabled,
-      options: this.options,
-      elementRef: this.elementRef,
-      className: this.cssClass
-    });
+    this.agentBridgeService.registerComponent(
+      componentDefinition,
+      this.elementRef.nativeElement
+    );
   }
   
   /**
@@ -104,9 +121,18 @@ export class AgentSelectComponent implements OnInit, OnDestroy, ControlValueAcce
         
         // Update the component state with options
         if (this.agentId) {
-          this.agentBridgeService.updateComponentState(this.agentId, {
-            options: this.options
-          });
+          const context: Partial<ExecutionContext> = {
+            request: {
+              id: `extract-${Date.now()}`,
+              timestamp: new Date()
+            }
+          };
+          
+          this.agentBridgeService.updateComponent(
+            this.agentId, 
+            { options: this.options },
+            context as ExecutionContext
+          );
         }
       }
     }
@@ -133,10 +159,21 @@ export class AgentSelectComponent implements OnInit, OnDestroy, ControlValueAcce
     this.value = value;
     
     // Update state to reflect the new value
-    this.agentBridgeService.updateComponentState(this.agentId, {
-      value,
-      lastChanged: new Date().toISOString()
-    });
+    const context: Partial<ExecutionContext> = {
+      request: {
+        id: `change-${Date.now()}`,
+        timestamp: new Date()
+      }
+    };
+    
+    this.agentBridgeService.updateComponent(
+      this.agentId, 
+      {
+        value,
+        lastChanged: new Date().toISOString()
+      },
+      context as ExecutionContext
+    );
     
     // Call change callbacks
     this.onChange(value);
@@ -153,9 +190,18 @@ export class AgentSelectComponent implements OnInit, OnDestroy, ControlValueAcce
     
     // Update state to reflect the new value
     if (this.agentId) {
-      this.agentBridgeService.updateComponentState(this.agentId, {
-        value: this.value
-      });
+      const context: Partial<ExecutionContext> = {
+        request: {
+          id: `write-${Date.now()}`,
+          timestamp: new Date()
+        }
+      };
+      
+      this.agentBridgeService.updateComponent(
+        this.agentId, 
+        { value: this.value },
+        context as ExecutionContext
+      );
     }
   }
   
@@ -184,9 +230,18 @@ export class AgentSelectComponent implements OnInit, OnDestroy, ControlValueAcce
     
     // Update state to reflect disabled status
     if (this.agentId) {
-      this.agentBridgeService.updateComponentState(this.agentId, {
-        disabled: isDisabled
-      });
+      const context: Partial<ExecutionContext> = {
+        request: {
+          id: `disable-${Date.now()}`,
+          timestamp: new Date()
+        }
+      };
+      
+      this.agentBridgeService.updateComponent(
+        this.agentId, 
+        { disabled: isDisabled },
+        context as ExecutionContext
+      );
     }
   }
 } 

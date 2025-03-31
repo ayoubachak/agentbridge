@@ -133,7 +133,8 @@ export class WebSocketCommunicationManager implements CommunicationManager {
   private createWebSocket(): WebSocket {
     const wsUrl = this.buildUrl();
     
-    // Create WebSocket
+    // Create WebSocket using direct construction to avoid type issues
+    // @ts-ignore: WebSocket implementation might have different constructor signature
     const ws = new this.WebSocketImpl(wsUrl);
     
     // Set up event handlers
@@ -285,16 +286,18 @@ export class WebSocketCommunicationManager implements CommunicationManager {
         this.ws?.removeEventListener('close', onClose);
       };
       
-      // Add event listeners
-      this.ws?.addEventListener('open', onOpen);
-      this.ws?.addEventListener('error', onError);
-      this.ws?.addEventListener('close', onClose);
-      
-      // If already connected, resolve immediately
-      if (this.ws?.readyState === WebSocket.OPEN) {
-        cleanup();
-        this.connectionState = 'connected';
-        resolve();
+      // Add event listeners with strict null checks
+      if (this.ws) {
+        this.ws.addEventListener('open', onOpen);
+        this.ws.addEventListener('error', onError);
+        this.ws.addEventListener('close', onClose);
+        
+        // If already connected, resolve immediately
+        if (this.ws.readyState === WebSocket.OPEN) {
+          cleanup();
+          this.connectionState = 'connected';
+          resolve();
+        }
       }
     });
   }
@@ -320,59 +323,24 @@ export class WebSocketCommunicationManager implements CommunicationManager {
         resolve();
       };
       
-      this.ws.addEventListener('close', onClose);
-      
-      this.connectionState = 'closed';
-      this.ws.close();
-      
-      // If already closed, resolve immediately
-      if (this.ws.readyState === WebSocket.CLOSED) {
-        this.ws.removeEventListener('close', onClose);
+      if (this.ws) {
+        this.ws.addEventListener('close', onClose);
+        
+        this.connectionState = 'closed';
+        this.ws.close();
+        
+        // If already closed, resolve immediately
+        if (this.ws.readyState === WebSocket.CLOSED) {
+          if (this.ws) {
+            this.ws.removeEventListener('close', onClose);
+          }
+          resolve();
+        }
+      } else {
+        // No WebSocket to disconnect
         resolve();
       }
     });
-  }
-
-  // Handle specific events
-  private handleEvents() {
-    if (this.ws) {
-      // Handle opening of connection
-      this.ws.addEventListener('open', () => {
-        this.connectionState = 'connected';
-        this.reconnectAttempts = 0;
-        console.log('[AgentBridge WebSocket] Connected');
-        // Send any queued messages
-        while (this.messageQueue.length > 0) {
-          const message = this.messageQueue.shift();
-          if (message) this.sendMessage(message);
-        }
-      });
-
-      // Handle incoming messages
-      this.ws.addEventListener('message', (message: WebSocket.MessageEvent) => {
-        this.handleIncomingMessage(message);
-      });
-
-      // Handle connection closing
-      this.ws.addEventListener('close', () => {
-        this.connectionState = 'closed';
-        console.log('[AgentBridge WebSocket] Connection closed');
-        if (this.config.reconnect?.enabled && (this.config.reconnect.maxAttempts === undefined || 
-                                             this.reconnectAttempts < (this.config.reconnect.maxAttempts || DEFAULT_RECONNECT_OPTIONS.maxAttempts))) {
-          this.connectionState = 'reconnecting';
-          this.scheduleReconnect();
-        }
-      });
-
-      // Handle errors
-      this.ws.addEventListener('error', (/* _ */): void => {
-        console.error('[AgentBridge WebSocket] Error:');
-        // If we're connecting and get an error, mark as failed
-        if (this.connectionState === 'connecting') {
-          this.connectionState = 'failed';
-        }
-      });
-    }
   }
 
   /**
@@ -382,8 +350,8 @@ export class WebSocketCommunicationManager implements CommunicationManager {
   private handleIncomingMessage(message: WebSocket.MessageEvent): void {
     try {
       // Parse the message content
-      const parsedMessage = JSON.parse(message.data as string);
-      // Call the message handler instead of using emit
+      const parsedMessage = JSON.parse(message.data as string) as Message;
+      // Call the message handler
       if (this.messageHandler) {
         this.messageHandler(parsedMessage);
       }
@@ -396,16 +364,9 @@ export class WebSocketCommunicationManager implements CommunicationManager {
    * Close the WebSocket connection gracefully
    */
   public close(): void {
-    try {
-      if (this.ws) {
-        this.ws.close();
-      }
-      // Set the connection state
-      this.connectionState = 'closed';
-      console.log('[AgentBridge WebSocket] Connection closed');
-    } catch (_err) {
-      console.error('Error closing WebSocket connection');
-    }
+    this.disconnect().catch(err => {
+      console.error('[AgentBridge WebSocket] Error disconnecting:', err);
+    });
   }
 
   /**
@@ -413,13 +374,7 @@ export class WebSocketCommunicationManager implements CommunicationManager {
    * @param message The message to publish
    */
   private publish(message: Message): void {
-    if (!this.ws) return;
-    
-    try {
-      this.ws.send(JSON.stringify(message));
-    } catch (_err) {
-      console.error('[AgentBridge WebSocket] Error publishing message');
-    }
+    this.sendMessage(message);
   }
 }
 

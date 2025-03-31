@@ -2,7 +2,9 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import {
   AgentBridge,
   FrameworkAdapter,
-  FunctionCallResult
+  FunctionCallResult,
+  ComponentDefinition,
+  ExecutionContext
 } from '@agentbridge/core';
 import { Platform } from 'react-native';
 

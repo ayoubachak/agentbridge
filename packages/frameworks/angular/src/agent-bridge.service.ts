@@ -1,8 +1,15 @@
 import { Injectable, Inject, Optional, NgZone } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AgentBridge, createAgentBridge, FunctionCallResult } from '@agentbridge/core';
-import { AngularAdapter, AgentBridgeState } from './angular-adapter';
+import { 
+  AgentBridge, 
+  createAgentBridge, 
+  ComponentDefinition, 
+  FunctionDefinition, 
+  ExecutionContext,
+  FunctionCallResult
+} from '@agentbridge/core';
 import { AgentBridgeModuleConfig } from './agent-bridge.module';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { AngularAdapter, AgentBridgeState } from './angular-adapter';
 
 /**
  * Service for interacting with AgentBridge in Angular applications
@@ -23,12 +30,21 @@ export class AgentBridgeService {
     @Optional() @Inject('AGENT_BRIDGE_CONFIG') private config: AgentBridgeModuleConfig,
     private zone: NgZone
   ) {
-    // Initialize with provided configuration or create new instances
-    this.bridge = config?.bridge || createAgentBridge();
-    this.adapter = config?.adapter || new AngularAdapter(zone);
+    // Create the AgentBridge instance
+    this.bridge = createAgentBridge();
+
+    // Create the Angular adapter
+    this.adapter = new AngularAdapter(zone);
     
     // Initialize the adapter with the bridge
     this.adapter.initialize(this.bridge);
+    
+    // Set up communication
+    if (config?.communicationManager) {
+      this.bridge.setCommunicationManager(config.communicationManager);
+    } else if (config?.providerInitFn) {
+      config.providerInitFn(this.bridge);
+    }
   }
   
   /**
@@ -46,14 +62,14 @@ export class AgentBridgeService {
   }
   
   /**
-   * Observable state that components can subscribe to
+   * Get the adapter state observable
    */
   get state$(): Observable<AgentBridgeState> {
     return this.adapter.state$;
   }
   
   /**
-   * Get the current state
+   * Get the current adapter state
    */
   get currentState(): AgentBridgeState {
     return this.adapter.currentState;
@@ -63,8 +79,8 @@ export class AgentBridgeService {
    * Register a function with AgentBridge
    * @param name Function name
    * @param description Function description
-   * @param parameters Schema for function parameters
-   * @param handler Function implementation
+   * @param parameters Parameters schema
+   * @param handler Function handler
    * @param options Additional options
    */
   registerFunction<T = any, R = any>(
@@ -85,7 +101,7 @@ export class AgentBridgeService {
   }
   
   /**
-   * Unregister a function by name
+   * Unregister a function
    * @param name Function name
    */
   unregisterFunction(name: string): void {
@@ -93,7 +109,7 @@ export class AgentBridgeService {
   }
   
   /**
-   * Call a function registered with AgentBridge
+   * Call a function
    * @param functionName Function name
    * @param params Function parameters
    * @param context Context information
@@ -109,12 +125,16 @@ export class AgentBridgeService {
   
   /**
    * Register a component with AgentBridge
-   * @param componentId Component ID
-   * @param componentType Component type
-   * @param props Component properties
+   * @param definition Component definition
+   * @param component Component instance or class
+   * @param handlers Component handlers
    */
-  registerComponent(componentId: string, componentType: string, props: Record<string, any> = {}): void {
-    this.adapter.registerComponent(componentId, componentType, props);
+  registerComponent(
+    definition: ComponentDefinition,
+    component: any,
+    handlers: any = {}
+  ): void {
+    this.adapter.registerComponent(component, definition, handlers);
   }
   
   /**
@@ -126,11 +146,45 @@ export class AgentBridgeService {
   }
   
   /**
-   * Update a component's state
+   * Update a component
    * @param componentId Component ID
-   * @param state New state
+   * @param properties Properties to update
+   * @param context Execution context
    */
-  updateComponentState(componentId: string, state: Record<string, any>): void {
-    this.adapter.updateComponentState(componentId, state);
+  async updateComponent(
+    componentId: string, 
+    properties: any, 
+    context: ExecutionContext
+  ): Promise<void> {
+    return this.adapter.updateComponent(componentId, properties, context);
+  }
+  
+  /**
+   * Execute a component action
+   * @param componentId Component ID
+   * @param action Action name
+   * @param params Action parameters
+   * @param context Execution context
+   */
+  async executeComponentAction(
+    componentId: string,
+    action: string,
+    params: any,
+    context: ExecutionContext
+  ): Promise<any> {
+    return this.adapter.executeComponentAction(componentId, action, params, context);
+  }
+  
+  /**
+   * Clean up when the service is destroyed
+   */
+  ngOnDestroy(): void {
+    if (this.bridge) {
+      this.bridge.dispose();
+    }
+    
+    if (this.adapter) {
+      this.adapter.dispose();
+    }
   }
 } 

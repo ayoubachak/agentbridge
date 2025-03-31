@@ -24,7 +24,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@agentbridge/core": "0.2.0",
+    "@agentbridge/core": "file:../../core",
     "isomorphic-ws": "^5.0.0",
     "ws": "^8.14.2"
   },

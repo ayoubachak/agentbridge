@@ -1,5 +1,5 @@
 import { Injectable, Inject, OnDestroy } from '@angular/core';
-import { AgentBridge, createAgentBridge, ComponentDefinition, FunctionDefinition } from '@agentbridge/core';
+import { AgentBridge, createAgentBridge, ComponentDefinition, FunctionDefinition, ExecutionContext } from '@agentbridge/core';
 import { AgentBridgeModuleConfig } from './agent-bridge.module';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -22,10 +22,8 @@ export class AgentBridgeService implements OnDestroy {
   public functions$: Observable<FunctionDefinition[]> = this._functions.asObservable();
 
   constructor(@Inject('AGENT_BRIDGE_CONFIG') private config: AgentBridgeModuleConfig) {
-    this.bridge = createAgentBridge({
-      communicationProvider: config.communicationProvider,
-      debug: config.debug || false
-    });
+    // Create the AgentBridge instance with empty config
+    this.bridge = createAgentBridge();
 
     // Set up event listeners
     this.bridge.on('connected', () => {
@@ -46,8 +44,14 @@ export class AgentBridgeService implements OnDestroy {
       this._functions.next([...current, func]);
     });
 
-    // Initialize connection
-    this.bridge.connect();
+    // Initialize communication
+    if (config.communicationManager) {
+      // If a communication manager is provided directly, use it
+      this.bridge.setCommunicationManager(config.communicationManager);
+    } else if (config.providerInitFn) {
+      // If a provider initialization function is provided, call it with the bridge
+      config.providerInitFn(this.bridge);
+    }
   }
 
   /**
@@ -55,15 +59,37 @@ export class AgentBridgeService implements OnDestroy {
    * @param component The component definition to register
    */
   registerComponent(component: ComponentDefinition): void {
-    this.bridge.registerComponent(component);
+    const { id, description, componentType } = component;
+    
+    // Extract the options
+    const options: any = {};
+    if (component.properties) options.properties = component.properties;
+    if (component.actions) options.actions = component.actions;
+    if (component.authLevel) options.authLevel = component.authLevel;
+    if (component.tags) options.tags = component.tags;
+    if (component.path) options.path = component.path;
+    
+    // Register the component
+    this.bridge.registerComponent(id, description, componentType, options);
   }
 
   /**
    * Register a function with AgentBridge
    * @param func The function definition to register
    */
-  registerFunction(func: FunctionDefinition): void {
-    this.bridge.registerFunction(func);
+  registerFunction(func: FunctionDefinition & { 
+    handler: (params: any, context: ExecutionContext) => Promise<any> 
+  }): void {
+    const { name, description, parameters, handler } = func;
+    
+    // Extract the options
+    const options: any = {};
+    if (func.authLevel) options.authLevel = func.authLevel;
+    if (func.tags) options.tags = func.tags;
+    if (func.rateLimit) options.rateLimit = func.rateLimit;
+    
+    // Register the function
+    this.bridge.registerFunction(name, description, parameters, handler, options);
   }
 
   /**
@@ -77,6 +103,9 @@ export class AgentBridgeService implements OnDestroy {
    * Disconnect and clean up when service is destroyed
    */
   ngOnDestroy(): void {
-    this.bridge.disconnect();
+    if (this.bridge) {
+      // Use dispose instead of disconnect as that's the API in the core package
+      this.bridge.dispose();
+    }
   }
 } 

@@ -18,9 +18,18 @@ interface AgentButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, Agen
 
 export const AgentButton = forwardRef<HTMLButtonElement, AgentButtonProps>(
   ({ agentId, agentType = 'button', agentProps = {}, onClick, children, ...props }, ref) => {
-    const { state: _state, updateState } = useAgentComponent(agentId, agentType, {
-      ...agentProps,
-      ...props
+    const { state: _state, updateState } = useAgentComponent(agentId, {
+      type: agentType,
+      properties: {
+        ...agentProps,
+        ...props
+      },
+      actions: {
+        click: () => {
+          updateState({ lastClicked: new Date().toISOString() });
+          return true;
+        }
+      }
     });
     
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -56,9 +65,22 @@ interface AgentInputProps extends InputHTMLAttributes<HTMLInputElement>, AgentCo
 
 export const AgentInput = forwardRef<HTMLInputElement, AgentInputProps>(
   ({ agentId, agentType = 'input', agentProps = {}, onChange, ...props }, ref) => {
-    const { state, updateState } = useAgentComponent(agentId, agentType, {
-      ...agentProps,
-      ...props
+    const { state, updateState } = useAgentComponent(agentId, {
+      type: agentType,
+      properties: {
+        ...agentProps,
+        ...props
+      },
+      actions: {
+        setValue: (value: string) => {
+          updateState({ value });
+          return true;
+        },
+        clear: () => {
+          updateState({ value: '' });
+          return true;
+        }
+      }
     });
     
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -102,9 +124,18 @@ interface AgentSelectProps extends AgentControlledProps {
 
 export const AgentSelect = forwardRef<HTMLSelectElement, AgentSelectProps>(
   ({ agentId, agentType = 'select', agentProps = {}, onChange, children, ...props }, ref) => {
-    const { state, updateState } = useAgentComponent(agentId, agentType, {
-      ...agentProps,
-      ...props
+    const { state, updateState } = useAgentComponent(agentId, {
+      type: agentType,
+      properties: {
+        ...agentProps,
+        ...props
+      },
+      actions: {
+        setValue: (value: string) => {
+          updateState({ value });
+          return true;
+        }
+      }
     });
     
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -149,10 +180,13 @@ interface AgentContainerProps extends AgentControlledProps {
 
 export const AgentContainer = forwardRef<HTMLDivElement, AgentContainerProps>(
   ({ agentId, agentType = 'container', agentProps = {}, as: Component = 'div', children, ...props }, ref) => {
-    useAgentComponent(agentId, agentType, {
-      ...agentProps,
-      ...props,
-      childCount: React.Children.count(children)
+    useAgentComponent(agentId, {
+      type: agentType,
+      properties: {
+        ...agentProps,
+        ...props,
+        childCount: React.Children.count(children)
+      }
     });
     
     return (
