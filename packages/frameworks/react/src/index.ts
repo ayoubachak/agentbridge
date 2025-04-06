@@ -1,16 +1,40 @@
-// Main Adapter
-export { ReactAdapter, AgentBridgeProvider, useAgentBridge } from './ReactAdapter';
+/**  
+ * AgentBridge React  
+ *  
+ * React integration for the AgentBridge framework.  
+ */ 
+
+// Core exports
+export { ReactAdapter } from './core/ReactAdapter';
+export { AgentBridgeProvider } from './core/AgentBridgeProvider';
+export {
+  useAgentBridgeContext,
+  useAgentBridgeOrThrow,
+  useReactAdapterOrThrow,
+  useAgentBridgeInitialized
+} from './core/context';
 
 // Hooks
-export { useAgentFunction, useAgentComponent, useAgentFunctionCall, useRegisterComponent } from './hooks';
+export {
+  useAgentComponent,
+  withAgentComponent
+} from './hooks/useAgentComponent';
+
+export {
+  useAgentFunction
+} from './hooks/useAgentFunction';
 
 // Components
-export {
-  AgentButton,
-  AgentInput,
-  AgentSelect,
-  AgentContainer
-} from './components';
+export * from './components';
+
+// Types
+export * from './core/types';
+
+// Utilities
+export * from './utils/debug';
+export * from './utils/errors';
+export * from './utils/schema';
+export * from './utils/stableObjects';
 
 // Re-export types from core
 export {
@@ -21,4 +45,7 @@ export {
   FunctionCallResult,
   AgentBridgeConfig,
   ComponentDefinition
-} from '@agentbridge/core'; 
+} from '@agentbridge/core';
+
+// Version information
+export const VERSION = '0.1.0'; 

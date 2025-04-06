@@ -7,6 +7,7 @@ import { WebSocketProvider } from '@agentbridge/communication-websocket';
 import Counter from './components/Counter';
 import History from './components/History';
 import Settings from './components/Settings';
+import BridgeDebugger from './components/BridgeDebugger';
 import './App.css';
 
 function App() {
@@ -114,6 +115,7 @@ function App() {
             <AgentBridgeProvider bridge={bridge}>
               <div className="counter-container">
                 <Counter onCountChange={addCountChangeToHistory} />
+                <BridgeDebugger />
               </div>
             </AgentBridgeProvider>
           ) : (

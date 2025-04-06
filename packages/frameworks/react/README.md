@@ -1,270 +1,219 @@
-# @agentbridge/react
+# AgentBridge React SDK
 
-React SDK for AgentBridge framework to connect your web applications with AI agents.
+A React SDK for the AgentBridge framework, allowing you to create AI-controllable components in your React applications.
 
 ## Installation
 
-```bash
-npm install @agentbridge/react @agentbridge/core
+Install the React SDK along with the core package:
 
-# You'll also need a communication provider
-npm install @agentbridge/provider-ably  # or another provider
+```bash
+npm install @agentbridge/core @agentbridge/react
 ```
 
 ## Usage
 
-### Setup
+### Basic Setup
 
-Wrap your app with the `AgentBridgeProvider`:
+Wrap your application with the `AgentBridgeProvider`:
 
 ```jsx
-import React from 'react';
 import { AgentBridgeProvider } from '@agentbridge/react';
-import { AblyProvider } from '@agentbridge/provider-ably';
+import { createAgentBridge } from '@agentbridge/core';
 
-// Initialize a communication provider
-const ablyProvider = new AblyProvider({
-  apiKey: 'your-ably-api-key'
-});
+// Create an AgentBridge instance
+const bridge = createAgentBridge();
 
-export default function App() {
+function App() {
   return (
-    <AgentBridgeProvider communicationProvider={ablyProvider} debug={true}>
-      <YourApp />
+    <AgentBridgeProvider bridge={bridge}>
+      {/* Your application components */}
     </AgentBridgeProvider>
   );
 }
 ```
 
-### Registering Components
+### Creating AI-Controllable Components
 
-There are multiple ways to register components:
-
-#### 1. Using the `useRegisterComponent` Hook
+You can make your components controllable by AI agents using the provided hooks:
 
 ```jsx
-import React, { useState } from 'react';
 import { useRegisterComponent } from '@agentbridge/react';
 
 function Counter() {
   const [count, setCount] = useState(0);
   
-  // Register with AgentBridge
-  const updateState = useRegisterComponent({
+  // Register this component with AgentBridge
+  useRegisterComponent({
     id: 'main-counter',
     componentType: 'counter',
-    name: 'Main Counter',
     description: 'A counter component that can be incremented or decremented',
     properties: {
       count,
-      isEven: count % 2 === 0,
-      isPositive: count > 0
+      isPositive: count >= 0
     },
     actions: {
-      increment: () => {
-        setCount(prev => prev + 1);
-        return true;
+      increment: {
+        description: 'Increment the counter by 1',
+        handler: () => setCount(prev => prev + 1)
       },
-      decrement: () => {
-        setCount(prev => prev - 1);
-        return true;
+      decrement: {
+        description: 'Decrement the counter by 1',
+        handler: () => setCount(prev => prev - 1)
       },
-      reset: () => {
-        setCount(0);
-        return true;
+      reset: {
+        description: 'Reset the counter to 0',
+        handler: () => setCount(0)
       }
     }
   });
   
   return (
     <div>
-      <h2>Count: {count}</h2>
-      <button onClick={() => setCount(count + 1)}>Increment</button>
-      <button onClick={() => setCount(count - 1)}>Decrement</button>
+      <h2>Counter: {count}</h2>
+      <button onClick={() => setCount(prev => prev - 1)}>-</button>
       <button onClick={() => setCount(0)}>Reset</button>
+      <button onClick={() => setCount(prev => prev + 1)}>+</button>
     </div>
   );
 }
 ```
 
-#### 2. Using the Legacy `useAgentComponent` Hook
+### Exposing Functions to AI Agents
+
+You can expose functions that AI agents can call:
 
 ```jsx
-import React, { useState } from 'react';
-import { useAgentComponent } from '@agentbridge/react';
-
-export default function MessageDisplay() {
-  const [message, setMessage] = useState('Hello World');
-  
-  // Register with AgentBridge
-  useAgentComponent('message-display', {
-    type: 'message',
-    properties: {
-      message,
-      length: message.length
-    },
-    actions: {
-      setMessage: (newMessage) => {
-        setMessage(newMessage);
-        return true;
-      },
-      clear: () => {
-        setMessage('');
-        return true;
-      }
-    }
-  });
-  
-  return (
-    <div>
-      <p>{message}</p>
-      <button onClick={() => setMessage('Updated message!')}>
-        Change Message
-      </button>
-    </div>
-  );
-}
-```
-
-### Registering Functions
-
-Use the `useAgentFunction` hook:
-
-```jsx
-import React from 'react';
 import { useAgentFunction } from '@agentbridge/react';
 
-export default function AuthModule() {
-  // Register a login function with AgentBridge
+function MessageComponent() {
+  const [messages, setMessages] = useState([]);
+  
+  // Register a function that AI agents can call
   useAgentFunction({
-    name: 'login',
-    description: 'Log in a user',
+    name: 'sendMessage',
+    description: 'Send a message to the user',
     parameters: {
-      type: 'object',
-      properties: {
-        username: { type: 'string' },
-        password: { type: 'string' }
-      },
-      required: ['username', 'password']
-    },
-    handler: async (params) => {
-      const { username, password } = params;
-      
-      try {
-        // In a real app, call your authentication API here
-        if (username && password) {
-          return { success: true, message: 'Login successful' };
-        }
-        return { success: false, message: 'Invalid credentials' };
-      } catch (error) {
-        return { success: false, message: error.message };
+      message: {
+        type: 'string',
+        description: 'The message to send'
       }
     }
+  }, async ({ message }) => {
+    setMessages(prev => [...prev, message]);
+    return { success: true };
   });
   
   return (
     <div>
-      <h2>Auth Module</h2>
-      <p>The AI agent can now authenticate users through the login function.</p>
+      <h2>Messages</h2>
+      <ul>
+        {messages.map((msg, index) => (
+          <li key={index}>{msg}</li>
+        ))}
+      </ul>
     </div>
   );
 }
 ```
 
-### Calling Functions
+## Pre-Built Components
 
-Use the `useAgentFunctionCall` hook:
+The SDK includes pre-built components that can be directly controlled by AI agents:
 
 ```jsx
-import React, { useState } from 'react';
-import { useAgentFunctionCall } from '@agentbridge/react';
+import { AgentButton, AgentInput, AgentSelect } from '@agentbridge/react';
 
-export default function WeatherWidget() {
-  const [location, setLocation] = useState('New York');
-  
-  // Set up the function call
-  const { 
-    data: weatherData, 
-    loading, 
-    error, 
-    call: fetchWeather 
-  } = useAgentFunctionCall('getWeather');
-  
-  const handleGetWeather = () => {
-    fetchWeather({ location });
-  };
-  
+function FormComponent() {
   return (
-    <div>
-      <h2>Weather Widget</h2>
-      <input 
-        value={location} 
-        onChange={(e) => setLocation(e.target.value)} 
-        placeholder="Enter location" 
+    <form>
+      <AgentInput 
+        agentId="name-input" 
+        placeholder="Enter your name" 
       />
-      <button onClick={handleGetWeather} disabled={loading}>
-        {loading ? 'Loading...' : 'Get Weather'}
-      </button>
       
-      {error && <p className="error">Error: {error.message}</p>}
+      <AgentSelect agentId="color-select">
+        <option value="red">Red</option>
+        <option value="blue">Blue</option>
+        <option value="green">Green</option>
+      </AgentSelect>
       
-      {weatherData && (
-        <div className="weather-data">
-          <h3>{weatherData.location}</h3>
-          <p>Temperature: {weatherData.temperature}°C</p>
-          <p>Conditions: {weatherData.conditions}</p>
-        </div>
-      )}
-    </div>
-  );
-}
-```
-
-### Accessing the Bridge Directly
-
-Use the `useAgentBridge` hook to access the bridge instance:
-
-```jsx
-import React from 'react';
-import { useAgentBridge } from '@agentbridge/react';
-
-export default function BridgeStatus() {
-  const { bridge, isConnected, connectionStatus } = useAgentBridge();
-  
-  return (
-    <div>
-      <h2>Bridge Status</h2>
-      <p>Connection: {isConnected ? 'Connected' : 'Disconnected'}</p>
-      <p>Status: {connectionStatus}</p>
-      <button 
-        onClick={() => {
-          if (isConnected) {
-            bridge.disconnect();
-          } else {
-            bridge.connect();
-          }
-        }}
+      <AgentButton 
+        agentId="submit-button"
+        onClick={() => console.log('Submitted!')}
       >
-        {isConnected ? 'Disconnect' : 'Connect'}
-      </button>
-    </div>
+        Submit
+      </AgentButton>
+    </form>
   );
 }
 ```
 
-## API Reference
+## Migration Guide from v0.1.x to v0.2.0
 
-### Provider
+### Breaking Changes
 
-- `AgentBridgeProvider` - React Context provider component
+Version 0.2.0 includes several important improvements to fix React hook-related issues and improve overall stability:
 
-### Hooks
+1. **Hook API Changes**:
+   - `useAgentFunction` now takes an options object instead of separate parameters
+   - All hooks now handle null context values gracefully
 
-- `useAgentBridge()` - Access the bridge instance and connection status
-- `useRegisterComponent(definition)` - Register a component with AgentBridge (recommended)
-- `useAgentComponent(id, options)` - Legacy hook to register a component
-- `useAgentFunction(options)` - Register a function with AgentBridge
-- `useAgentFunctionCall(functionName)` - Call a function registered with AgentBridge
+2. **React Version Requirements**:
+   - React 17.0.0 or higher is required
+   - React DOM is now a peer dependency
+
+### How to Migrate
+
+#### Update Dependency
+
+Update to the latest version:
+
+```bash
+npm install @agentbridge/react@latest @agentbridge/core@latest
+```
+
+#### Update Hook Usage
+
+**Before (v0.1.x)**:
+```jsx
+useAgentFunction(
+  'functionName',
+  'Function description',
+  async (params) => {
+    // Function logic
+  },
+  {
+    tags: ['tag1', 'tag2']
+  }
+);
+```
+
+**After (v0.2.0)**:
+```jsx
+useAgentFunction(
+  {
+    name: 'functionName',
+    description: 'Function description',
+    tags: ['tag1', 'tag2']
+  },
+  async (params) => {
+    // Function logic  
+  }
+);
+```
+
+#### Ensuring Proper React Context
+
+Make sure your app uses a consistent version of React by adding resolutions (for yarn) or overrides (for npm) to your package.json:
+
+```json
+{
+  "resolutions": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
+```
 
 ## License
 

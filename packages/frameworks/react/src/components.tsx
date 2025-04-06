@@ -18,7 +18,7 @@ interface AgentButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, Agen
 
 export const AgentButton = forwardRef<HTMLButtonElement, AgentButtonProps>(
   ({ agentId, agentType = 'button', agentProps = {}, onClick, children, ...props }, ref) => {
-    const { state: _state, updateState } = useAgentComponent(agentId, {
+    const { updateState } = useAgentComponent(agentId, {
       type: agentType,
       properties: {
         ...agentProps,
@@ -32,7 +32,7 @@ export const AgentButton = forwardRef<HTMLButtonElement, AgentButtonProps>(
       }
     });
     
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleClick = React.useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
       // Update state to reflect the click
       updateState({
         lastClicked: new Date().toISOString()
@@ -42,7 +42,7 @@ export const AgentButton = forwardRef<HTMLButtonElement, AgentButtonProps>(
       if (onClick) {
         onClick(e);
       }
-    };
+    }, [onClick, updateState]);
     
     return (
       <button
@@ -83,7 +83,7 @@ export const AgentInput = forwardRef<HTMLInputElement, AgentInputProps>(
       }
     });
     
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
       // Update state to reflect the new value
       updateState({
         value: e.target.value,
@@ -94,7 +94,7 @@ export const AgentInput = forwardRef<HTMLInputElement, AgentInputProps>(
       if (onChange) {
         onChange(e);
       }
-    };
+    }, [onChange, updateState]);
     
     // Use value from state if available
     const value = state.value !== undefined ? state.value : props.value;
@@ -138,7 +138,7 @@ export const AgentSelect = forwardRef<HTMLSelectElement, AgentSelectProps>(
       }
     });
     
-    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleChange = React.useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
       // Update state to reflect the new value
       updateState({
         value: e.target.value,
@@ -149,7 +149,7 @@ export const AgentSelect = forwardRef<HTMLSelectElement, AgentSelectProps>(
       if (onChange) {
         onChange(e);
       }
-    };
+    }, [onChange, updateState]);
     
     // Use value from state if available
     const value = state.value !== undefined ? state.value : props.value;

@@ -1,0 +1,87 @@
+.counter-container {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.counter-value {
+  font-size: 64px;
+  font-weight: bold;
+  margin: 10px 0 20px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+}
+
+.counter-value.positive {
+  color: #4caf50;
+}
+
+.counter-value.negative {
+  color: #f44336;
+}
+
+.counter-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.counter-button {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  min-width: 60px;
+}
+
+.counter-button.increment {
+  background-color: #4caf50;
+  color: white;
+}
+
+.counter-button.decrement {
+  background-color: #f44336;
+  color: white;
+}
+
+.counter-button.reset {
+  background-color: #2196f3;
+  color: white;
+}
+
+.counter-button:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+.counter-help {
+  margin-top: 20px;
+  text-align: left;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+}
+
+.counter-help h4 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.counter-help ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.counter-help li {
+  margin: 4px 0;
+  color: #555;
+} 

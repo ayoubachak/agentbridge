@@ -1,29 +1,87 @@
-import { useEffect, useState, useCallback, useRef } from 'react';
+import * as React from 'react';
 import { useAgentBridge } from './ReactAdapter';
 import { FunctionCallResult, ComponentDefinition, ExecutionContext } from '@agentbridge/core';
+
+// Type for component registration
+interface ComponentRegistrationOptions extends Omit<ComponentDefinition, 'id' | 'properties'> {
+  id: string;
+  properties?: Record<string, any>;
+  actions?: Record<string, {
+    description: string;
+    handler: (params?: any) => any;
+    parameters?: any;
+  }>;
+}
+
+/**
+ * Creates a wrapper for plain objects to make them compatible with Zod schemas
+ * by adding a describe() method
+ * This is a duplicate of the function in ReactAdapter.tsx
+ * 
+ * @param obj The object to wrap
+ * @returns An object with a describe() method
+ */
+function createSchemaCompatibleObject(obj: Record<string, any>) {
+  if (!obj) return obj;
+  
+  // If it already has a describe method, assume it's compatible
+  if (obj && typeof obj.describe === 'function') {
+    return obj;
+  }
+  
+  const result = {
+    ...obj,
+    describe: (name: string) => {
+      // Return a simplified schema description
+      return {
+        type: 'object',
+        properties: Object.entries(obj).reduce((acc: Record<string, any>, [key, value]) => {
+          // Extract type and description if available
+          const type = value?.type || typeof value;
+          const description = value?.description || `Property ${key}`;
+          
+          acc[key] = { type, description };
+          
+          // Include any additional properties
+          if (value && typeof value === 'object') {
+            Object.entries(value).forEach(([propKey, propValue]) => {
+              if (propKey !== 'type' && propKey !== 'description') {
+                acc[key][propKey] = propValue;
+              }
+            });
+          }
+          
+          return acc;
+        }, {})
+      };
+    }
+  };
+  
+  return result;
+}
 
 /**
  * Hook for registering a component with AgentBridge
  * 
- * @param component Component definition and properties
+ * @param componentOptions Component definition and properties
  */
-export function useRegisterComponent(
-  component: Omit<ComponentDefinition, 'id' | 'properties'> & { 
-    id: string;
-    properties?: Record<string, any>;
-    actions?: Record<string, {
-      description: string;
-      handler: (params?: any) => any;
-      parameters?: any;
-    }>
-  }
-) {
-  const { adapter, isInitialized } = useAgentBridge();
-  const registered = useRef(false);
-
-  useEffect(() => {
-    if (!isInitialized || !adapter || registered.current) return;
-
+export function useRegisterComponent(componentOptions: ComponentRegistrationOptions) {
+  const { adapter, initialized } = useAgentBridge() || { adapter: null, initialized: false };
+  const [state, setState] = React.useState<Record<string, any>>({});
+  const optionsRef = React.useRef(componentOptions);
+  const componentId = componentOptions.id;
+  
+  // Update the ref whenever the options change
+  React.useEffect(() => {
+    optionsRef.current = componentOptions;
+  }, [componentOptions]);
+  
+  // Register component only once on mount
+  React.useEffect(() => {
+    if (!initialized || !adapter) return;
+    
+    const component = optionsRef.current;
+    
     // Create handlers from actions
     const handlers: Record<string, any> = {};
     
@@ -38,93 +96,121 @@ export function useRegisterComponent(
     // Remove handlers from definition since they should be passed separately
     const { actions, properties, ...definition } = component;
     
-    // Create a proper ComponentDefinition
-    // Note: ComponentDefinition expects a ZodType for properties, but we're using a simple object
-    // for ease of use. This is handled in the adapter implementation.
-    const componentDefinition: any = {
-      ...definition,
-      // We'll treat properties as any since we don't want to require Zod schemas
-      properties: properties || {},
-      actions: actions ? Object.entries(actions).reduce((acc, [name, config]) => {
-        acc[name] = {
+    // Make properties schema-compatible
+    const schemaCompatibleProps = properties ? createSchemaCompatibleObject(properties) : {};
+    
+    // Process actions to make parameters schema-compatible
+    const processedActions: Record<string, any> = {};
+    
+    if (actions) {
+      Object.entries(actions).forEach(([name, config]) => {
+        processedActions[name] = {
           description: config.description,
-          parameters: config.parameters
+          parameters: config.parameters ? createSchemaCompatibleObject(config.parameters) : undefined
         };
-        return acc;
-      }, {} as Record<string, { description: string; parameters?: any }>) : {}
+      });
+    }
+    
+    // Create a proper ComponentDefinition
+    const componentDefinition: ComponentDefinition = {
+      ...definition,
+      id: component.id,
+      // Add schema-compatible properties
+      properties: schemaCompatibleProps as any,
+      actions: processedActions as any
     };
 
-    // Register the component
-    adapter.registerComponent(null, componentDefinition, handlers);
-
-    registered.current = true;
+    try {
+      // Register the component
+      adapter.registerComponent(null, componentDefinition, handlers);
+    } catch (error) {
+      console.error(`Error registering component ${componentId}:`, error);
+    }
 
     // Cleanup on unmount
     return () => {
-      if (adapter) {
-        adapter.unregisterComponent(component.id);
-      }
+      adapter.unregisterComponent(componentId);
     };
-  }, [isInitialized, adapter, component]);
+  }, [adapter, initialized, componentId]); // Only depend on stable identifiers
   
-  // Get current state and update function
-  const [state, setState] = useState<Record<string, any>>({});
-  
-  const updateState = useCallback((newState: Record<string, any>) => {
-    if (!isInitialized || !adapter) return;
+  // Create a stable updateState callback
+  const updateState = React.useCallback((newState: Record<string, any>) => {
+    if (!initialized || !adapter) return;
     
     setState(prev => {
       const merged = { ...prev, ...newState };
-      adapter.updateComponentState(component.id, merged);
+      adapter.updateComponentState(componentId, merged);
       return merged;
     });
-  }, [isInitialized, adapter, component.id]);
+  }, [initialized, adapter, componentId]);
   
   return { state, updateState };
+}
+
+// Interface for AgentFunction configuration
+interface AgentFunctionOptions {
+  name: string;
+  description: string;
+  parameters?: any; // Ideally this would be a zod schema
+  enabled?: boolean;
+  authLevel?: 'public' | 'user' | 'admin';
+  tags?: string[];
 }
 
 /**
  * Hook for exposing a function to AI agents
  * 
- * @param name Function name
- * @param description Function description
+ * @param options Function configuration
  * @param handler Function implementation
- * @param options Additional options
  */
 export function useAgentFunction<T = any, R = any>(
-  name: string,
-  description: string,
-  handler: (params: T, context: any) => Promise<R>,
-  options: {
-    enabled?: boolean;
-    authLevel?: 'public' | 'user' | 'admin';
-    tags?: string[];
-    parameters?: any; // Ideally this would be a zod schema
-  } = {}
+  options: AgentFunctionOptions,
+  handler: (params: T, context: any) => Promise<R> | R
 ) {
-  const { bridge, isInitialized } = useAgentBridge();
-  const { enabled = true } = options;
+  const { bridge, initialized } = useAgentBridge() || { bridge: null, initialized: false };
+  const { name, description, parameters, enabled = true, authLevel, tags } = options;
   
-  useEffect(() => {
-    if (!isInitialized || !bridge || !enabled) return;
+  // Keep a stable reference to the handler
+  const handlerRef = React.useRef(handler);
+  
+  // Update handler ref when handler changes
+  React.useEffect(() => {
+    handlerRef.current = handler;
+  }, [handler]);
+  
+  // Register function only when dependencies change
+  React.useEffect(() => {
+    if (!initialized || !bridge || !enabled) return;
+    
+    // Create a stable function wrapper that uses the latest handler
+    const stableHandler = async (params: T, context: any) => {
+      return handlerRef.current(params, context);
+    };
+    
+    // Create schema-compatible parameters
+    const schemaCompatibleParams = parameters ? createSchemaCompatibleObject(parameters) : { type: 'object', properties: {} };
     
     // Register the function with AgentBridge
-    bridge.registerFunction(
-      name,
-      description,
-      options.parameters || { type: 'object', properties: {} } as any,
-      handler,
-      {
-        authLevel: options.authLevel,
-        tags: options.tags
-      }
-    );
+    try {
+      bridge.registerFunction(
+        name,
+        description,
+        schemaCompatibleParams as any,
+        stableHandler,
+        {
+          authLevel,
+          tags
+        }
+      );
+    } catch (error) {
+      console.error(`Error registering function ${name}:`, error);
+    }
     
-    // Cleanup: unregister the function when the component unmounts
+    // Cleanup: unregister the function when the component unmounts or dependencies change
     return () => {
       bridge.unregisterFunction(name);
     };
-  }, [isInitialized, bridge, name, description, handler, enabled, options.authLevel, options.parameters, options.tags]);
+  }, [initialized, bridge, name, description, enabled, parameters, authLevel, tags]);
 }
 
 /**
@@ -141,49 +227,68 @@ export function useAgentComponent(
     actions?: Record<string, (params?: any) => any>;
   }
 ) {
-  const { adapter, isInitialized } = useAgentBridge();
-  const [state, setState] = useState<Record<string, any>>({});
+  const { adapter, initialized } = useAgentBridge() || { adapter: null, initialized: false };
+  const [state, setState] = React.useState<Record<string, any>>({});
+  const optionsRef = React.useRef(options);
   
-  // Register the component on mount
-  useEffect(() => {
-    if (!isInitialized || !adapter) return;
+  // Update options ref when options change
+  React.useEffect(() => {
+    optionsRef.current = options;
+  }, [options]);
+  
+  // Register the component
+  React.useEffect(() => {
+    if (!initialized || !adapter) return;
+    
+    const currentOptions = optionsRef.current;
+    
+    // Make properties schema-compatible
+    const schemaCompatibleProps = currentOptions.properties ? 
+      createSchemaCompatibleObject(currentOptions.properties) : {};
+    
+    // Process actions
+    const actionDefs: Record<string, { description: string }> = {};
+    const actionHandlers: Record<string, any> = {};
+    
+    if (currentOptions.actions) {
+      Object.entries(currentOptions.actions).forEach(([key, handler]) => {
+        actionDefs[key] = { description: `Action: ${key}` };
+        actionHandlers[key] = handler;
+      });
+    }
     
     // Create a ComponentDefinition from the options
-    // Note: ComponentDefinition expects a ZodType for properties, but we're using a simple object
-    // for ease of use. This is handled in the adapter implementation.
-    const componentDefinition: any = {
+    const componentDefinition: ComponentDefinition = {
       id: componentId,
-      componentType: options.type,
-      name: componentId,
-      description: `Component: ${options.type}`,
-      properties: options.properties || {},
-      actions: options.actions ? Object.keys(options.actions).reduce((acc, key) => {
-        acc[key] = { description: `Action: ${key}` };
-        return acc;
-      }, {} as Record<string, { description: string }>) : {}
+      componentType: currentOptions.type,
+      description: `Component: ${currentOptions.type}`,
+      properties: schemaCompatibleProps as any,
+      actions: actionDefs as any
     };
     
-    // Create handlers object from actions
-    const handlers = options.actions || {};
-    
-    adapter.registerComponent(null, componentDefinition, handlers);
+    try {
+      // Register the component
+      adapter.registerComponent(null, componentDefinition, actionHandlers);
+    } catch (error) {
+      console.error(`Error registering component ${componentId}:`, error);
+    }
     
     // Cleanup: unregister the component when the component unmounts
     return () => {
       adapter.unregisterComponent(componentId);
     };
-  }, [isInitialized, adapter, componentId, options]);
+  }, [initialized, adapter, componentId]);
   
-  // Update the component state
-  const updateState = useCallback((newState: Record<string, any>) => {
-    if (!isInitialized || !adapter) return;
+  // Create a stable updateState callback
+  const updateState = React.useCallback((newState: Record<string, any>) => {
+    if (!initialized || !adapter) return;
     
     setState(prev => {
       const merged = { ...prev, ...newState };
       adapter.updateComponentState(componentId, merged);
       return merged;
     });
-  }, [isInitialized, adapter, componentId]);
+  }, [initialized, adapter, componentId]);
   
   return { state, updateState };
 }
@@ -194,16 +299,17 @@ export function useAgentComponent(
  * @param functionName Name of the function to call
  */
 export function useAgentFunctionCall(functionName: string) {
-  const { adapter, isInitialized } = useAgentBridge();
-  const [isLoading, setIsLoading] = useState(false);
-  const [result, setResult] = useState<FunctionCallResult | null>(null);
-  const [error, setError] = useState<Error | null>(null);
+  const { adapter, initialized } = useAgentBridge() || { adapter: null, initialized: false };
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [result, setResult] = React.useState<FunctionCallResult | null>(null);
+  const [error, setError] = React.useState<Error | null>(null);
   
-  const callFunction = useCallback(async (
+  // Create a stable callFunction callback
+  const callFunction = React.useCallback(async (
     params: any, 
     context: Record<string, any> = {}
   ) => {
-    if (!isInitialized || !adapter) {
+    if (!initialized || !adapter) {
       setError(new Error('AgentBridge is not initialized'));
       return null;
     }
@@ -222,7 +328,7 @@ export function useAgentFunctionCall(functionName: string) {
       setIsLoading(false);
       return null;
     }
-  }, [isInitialized, adapter, functionName]);
+  }, [initialized, adapter, functionName]);
   
   return { callFunction, isLoading, result, error };
 } 
