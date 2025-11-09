@@ -1,0 +1,25 @@
+{
+  "name": "agentbridge-server",
+  "version": "1.0.0",
+  "description": "Custom WebSocket server for AgentBridge examples",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "agent": "node agent-client.js"
+  },
+  "keywords": [
+    "agentbridge",
+    "websocket",
+    "server",
+    "agent"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^8.14.2"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.5.8"
+  }
+}

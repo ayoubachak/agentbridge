@@ -5,6 +5,12 @@ export { AgentBridge, CommunicationManager } from './agent-bridge';
 export { InMemoryFunctionRegistry } from './registry';
 export { InMemoryComponentRegistry } from './component-registry';
 
+// Export event emitter
+export { EventEmitter } from './event-emitter';
+
+// Export WebSocket adapter
+export { WebSocketAdapter, WebSocketAdapterConfig } from './websocket-adapter';
+
 // Export adapter
 export { Adapter, CommunicationAdapter, AgentBridge as AgentBridgeInterface } from './adapter';
 

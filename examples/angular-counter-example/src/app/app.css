@@ -1,0 +1,108 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+}
+
+.app-header {
+  text-align: center;
+  padding: 40px 20px;
+  color: white;
+}
+
+.app-header h1 {
+  margin: 0 0 10px 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.app-header p {
+  margin: 0 0 20px 0;
+  opacity: 0.9;
+  font-size: 1.1rem;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin: 10px 0;
+  transition: all 0.3s ease;
+}
+
+.status-connected {
+  background-color: #4caf50;
+  color: white;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+}
+
+.status-connecting {
+  background-color: #ff9800;
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
+}
+
+.status-disconnected {
+  background-color: #f44336;
+  color: white;
+  box-shadow: 0 4px 15px rgba(244, 67, 54, 0.4);
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  color: white;
+  backdrop-filter: blur(10px);
+}
+
+.stat-item strong {
+  color: #ffd700;
+}
+
+.app-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.app-footer {
+  text-align: center;
+  padding: 30px 20px;
+  background: rgba(0, 0, 0, 0.2);
+  color: white;
+}
+
+.app-footer p {
+  margin: 5px 0;
+  opacity: 0.9;
+}
+
+.server-info {
+  font-size: 0.9rem;
+  font-family: 'Courier New', monospace;
+  color: #ffd700;
+}
+
+@media (max-width: 600px) {
+  .app-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .stats {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+

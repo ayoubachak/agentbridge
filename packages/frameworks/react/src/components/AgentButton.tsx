@@ -137,10 +137,8 @@ export const AgentButton: React.FC<AgentButtonProps> = ({
     }
   });
   
-  // Update component state when disabled changes
-  React.useEffect(() => {
-    component.updateState({ disabled: isDisabled });
-  }, [isDisabled, component]);
+  // No need to sync state - the component manages its own state
+  // Agent can read state through action results
   
   // Compute CSS classes
   const variantClass = `agent-button-${variant}`;

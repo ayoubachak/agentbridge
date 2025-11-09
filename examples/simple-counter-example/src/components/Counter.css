@@ -1,0 +1,142 @@
+.counter {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  width: 100%;
+}
+
+.counter h2 {
+  margin: 0 0 1.5rem 0;
+  color: #333;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.counter-value {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.counter-value span {
+  font-size: 4rem;
+  font-weight: bold;
+  display: inline-block;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.counter-value .positive {
+  color: #10b981;
+  background: #d1fae5;
+}
+
+.counter-value .negative {
+  color: #ef4444;
+  background: #fee2e2;
+}
+
+.counter-info {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: #f3f4f6;
+  border-radius: 8px;
+}
+
+.counter-info p {
+  margin: 0.5rem 0;
+  color: #666;
+  font-size: 1rem;
+}
+
+.counter-info strong {
+  color: #333;
+}
+
+.counter-controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.counter-help {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #eff6ff;
+  border-radius: 8px;
+  border-left: 4px solid #3b82f6;
+}
+
+.counter-help p {
+  margin: 0.5rem 0;
+  color: #1e40af;
+  font-size: 0.9rem;
+}
+
+.counter-help ul {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+  color: #1e40af;
+}
+
+.counter-help li {
+  margin: 0.25rem 0;
+}
+
+/* AgentButton styles */
+.agent-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 100px;
+}
+
+.agent-button:hover:not(.agent-button-disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.agent-button:active:not(.agent-button-disabled) {
+  transform: translateY(0);
+}
+
+.agent-button-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.agent-button-primary {
+  background: #3b82f6;
+  color: white;
+}
+
+.agent-button-primary:hover:not(.agent-button-disabled) {
+  background: #2563eb;
+}
+
+.agent-button-secondary {
+  background: #6b7280;
+  color: white;
+}
+
+.agent-button-secondary:hover:not(.agent-button-disabled) {
+  background: #4b5563;
+}
+
+.agent-button-outline {
+  background: transparent;
+  color: #3b82f6;
+  border: 2px solid #3b82f6;
+}
+
+.agent-button-outline:hover:not(.agent-button-disabled) {
+  background: #3b82f6;
+  color: white;
+}

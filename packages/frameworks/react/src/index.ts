@@ -26,6 +26,8 @@ export {
 
 // Components
 export * from './components';
+export { AgentButton } from './components/AgentButton';
+export type { AgentButtonProps } from './components/AgentButton';
 
 // Types
 export * from './core/types';

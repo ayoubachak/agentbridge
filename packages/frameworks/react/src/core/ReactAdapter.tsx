@@ -24,6 +24,7 @@ export class ReactAdapter {
   private config: ReactAdapterConfiguration;
   private contextUpdater: UpdateRegistryFunction | null = null;
   private initialized = false;
+  private registeredWithCore = new Set<string>(); // Track what's registered with core
 
   /**
    * Creates a new ReactAdapter instance
@@ -111,28 +112,104 @@ export class ReactAdapter {
   }
 
   /**
-   * Registers a new component
-   * @param id Component ID
-   * @param data Component data
+   * Registers a new component with both the adapter and AgentBridge core
+   * @param component React component reference (can be null)
+   * @param definition Component definition
+   * @param handlers Component handlers (update and actions)
    */
-  registerComponent(id: string, data: ComponentData): void {
-    if (!this.initialized) {
-      warn(`Cannot register component ${id} - adapter not initialized`);
+  registerComponent(
+    component: any,
+    definition: ComponentDefinition,
+    handlers: {
+      updateHandler?: (properties: any, context: any) => Promise<void>;
+      [key: string]: any;
+    }
+  ): void {
+    if (!this.initialized || !this.bridge) {
+      warn(`Cannot register component ${definition.id} - adapter not initialized`);
       return;
     }
 
-    if (this.componentRegistry.has(id)) {
-      debug(`Updating existing component: ${id}`);
+    const componentId = definition.id;
+
+    // Store in local registry for React-specific tracking
+    const componentData: ComponentData = {
+      id: componentId,
+      type: definition.componentType,
+      definition,
+      ...handlers
+    };
+
+    if (this.componentRegistry.has(componentId)) {
+      debug(`Updating existing component: ${componentId}`);
     } else {
-      debug(`Registering new component: ${id}`);
+      debug(`Registering new component: ${componentId}`);
     }
 
-    this.componentRegistry.set(id, data);
+    this.componentRegistry.set(componentId, componentData);
     this.updateRegistry();
+
+    // Register with AgentBridge core (this triggers capability broadcast)
+    // First, unregister if already registered (allows hot-reload/re-registration)
+    if (this.registeredWithCore.has(componentId) && this.bridge) {
+      try {
+        this.bridge.unregisterComponent(componentId);
+        this.registeredWithCore.delete(componentId);
+        debug(`Pre-unregistered component ${componentId} before re-registration`);
+      } catch (err) {
+        // Ignore unregister errors
+      }
+    }
+
+    try {
+      // Build actions with handlers included
+      const actionsWithHandlers: Record<string, {
+        description: string;
+        parameters?: any;
+        handler: (params: any, context: any) => Promise<any>;
+      }> = {};
+
+      if (definition.actions) {
+        for (const [actionName, actionDef] of Object.entries(definition.actions)) {
+          if (handlers[actionName]) {
+            actionsWithHandlers[actionName] = {
+              description: actionDef.description,
+              parameters: actionDef.parameters, // Already processed by processComponentDefinition
+              handler: handlers[actionName]
+            };
+          }
+        }
+      }
+
+      // Ensure properties has a describe method (should be processed already)
+      const properties = definition.properties;
+      if (properties && typeof properties === 'object' && !('describe' in properties)) {
+        warn(`Properties for ${componentId} not properly processed - should have describe method`);
+      }
+
+      this.bridge.registerComponent(
+        componentId,
+        definition.description || `Component: ${definition.componentType}`,
+        definition.componentType,
+        {
+          properties: definition.properties,
+          actions: actionsWithHandlers,
+          updateHandler: handlers.updateHandler,
+          authLevel: definition.authLevel,
+          tags: definition.tags,
+          path: definition.path
+        }
+      );
+
+      this.registeredWithCore.add(componentId);
+      debug(`Component ${componentId} registered with AgentBridge core`);
+    } catch (err) {
+      error(`Error registering component ${componentId} with core:`, err);
+    }
   }
 
   /**
-   * Unregisters a component
+   * Unregisters a component from both adapter and core
    * @param id Component ID
    */
   unregisterComponent(id: string): void {
@@ -145,6 +222,17 @@ export class ReactAdapter {
       debug(`Unregistering component: ${id}`);
       this.componentRegistry.delete(id);
       this.updateRegistry();
+
+      // Unregister from core
+      if (this.registeredWithCore.has(id) && this.bridge) {
+        try {
+          this.bridge.unregisterComponent(id);
+          this.registeredWithCore.delete(id);
+          debug(`Component ${id} unregistered from AgentBridge core`);
+        } catch (err) {
+          error(`Error unregistering component ${id} from core:`, err);
+        }
+      }
     } else {
       debug(`Cannot unregister component ${id} - not found`);
     }
@@ -154,38 +242,20 @@ export class ReactAdapter {
    * Updates component state
    * @param id Component ID
    * @param update State update function or object
+   * @deprecated Components manage their own state. This is for legacy support only.
    */
   updateComponentState(id: string, update: any): void {
     const component = this.componentRegistry.get(id);
     
     if (!component) {
-      warn(`Cannot update component ${id} - not found`);
+      debug(`Component ${id} not found for state update - this is normal`);
       return;
     }
 
-    try {
-      if (typeof component.setState === 'function') {
-        // If setState is a function, call it with the update
-        component.setState(update);
-      } else if (component.state !== undefined) {
-        // If we have a state object but no setState, merge the updates
-        if (typeof update === 'function') {
-          component.state = update(component.state);
-        } else {
-          component.state = {
-            ...component.state,
-            ...update
-          };
-        }
-        
-        // Notify of registry updates
-        this.updateRegistry();
-      } else {
-        warn(`Component ${id} does not have a valid state mechanism`);
-      }
-    } catch (err) {
-      error(`Error updating state for component ${id}`, err);
-    }
+    // Components manage their own state in React
+    // This method exists for API compatibility but does nothing
+    // State updates happen through action handlers which return the new state
+    debug(`State update requested for ${id} - delegating to component's own state management`);
   }
 
   /**

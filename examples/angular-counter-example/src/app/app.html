@@ -1,0 +1,32 @@
+<div class="app">
+  <header class="app-header">
+    <h1>{{ title }}</h1>
+    <p>Counter and buttons controlled by AI agents via WebSocket</p>
+    
+    <div [ngClass]="statusBadgeClass()">
+      {{ statusText() }}
+    </div>
+    
+    <div class="stats">
+      <span class="stat-item">
+        <strong>Components:</strong> {{ componentCount() }}
+      </span>
+      <span class="stat-item">
+        <strong>Functions:</strong> {{ functionCount() }}
+      </span>
+    </div>
+  </header>
+  
+  <main class="app-content">
+    <app-counter></app-counter>
+  </main>
+  
+  <footer class="app-footer">
+    <p>
+      AgentBridge Example - Components registered and ready for AI control
+    </p>
+    <p class="server-info">
+      Server: ws://localhost:8080 | Agent Client: ws://localhost:8081
+    </p>
+  </footer>
+</div>

@@ -163,6 +163,36 @@ export function ensureSchemaCompatible(obj: unknown): Record<string, any> {
 }
 
 /**
+ * Create a Zod-compatible schema wrapper
+ * This adds a describe() method to plain schema objects
+ * @param schema Plain schema object
+ * @returns Schema with describe() method
+ */
+export function createZodCompatibleSchema(schema: Record<string, any>): any {
+  if (!schema) {
+    schema = { type: 'object', properties: {} };
+  }
+  
+  // If it already has a describe method (real Zod schema), return as-is
+  if (typeof schema.describe === 'function') {
+    return schema;
+  }
+  
+  // Create a wrapper with describe method
+  return {
+    ...schema,
+    describe: (description: string) => ({
+      ...schema,
+      description
+    }),
+    // Add parse method for compatibility (just passes through)
+    parse: (value: any) => value,
+    // Add optional method for compatibility
+    optional: () => createZodCompatibleSchema({ ...schema, optional: true })
+  };
+}
+
+/**
  * Process a component definition to ensure schema compatibility
  * @param definition Component definition
  * @returns Processed definition with schema-compatible properties
@@ -175,12 +205,30 @@ export function processComponentDefinition(
   // Create a deep copy to avoid mutations
   const processedDefinition = { ...definition } as ComponentDefinition;
   
-  // Handle properties - cast as any to work around the ZodType requirement
+  // Handle properties - convert to Zod-compatible schema
   if (definition.properties) {
-    processedDefinition.properties = ensureSchemaCompatible(definition.properties) as any;
+    const plainSchema = ensureSchemaCompatible(definition.properties);
+    processedDefinition.properties = createZodCompatibleSchema(plainSchema) as any;
   } else {
     // Create empty schema if no properties
-    processedDefinition.properties = { type: 'object', properties: {} } as any;
+    processedDefinition.properties = createZodCompatibleSchema({ 
+      type: 'object', 
+      properties: {} 
+    }) as any;
+  }
+  
+  // Handle actions - convert parameters to Zod-compatible schemas
+  if (definition.actions) {
+    const processedActions: Record<string, any> = {};
+    for (const [actionName, actionDef] of Object.entries(definition.actions)) {
+      processedActions[actionName] = {
+        ...actionDef,
+        parameters: actionDef.parameters ? 
+          createZodCompatibleSchema(ensureSchemaCompatible(actionDef.parameters)) : 
+          createZodCompatibleSchema({ type: 'object', properties: {} })
+      };
+    }
+    processedDefinition.actions = processedActions as any;
   }
   
   return processedDefinition;

@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events';
+import { EventEmitter } from './event-emitter';
 import { ComponentDefinition, ExecutionContext, MessageQueue } from './types';
 
 // Forward reference for AgentBridge (to avoid circular dependency)

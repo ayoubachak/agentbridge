@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
-import { EventEmitter } from 'events';
+import { EventEmitter } from './event-emitter';
 import { 
   AgentBridgeConfig, 
   CallResult, 
@@ -23,6 +23,7 @@ export class AgentBridge extends EventEmitter {
   private config: AgentBridgeConfig;
   private communicationManager: CommunicationManager | null = null;
   private sessionId: string;
+  private hasRegisteredCapabilities: boolean = false;
   /** Components registered with this instance */
   public components: any[] = [];
   /** Framework adapter */
@@ -79,8 +80,27 @@ export class AgentBridge extends EventEmitter {
     // Set up message handlers
     manager.onMessage(this.handleIncomingMessage.bind(this));
     
-    // Send capabilities
-    this.sendCapabilities();
+    // If the manager has an onConnected method (WebSocketAdapter), use it
+    // @ts-ignore - WebSocketAdapter has an onConnected method
+    if (typeof manager.onConnected === 'function') {
+      // @ts-ignore
+      manager.onConnected(() => {
+        this.log('debug', 'Communication manager connected, sending capabilities');
+        this.sendCapabilities();
+      });
+      
+      // Also initiate connection if connect method exists
+      // @ts-ignore
+      if (typeof manager.connect === 'function') {
+        // @ts-ignore
+        manager.connect().catch((err: any) => {
+          this.log('error', 'Failed to connect communication manager', err);
+        });
+      }
+    } else {
+      // For non-WebSocket adapters (like pub/sub), send immediately
+      this.sendCapabilities();
+    }
   }
 
   /**
@@ -110,8 +130,19 @@ export class AgentBridge extends EventEmitter {
           // Handle session message
           await this.handleSessionMessage(message as any);
           break;
+        case 'connection_ack' as any:
+          // Server acknowledgment - just log and ignore
+          this.log('debug', 'Received connection acknowledgment from server');
+          break;
+        case 'capabilities_updated' as any:
+          // Server notification that capabilities were updated - can be ignored on client side
+          this.log('debug', 'Server confirmed capabilities update');
+          break;
         default:
-          this.log('warn', `Received unsupported message type: ${message.type}`);
+          // Only warn if it's actually a problem - some messages are informational
+          if (message.type && !['connection_ack', 'capabilities_updated'].includes(message.type as string)) {
+            this.log('warn', `Received unsupported message type: ${message.type}`);
+          }
       }
     } catch (error) {
       this.log('error', 'Error handling message', error);
@@ -149,6 +180,18 @@ export class AgentBridge extends EventEmitter {
     const functionDefinitions = this.getFunctionDefinitions();
     const componentDefinitions = this.getComponentDefinitions();
     
+    // Don't send empty capabilities on initial registration
+    // Only send if we have capabilities OR if we've previously registered (for reconnection)
+    if (
+      (functionDefinitions.length === 0 && componentDefinitions.length === 0) &&
+      !this.hasRegisteredCapabilities
+    ) {
+      this.log('debug', 'Skipping capability registration - no capabilities yet');
+      return;
+    }
+    
+    this.log('debug', `Sending capabilities: ${functionDefinitions.length} functions, ${componentDefinitions.length} components`);
+    
     this.communicationManager.sendMessage({
       type: MessageType.REGISTER_CAPABILITIES,
       id: uuidv4(),
@@ -157,6 +200,9 @@ export class AgentBridge extends EventEmitter {
       functions: functionDefinitions,
       components: componentDefinitions
     });
+    
+    // Mark that we've sent capabilities at least once
+    this.hasRegisteredCapabilities = true;
   }
 
   /**

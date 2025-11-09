@@ -198,7 +198,20 @@ function useAgentComponentWithHooks<P = any, S extends Record<string, any> = Rec
     return processComponentDefinition(componentDefinition);
   }, [componentDefinition]);
   
-  // Register the component when the adapter is initialized
+  // Store the latest handlers in refs so they don't cause re-registration
+  const actionHandlersRef = useRef(actionHandlers);
+  const updateHandlerRef = useRef(updateHandler);
+  const processedDefinitionRef = useRef(processedDefinition);
+
+  // Update refs when handlers change
+  useEffect(() => {
+    actionHandlersRef.current = actionHandlers;
+    updateHandlerRef.current = updateHandler;
+    processedDefinitionRef.current = processedDefinition;
+  }, [actionHandlers, updateHandler, processedDefinition]);
+
+  // Register the component ONCE when adapter is initialized
+  // Only re-register if componentId changes
   useEffect(() => {
     if (!initialized || !adapter) {
       return;
@@ -207,16 +220,16 @@ function useAgentComponentWithHooks<P = any, S extends Record<string, any> = Rec
     try {
       info(`Registering component ${componentId} with AgentBridge`);
       
-      // Register with the adapter
+      // Register with the adapter using current refs
       adapter.registerComponent(
         null, // No actual component reference needed in React
-        processedDefinition,
-        { ...actionHandlers, updateHandler }
+        processedDefinitionRef.current,
+        { ...actionHandlersRef.current, updateHandler: updateHandlerRef.current }
       );
       
       debug(`Component ${componentId} registered successfully`);
       
-      // Clean up on unmount
+      // Clean up on unmount or componentId change
       return () => {
         info(`Unregistering component ${componentId}`);
         adapter.unregisterComponent(componentId);
@@ -229,38 +242,33 @@ function useAgentComponentWithHooks<P = any, S extends Record<string, any> = Rec
         err instanceof Error ? err : undefined
       );
     }
-  }, [
-    initialized, adapter, componentId, 
-    processedDefinition, actionHandlers, updateHandler
-  ]);
+  }, [initialized, adapter, componentId]); // Only re-run if these change
   
   // Update state function that also notifies the adapter
-  const updateState = (newState: Partial<S>) => {
+  // Use useCallback to make it stable and prevent re-renders
+  const updateState = React.useCallback((newState: Partial<S>) => {
     debug(`Setting state for component ${componentId}`, newState);
     
     // Update local state
     setState(prevState => {
       const combinedState = { ...prevState, ...newState };
       
-      // Update adapter if initialized
-      if (initialized && adapter) {
-        try {
-          adapter.updateComponentState(componentId, newState);
-        } catch (err) {
-          error(`Error updating component state in adapter:`, err);
-        }
-      }
+      // DON'T notify adapter here - it causes loops
+      // The adapter doesn't need to know about every state change
+      // Only notify when the agent explicitly updates state
       
       return combinedState;
     });
-  };
+  }, [componentId]);
   
-  // Create result
-  return useMemo(() => ({
+  // Create result with stable reference
+  const result = useMemo(() => ({
     id: componentId,
     state,
     updateState
-  }), [componentId, state, initialized, adapter]);
+  }), [componentId, state, updateState]);
+  
+  return result;
 }
 
 /**

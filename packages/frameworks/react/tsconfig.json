@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "CommonJS",
+    "module": "ESNext",
     "declaration": true,
     "outDir": "./dist",
     "rootDir": "./src",
@@ -10,6 +10,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
+    "moduleResolution": "node",
     "lib": ["DOM", "DOM.Iterable", "ESNext"]
   },
   "include": ["src/**/*"],
