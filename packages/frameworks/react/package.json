@@ -1,6 +1,6 @@
 {
   "name": "@agentbridge/react",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "React SDK for AgentBridge framework",
   "type": "module",
   "main": "dist/index.js",
@@ -33,7 +33,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@agentbridge/core": "file:../../core"
+    "@agentbridge/core": "^0.1.2"
   },
   "devDependencies": {
     "@types/jest": "^29.5.5",
